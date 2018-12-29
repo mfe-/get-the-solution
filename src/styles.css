@@ -1,1 +1,125 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url(fonts/JosefinSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Spectral';
+    src: url(fonts/Spectral-Regular.ttf);
+}
+
+header {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2em;
+    text-align: center;
+}
+
+.center {
+    margin: 0 auto;
+    width: 70%;
+}
+
+nav {
+    text-align: center;
+}
+
+nav ul {
+    font-family: 'Josefin Sans', sans-serif;
+    list-style-type: none;
+    list-style: none;
+    overflow: hidden;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+/* Change the link color to #111 (black) on hover */
+
+nav li a:hover {
+    background-color: #111;
+    color: #00a874;
+    text-decoration: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+section h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: left;
+}
+
+main {
+    font-family: 'Spectral', serif;
+    font-size: 1.2em;
+    position: relative;
+    float: left;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+article {
+
+}
+
+.author {
+    white-space: nowrap;
+    display: inline;
+}
+
+a:link {
+    color: #00a874;
+    background-color: transparent;
+}
+
+a:visited {
+    color: #00a874;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #00a874;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #00a874;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+footer {
+    margin: 0 !important;
+    width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 1rem;
+    /*background-color: #efefef;*/
+    text-align: center;
+}

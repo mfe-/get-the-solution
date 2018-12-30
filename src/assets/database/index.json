@@ -1,7 +1,10 @@
 [
     {
         "BlogEntry": 1,
-        "Title": "Add Token Authorization to AngularJS and WebApi"
+        "Title": "Add Token Authorization to AngularJS and WebApi",
+        "Author": "Martin",
+        "Release": "2015-05-26T00:00:00",
+        "Regards": ["PHP", "JSON"]
     },
     {
         "BlogEntry": 2,

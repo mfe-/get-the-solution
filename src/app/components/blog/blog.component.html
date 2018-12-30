@@ -1,7 +1,6 @@
-<p>
+
   blog works!
-  {{BlogEntry}}
-  <li ng-repeat="item in BlogEntry">
-    {{$index}} {{item}}
-  </li>
-</p>
+  <div *ngFor="let blogEntry of BlogEntry" [attr.data-blogEntry-blogEntryId]="blogEntry.BlogEntryId">
+    <app-blogentry [blogEntryValue]="blogEntry"></app-blogentry>
+  </div>
+

@@ -1,0 +1,17 @@
+<article>
+    <h2>
+        <a href=" https://get-the-solution.net/2017/11/26/storing-hierarchical-data-structures-in-repositories/">
+            {{blogEntryValue.Title}}</a>
+    </h2>
+    <p class="info"></p>
+    <address class="author">By <a rel="author" [attr.href]="blogEntryValue.Author">{{blogEntryValue.Author}}</a></address>
+    on
+    <time pubdate="" [attr.datetime]="blogEntryValue.Release | date: 'yyyy-MM-dd'" [attr.title]="blogEntryValue.Release | date: 'yyyy-MM-dd'">
+        {{blogEntryValue.Release | date }}
+    </time>
+    <span class="regards">Regards:
+        <a *ngFor="let tag of blogEntryValue.Regards" href="category/{{tag}}">{{tag}}; </a>
+    </span>
+    <p>
+    </p>
+</article>

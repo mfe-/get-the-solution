@@ -13,8 +13,11 @@ export class BlogService implements IBlogService {
 
     constructor(protected httpClient: HttpClient) { }
 
-    public GetBlogEntries(): Observable<BlogEntry[]>  {
-        return this.httpClient
-            .get<BlogEntry[]>(this.baseUri);
+    public GetBlogEntries(): Observable<BlogEntry[]> {
+        return this.httpClient.get<BlogEntry[]>(this.baseUri);
+    }
+    public GetBlogEntry(year: number, month: number, day: number, title: string, blogEntries: BlogEntry[]): BlogEntry {
+        return blogEntries.find(b => { return (b.Title.toLowerCase() == title.toLowerCase() 
+            || b.Title.replace(/\ /g, "-").toLowerCase() == title.toLowerCase()); });
     }
 }

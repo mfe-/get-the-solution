@@ -16,7 +16,7 @@ export class BlogEntryComponent implements OnInit {
 
     }
     public ngOnInit() {
-        console.log(this.blogEntryValue);
+
     }
 
 }

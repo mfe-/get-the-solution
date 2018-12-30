@@ -8,4 +8,10 @@ As you know the RESTFul Service is stateless. We need to achieve that the WebApi
 
 When sending a valid login request to the WebApi, it will issue a token for the logged in user. The SWA will catch the returned token from the login. From now the SWA will add the token to each call into the HTTP Header. The WebApi will check if there exists a JWT and extract the containing user information. This process is visualized in the graphic below.
 
-![sts](http://url/to/img.png)
+![sts](https://github.com/mfe-/get-the-solution/blob/master/src/assets/img/blog/sts.png?raw=true)
+
+After associating a user to the request we can permit or deny the request.
+
+`{"iss":"Identity Provider","name":"John Doe","admin":true}`
+
+The Json Web Token is a JSON-based open standard which contains the user payload a signature and the following important header information’s (JSON Web Token, https://en.wikipedia.org/wiki/JSON_Web_Token, 22.08.2015).

@@ -9,7 +9,9 @@
     },
     {
         "BlogEntry": 2,
-        "Title": "a"
+        "Title": "exercises with the R exams package",
+        "Author": "Simon",
+        "Source": "assets/database/ExercisesWithExamsPackage.html"
     },
     {
         "BlogEntry": 3,

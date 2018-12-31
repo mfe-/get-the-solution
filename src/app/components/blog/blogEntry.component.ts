@@ -16,8 +16,6 @@ export class BlogEntryComponent implements OnInit {
 
     }
     public ngOnInit() {
-        // LoadBlogEntry
-        this.blogService
     }
 
 }

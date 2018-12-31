@@ -4,6 +4,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
+## Convert markdown files to html files
+Using pandoc in Linux: 
+
+	cd src/assets/database; for file in *.md; do pandoc $file -o `basename -s .md $file`.html; done
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

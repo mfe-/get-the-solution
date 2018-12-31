@@ -5,7 +5,7 @@
         "Author": "Martin",
         "Release": "2015-08-23T00:00:00",
         "Regards": ["PHP", "JSON"],
-        "Source": "http://localhost:4200/assets/database/AngularToken.md"
+        "Source": "assets/database/AngularToken.html"
     },
     {
         "BlogEntry": 2,

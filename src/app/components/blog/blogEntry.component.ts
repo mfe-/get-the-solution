@@ -5,8 +5,8 @@ import { BlogEntry } from 'src/app/model/BlogEntry';
 
 @Component({
     selector: 'app-blogentry',
-    templateUrl: './blogEntry.component.html',
-})
+    templateUrl: './blogEntry.component.html'
+  })
 export class BlogEntryComponent implements OnInit {
 
     @Input()
@@ -16,7 +16,8 @@ export class BlogEntryComponent implements OnInit {
 
     }
     public ngOnInit() {
-
+        // LoadBlogEntry
+        this.blogService
     }
 
 }

@@ -3,8 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
 
 import { IBlogService } from '../contract/IBlogService';
-
-import { BlogEntry } from '../model/BlogEntry';
+import { BlogEntry } from 'src/app/model/BlogEntry';
 
 @Injectable()
 export class BlogService implements IBlogService {
@@ -17,7 +16,14 @@ export class BlogService implements IBlogService {
         return this.httpClient.get<BlogEntry[]>(this.baseUri);
     }
     public GetBlogEntry(year: number, month: number, day: number, title: string, blogEntries: BlogEntry[]): BlogEntry {
-        return blogEntries.find(b => { return (b.Title.toLowerCase() == title.toLowerCase() 
-            || b.Title.replace(/\ /g, "-").toLowerCase() == title.toLowerCase()); });
+        return blogEntries.find(b => {
+            return (b.Title.toLowerCase() == title.toLowerCase()
+                //replace all " " with "-"
+                || b.Title.replace(/\ /g, "-").toLowerCase() == title.toLowerCase());
+        });
+    }
+    public LoadBlogEntry(blogEntry: BlogEntry) {
+        this.httpClient.get<BlogEntry[]>(blogEntry.Source).toPromise().then(a=>console.log(a));
+        
     }
 }

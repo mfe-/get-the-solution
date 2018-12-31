@@ -4,6 +4,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
+## Build for github with
+
+`ng build --prod --base-href "https://mfe-.github.io/get-the-solution/"`
+
 ## Convert markdown files to html files
 Using pandoc in Linux: 
 

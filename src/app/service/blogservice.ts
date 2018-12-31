@@ -9,7 +9,7 @@ import { BlogEntry } from 'src/app/model/BlogEntry';
 @Injectable()
 export class BlogService implements IBlogService {
 
-    private readonly baseUri: string = "http://localhost:4200/assets/database/index.json";
+    private readonly baseUri: string = "assets/database/index.json";
 
     constructor(protected httpClient: HttpClient) { }
 

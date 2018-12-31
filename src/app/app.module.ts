@@ -11,7 +11,7 @@ import { HeaderComponent } from './components/header.component';
 import { HomeComponent } from './components/home.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { BlogComponent } from './components/blog/blog.component';
-import { BlogEntryComponent } from './components/blog/BlogEntry.component';
+import { BlogEntryComponent } from './components/blog/blogEntry.component';
 import { ContactComponent } from './components/contact.component';
 import { FooterComponent } from './components/footer.component';
 

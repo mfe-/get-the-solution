@@ -1,5 +1,10 @@
 # [https://mfe-.github.io/get-the-solution/](https://mfe-.github.io/get-the-solution/)
 
+## Prerequisites
+
+- nodejs
+- `npm install`
+
 # GetTheSolutionApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.

@@ -11,12 +11,16 @@ export class PageNotFoundComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.Link = "/" + this.route.snapshot.paramMap.get('p');
-    let id = this.Link;
-    console.log(id);
-    let url = this.router.parseUrl(id);
-    // this.router.navigate(['/your-path'])
-
+    let id = this.route.snapshot.paramMap.get('p');
+    if (id == null) {
+      this.Link = "/home";
+      this.router.navigate([this.Link])
+    }
+    else {
+      this.Link = "/" + this.route.snapshot.paramMap.get('p');
+      console.log(id);
+      let url = this.router.parseUrl(id);
+    }
   }
   public Link: string;
 

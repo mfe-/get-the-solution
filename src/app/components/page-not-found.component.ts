@@ -14,13 +14,11 @@ export class PageNotFoundComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('p');
     if (id == null) {
       this.Link = "/home";
-      this.router.navigate([this.Link])
     }
     else {
       this.Link = "/" + this.route.snapshot.paramMap.get('p');
-      console.log(id);
-      let url = this.router.parseUrl(id);
     }
+    this.router.navigate([this.Link]);
   }
   public Link: string;
 

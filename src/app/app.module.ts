@@ -16,6 +16,7 @@ import { ContactComponent } from './components/contact.component';
 import { FooterComponent } from './components/footer.component';
 
 import { BlogService } from './service/blogservice';
+import { PageNotFoundComponent } from './components/page-not-found.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { BlogService } from './service/blogservice';
     BlogComponent,
     BlogEntryComponent,
     ContactComponent,
-    FooterComponent
+    FooterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     HttpClientModule,
@@ -35,7 +37,7 @@ import { BlogService } from './service/blogservice';
     AppRoutingModule
   ],
   providers: [
-    { provide: 'IBlogService', useClass: BlogService },
+    { provide: 'IBlogService', useClass: BlogService }
   ],
   bootstrap: [AppComponent]
 })

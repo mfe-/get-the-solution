@@ -50,6 +50,11 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
+              ],
+              "assets" : [
+                { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "favicon.ico", "input": "src/", "output": "./" },
+                { "glob": "404.html", "input": "src/", "output": "./" }
               ]
             }
           }

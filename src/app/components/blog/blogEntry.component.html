@@ -1,6 +1,6 @@
 <article>
     <h2>
-        <a routerLink="{{blogEntryValue.Title}}">{{blogEntryValue.Title}}</a>
+        <a href="blog/{{blogEntryValue.Title}}">{{blogEntryValue.Title}}</a>
     </h2>
     <p class="info"></p>
     <address class="author">By <a rel="author" [attr.href]="blogEntryValue.Author">{{blogEntryValue.Author}}</a></address>

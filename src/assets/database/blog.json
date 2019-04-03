@@ -1,0 +1,156 @@
+[
+    {
+        "BlogEntry": 1,
+        "Title": "Add Token Authorization to AngularJS and WebApi",
+        "Author": "Martin",
+        "Release": "2015-08-23T00:00:00",
+        "Regards": [".NET Framework", "C#"],
+        "Source": "assets/database/15.08.23-Add Token Authorization to AngularJS and WebApi.html"
+    },
+    {
+        "BlogEntry": 2,
+        "Title": "exercises with the R exams package",
+        "Author": "Simon",
+        "Source": "assets/database/ExercisesWithExamsPackage.html"
+    },
+    {
+        "BlogEntry": 173,
+        "Title": "DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0",
+        "Author": "Martin",
+        "Release": "2015-05-10T00:00:00",
+        "Regards": [".NET Framework"]
+    },
+    {
+        "BlogEntry": 172,
+        "Title": "Datenbankoptimierung",
+        "Author": "Martin",
+        "Release": "2015-04-05T00:00:00",
+        "Regards": ["DBMS"]
+    },
+    {
+        "BlogEntry": 171,
+        "Title": "Email Subject mit UTF8 im Header",
+        "Author": "Martin",
+        "Release": "2015-03-14T00:00:00",
+        "Regards": ["DBMS"]
+    },
+    {
+        "BlogEntry": 169,
+        "Title": "Shenyang",
+        "Author": "Martin",
+        "Release": "2015-01-25T00:00:00",
+        "Regards": ["Other"]
+    },
+    {
+        "BlogEntry": 166,
+        "Title": "Glassfish 4 and Realm",
+        "Author": "Martin",
+        "Release": "2014-02-07T00:00:00",
+        "Regards": ["Other"]
+    },
+    {
+        "BlogEntry": 163,
+        "Title": "reinstall grub",
+        "Author": "Martin",
+        "Release": "2013-08-24T00:00:00",
+        "Regards": ["Infrastructure"]
+    },
+    {
+        "BlogEntry": 130,
+        "Title": "MySQL Cursor alternative – Dynamische SQL Cursor",
+        "Author": "Martin",
+        "Release": "2011-03-10T00:00:00",
+        "Regards": ["DBMS"]
+    },
+    {
+        "BlogEntry": 121,
+        "Title": "Datenbank erstellen mit dem ER-Diagramm und MySql",
+        "Author": "Martin",
+        "Release": "2011-02-09T00:00:00",
+        "Regards": ["DBMS"]
+    },
+    {
+        "BlogEntry": 101,
+        "Title": "Modelle in der Informatik",
+        "Author": "Martin",
+        "Release": "2011-02-09T00:00:00",
+        "Regards": ["Article"]
+    },
+    {
+        "BlogEntry": 100,
+        "Title": "Subversion – Repositories zusammenlegen – exportieren",
+        "Author": "Martin",
+        "Release": "2010-12-15T00:00:00",
+        "Regards": ["Infrastructure"]
+    },
+    {
+        "BlogEntry": 89,
+        "Title": "C# Plugins mit AppDomains realisieren",
+        "Author": "Martin",
+        "Release": "2010-08-23T00:00:00",
+        "Regards": [".NET Framework","C#"]
+    },
+    {
+        "BlogEntry": 88,
+        "Title": "C# Anwendung Plugin fähig machen",
+        "Author": "Martin",
+        "Release": "2010-07-23T00:00:00",
+        "Regards": [".NET Framework","C#"]
+    },
+    {
+        "BlogEntry": 81,
+        "Title": "ONLINE COMMUNITIES",
+        "Author": "Martin",
+        "Release": "2010-04-07T00:00:00",
+        "Regards": ["Article"]
+    },
+    {
+        "BlogEntry": 78,
+        "Title": "Tray Icon mit WPF",
+        "Author": "Martin",
+        "Release": "2010-02-14T00:00:00",
+        "Regards": ["Article"]
+    },
+    {
+        "BlogEntry": 73,
+        "Title": "MarkupExtension – Bilder aus Resource direkt ins XAML laden",
+        "Author": "Martin",
+        "Release": "2009-09-02T00:00:00",
+        "Regards": [".NET Framework","C#","XAML"]
+    },
+    {
+        "BlogEntry": 59,
+        "Title": "Überschriebener Default Style in BasedOn angeben",
+        "Author": "Martin",
+        "Release": "2009-04-02T00:00:00",
+        "Regards": [".NET Framework","C#","XAML"]
+    },
+    {
+        "BlogEntry": 55,
+        "Title": "ListBox – SelectedItem Zusatzinformationen anzeigen",
+        "Author": "Martin",
+        "Release": "2009-03-28T00:00:00",
+        "Regards": [".NET Framework","C#","XAML"]
+    },
+    {
+        "BlogEntry": 52,
+        "Title": "Einführung in die Programmierung",
+        "Author": "Martin",
+        "Release": "2009-03-21T00:00:00",
+        "Regards": ["Article"]
+    },
+    {
+        "BlogEntry": 49,
+        "Title": "ItemsSource zu UserControl hinzufügen",
+        "Author": "Martin",
+        "Release": "2009-02-20T00:00:00",
+        "Regards": [".NET Framework","C#","XAML"]
+    },
+    {
+        "BlogEntry": 45,
+        "Title": "Subklassen in XAML ansprechen",
+        "Author": "Martin",
+        "Release": "2009-02-02T00:00:00",
+        "Regards": [".NET Framework","C#","XAML"]
+    }
+]

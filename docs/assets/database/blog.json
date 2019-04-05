@@ -1,6 +1,6 @@
 [
     {
-        "BlogEntry": 1,
+        "BlogEntry": 176,
         "Title": "Add Token Authorization to AngularJS and WebApi",
         "Author": "Martin",
         "Release": "2015-08-23T00:00:00",
@@ -18,6 +18,7 @@
         "Title": "DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0",
         "Author": "Martin",
         "Release": "2015-05-10T00:00:00",
+        "Source" : "assets/database/15.05.10-DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0.html",
         "Regards": [".NET Framework"]
     },
     {
@@ -25,6 +26,7 @@
         "Title": "Datenbankoptimierung",
         "Author": "Martin",
         "Release": "2015-04-05T00:00:00",
+        "Source":"assets/database/15.04.05-Datenbankoptimierung.html",
         "Regards": ["DBMS"]
     },
     {
@@ -32,6 +34,7 @@
         "Title": "Email Subject mit UTF8 im Header",
         "Author": "Martin",
         "Release": "2015-03-14T00:00:00",
+        "Source":"assets/database/15.03.14-Email Subject mit UTF8 im Header.html",
         "Regards": ["DBMS"]
     },
     {
@@ -39,6 +42,7 @@
         "Title": "Shenyang",
         "Author": "Martin",
         "Release": "2015-01-25T00:00:00",
+        "Source":"assets/database/15.01.25-Shenyang.html",
         "Regards": ["Other"]
     },
     {

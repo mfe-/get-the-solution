@@ -52,7 +52,12 @@
                 }
               ],
               "assets" : [
-                { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.json", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.html", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.html", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.jpg", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.png", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.gif", "input": "src/assets/", "output": "/assets/" },
                 { "glob": "favicon.ico", "input": "src/", "output": "./" },
                 { "glob": "404.html", "input": "src/", "output": "./" }
               ]

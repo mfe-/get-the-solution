@@ -49,6 +49,7 @@ pre
    border-radius:.25rem;
    background-color:#f9f9f9;
    padding: .5em;
+   overflow-x:scroll;
 }
 
 /* Change the link color to #111 (black) on hover */

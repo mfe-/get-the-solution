@@ -5,7 +5,7 @@
 <p>As you know the RESTFul Service is stateless. We need to achieve that the WebApi can correctly identify our current requests to a user. There the token, or precisely the Json Web Token, comes into play. Because the returned data is formatted as JSON the term Json Web Token is more common in that subject.</p>
 <p>When sending a valid login request to the WebApi, it will issue a token for the logged in user. The SWA will catch the returned token from the login. From now the SWA will add the token to each call into the HTTP Header. The WebApi will check if there exists a JWT and extract the containing user information. This process is visualized in the graphic below.</p>
 <div class="figure">
-<img src="../img/blog/jwt-token.png?raw=true" alt="sts" /><p class="caption">sts</p>
+<img src="https://raw.githubusercontent.com/mfe-/get-the-solution/master/src/assets/img/blog/jwt-token.png" alt="sts" /><p class="caption">sts</p>
 </div>
 <p>After associating a user to the request we can permit or deny the request.</p>
 <p><code>{&quot;iss&quot;:&quot;Identity Provider&quot;,&quot;name&quot;:&quot;John Doe&quot;,&quot;admin&quot;:true}</code></p>
@@ -137,7 +137,7 @@
 </code></pre>
 <p>If for specific action methods certain claims are necessary we can use the ClaimsAuthorization attribute. Before the action method gets executed, it checks if the current HttpContext.User got the required claims.</p>
 <div class="figure">
-<img src="../img/blog/request-pipelining.jpg?raw=true" alt="The order how the web request is processed" /><p class="caption">The order how the web request is processed</p>
+<img src="https://raw.githubusercontent.com/mfe-/get-the-solution/master/src/assets/img/blog/request-pipelining.jpg" alt="The order how the web request is processed" /><p class="caption">The order how the web request is processed</p>
 </div>
 <h3 id="remarks">Remarks</h3>
 <p>The solution is configured in a way that you can easily execute the project. Make sure you installed Visual Studio 2013 with the Web Development Tools and the latest updates. Also The Web Essential Tools should be installed with the latest TypeScript Version. You can Download the project from Github.</p>

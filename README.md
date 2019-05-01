@@ -1,22 +1,22 @@
-# [https://mfe-.github.io/get-the-solution/](https://mfe-.github.io/get-the-solution/)
+# [get-the-solution.net](https://get-the-solution.net/)
 
 ## Prerequisites
 
 - nodejs
 - `npm install`
 
-# GetTheSolutionApp
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
-
 ## Build for github with
 
-`ng build --output-path=docs --prod --base-href "https://mfe-.github.io/get-the-solution/"`
+1. Convert *.md files with pandoc
+2. `ng build --output-path=docs --prod --base-href "https://get-the-solution.net/"`
+3. push to github
 
 ## Convert markdown files to html files
 Using pandoc in Linux: 
 
 	cd src/assets/database; for file in *.md; do pandoc $file -o `basename -s .md $file`.html; done
+	
+	`ng build --output-path=docs --prod --base-href "https://get-the-solution.net/"`
 
 ## Development server
 
@@ -38,6 +38,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## GetTheSolutionApp
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
 ## Further help
 

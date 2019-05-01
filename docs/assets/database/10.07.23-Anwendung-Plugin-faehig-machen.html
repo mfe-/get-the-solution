@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>In diesem Beispiel sieht man wie man ein einfaches Plugin-System realisiert. Demonstriert wird das ganze anhand eines „Mathematikprogramms“.</p>
+<p>Das Mathematikprogramm lädt zu Beginn alle Plugins. Wenn der Benutzer z.B. die Wurzelfunktion aufruft mit „sqrt(3)“ durchsucht das Mathematikprogramm alle Plugins und schaut nach ob eines der Plugins die Funktion „sqrt“ berechnen kann. Der Pluginname verrät, für welche Mathematikfunktion das Plugin zu ständig ist. Wurde kein zuständiges Plugin gefunden, wird die Meldung „unbekannte Funktion“ ausgegeben.</p>
+<p>Gibt der Benutzer als Eingabe z.B. „sqrt(4)“ ein, wird dem Plugin, das die Funktion „sqrt“ implementiert, „sqrt(4)“ übergeben. Somit weiß das Plugin was es überhaupt berechnen soll. Zurück gibt es das berechnete Ergebnis der Eingabe.</p>
+<p>Damit wir wissen wie die Plugins „aussehen“, also wie die Funktionen, Eigenschaften heißen, müssen wir ein Interface für die Plugins definieren. Ansonsten könnte es passieren (wenn verschiedene Entwickler die Plugins erstellen) dass die zu berechnende Funktion einmal „Berechne(String input)“ oder „Calculate(int input)“ heißt.</p>
+<p>Wenn jeder das Interface des Plugins implementiert, kann es nicht zu solchen Problemen kommen. Unser Plugin-Interface sieht wie folgt aus.</p>
+<pre><code>        /// &lt;summary&gt;
+        /// Definiert das &quot;Aussehen&quot; unseres Plugins
+        /// &lt;/summary&gt;
+        public interface IPlugin
+        {
+            /// &lt;summary&gt;
+            /// Name des Plugins
+            /// &lt;/summary&gt;
+            String Name { get; set; }
+     
+            /// &lt;summary&gt;
+            /// Beschreibung des Plugins
+            /// &lt;/summary&gt;
+            String Description { get; set; }
+     
+            /// &lt;summary&gt;
+            /// Berechnet die Eingabe
+            /// &lt;/summary&gt;
+            /// &lt;param name=&quot;pInput&quot;&gt;Eingabe die ausgewertet werden soll.&lt;/param&gt;
+            /// &lt;returns&gt;Gibt das berechnete Ergebnis zurück&lt;/returns&gt;
+            String Calc(String pInput);
+        }</code></pre>
+<p>Das bedeutet, dass jeder, der unser Interface implementiert zwei Properties &quot;Name&quot; und &quot;Description&quot; definiert und zu guter Letzt eine Funktion &quot;Calc&quot;.</p>
+<p>Im Namen speichern wir den Funktionsnamen der Mathematischen Funktion. Als z.B. „sqrt“. In der Funktion Calc berechnen wir den Übergabewert pInput und geben das Ergebnis als String zurück. Natürlich wäre eine andere Mathematische Funktion wie z.B. Modulo interessanter zu implementieren.Als nächstes gilt es die Mathematik Klasse MathCore zu erstellen, welche die Plugins lädt und erstellt.</p>
+<p>Als erstes wird die Funktion LoadPlugins aufgerufen. Dieser übergeben wir den Dateipfad in dem sich die Plugins befinden.</p>
+<p>Als nächstes gilt es die Mathematik Klasse MathCore zu erstellen, welche die Plugins lädt und erstellt. Als erstes wird die Funktion LoadPlugins aufgerufen. Dieser übergeben wir den Dateipfad in dem sich die Plugins befinden.</p>
+<pre><code>    public void LoadPlugins(String pPluginPath)
+    {
+                String[] files = Directory.GetFiles(pPluginPath);
+     
+                foreach (String file in files)
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+     
+                    if (fileInfo.Extension.Equals(&quot;.dll&quot;))
+                    {
+                        Dictionary&lt;string, object&gt; dictionary = GetModul(file, typeof(IPlugin.IPlugin));
+                        foreach (var a in dictionary)
+                        {
+                            Plugins.Add(a.Key,a.Value);
+                        }
+     
+                    }
+     
+                }
+    }</code></pre>
+<p>Es werden alle Dateien aus dem Verzeichnis gelesen und Dateien mit der Dateiendung „.dll“ gefiltert. Ist eine Datei eine „.dll“, wird die Funktion GetModul(file, Type) aufgerufen. Diese lädt die Plugins in unsere Instanz hinein. Sehen wir uns dazu diese Funktion genauer an.</p>
+<pre><code>    private static Dictionary&lt;string, object&gt; GetModul(string pFileName, Type pTypeInterface)
+    {
+                //Hier speichern wir unsere Plugins
+                Dictionary&lt;string, object&gt; interfaceinstances = new Dictionary&lt;string, object&gt;();
+     
+                //Loads an assembly given its file name or path.
+                Assembly assembly = Assembly.LoadFrom(pFileName);
+     
+                // http://msdn.microsoft.com/de-de/library/t0cs7xez.aspx
+                // Assembly Eigenschaften checken
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (type.IsPublic) // Ruft einen Wert ab, der angibt, ob der Type als öffentlich deklariert ist. 
+                    {
+                        if (!type.IsAbstract)  //nur Assemblys verwenden die nicht Abstrakt sind
+                        {
+                            // Sucht die Schnittstelle mit dem angegebenen Namen. 
+                            Type typeInterface = type.GetInterface(pTypeInterface.ToString(), true);
+     
+                            //Make sure the interface we want to use actually exists
+                            if (typeInterface != null)
+                            {
+                                try
+                                {
+     
+                                    object activedInstance = Activator.CreateInstance(type);
+                                    if (activedInstance != null)
+                                    {
+                                        interfaceinstances.Add(type.Name, activedInstance);
+                                    }
+                                }
+                                catch (Exception exception)
+                                {
+                                    System.Diagnostics.Debug.WriteLine(exception);
+                                }
+                            }
+     
+                            typeInterface = null;
+                        }
+                    }
+                }
+     
+                assembly = null;
+     
+                return interfaceinstances;
+    }</code></pre>
+<p>Der Funktion wird der Pfad der <a href="http://msdn.microsoft.com/en-us/library/hk5f40ct(VS.71).aspx">Assembly</a> übergeben, die nach Plugins durchsucht werden soll. Zusätzlich muss man den Typ des Plugins übergeben.</p>
+<p>Wir laden die Assembly mit Assembly.LoadFrom() damit wir Informationen aus ihr lesen können (Stichwort Reflection). Mit der Funktion GetTypes() erhalten wir alle Typen (Klassen), die in der Assembly gespeichert sind. Als nächstes führen wir ein paar Routineprüfungen durch wie z.B. ob der Typ public ist und nicht abstrakt.</p>
+<p>Danach „suchen“ oder besser gesagt holen wir mit der Methode GetInterface() das Plugin-Interface falls der gerade iterierende Typ das Plugin implementiert hat. Falls kein Interface implementiert wurde ist der Rückgabewert NULL. Deshalb wird als nächstes überprüft ob der Rückgabewert ungleich NULL ist. Haben wir einen Rückgabewert erhalten, erstellen wir mit Activator.CreateInstance eine Instanz. Diese speichern wir dann in unser Dictionary.</p>
+<p>So werden die Plugins Schritt für Schritt in unsere Anwendung geladen. Wurden alle Dateien auf Plugins überprüft, kann man mit der Funktion public string Calc(string pInput) Mathematikfunktionen aufrufen bzw. ausführen.</p>
+<p>Ruft man _MathCore.Calc(&quot;sqrt(3)&quot;) auf, wird in der Funktion Calc der Input String interpretiert damit man weiß, welche Mathematikfunktion aufgerufen wird. In diesem Fall wäre das „sqrt“. Anschließend wird nach dem passenden Plugin mit der Funktion GetPlugin gesucht. Wurde es gefunden, wird der Input String an das Plugin weitergereicht und die Funktion Calc vom Plugin aufgerufen.</p>
+<p>Wurde kein Plugin gefunden, wird &quot;Funktion nicht gefunden&quot; zurückgegeben.</p>
+<p>Wie gesagt handelt es sich hierbei um ein sehr einfaches Plugin-System. Das Beispiel verwendet die Plugins zwar nur in einer Konsolen Applikation, trotzdem sollte es kein Problem sein, das Ganze in WPF oder WinForms umzusetzen.</p>
+<p>Bei einem ausgereiften Plugin-System gibt es Features wie z.B., dass die Plugins auf bestimmte Teile des Host System zugreifen können (z.b auf ein Control), dass Plugins wiederum Plugins enthalten können oder, dass die Plugins in einer Art Sandbox (Stichwort AppDomain ) gehostet werden damit kein schädlicher Code ausgeführt werden kann usw. usf.</p>
+<p>Seit .NET 2&lt; wurden eine Reihe neuer Techniken mitgeliefert die das Erstellen von Plugins vereinfachen soll.</p>
+<p>Anbei ein paar Links:</p>
+<p><a href="http://www.mycsharp.de/wbb2/thread.php?threadid=34472" class="uri">http://www.mycsharp.de/wbb2/thread.php?threadid=34472</a> <a href="http://www.codeproject.com/KB/cs/pluginsincsharp.aspx" class="uri">http://www.codeproject.com/KB/cs/pluginsincsharp.aspx</a></p>
+<p><a href="https://github.com/mfe-/ApplicationWithPlugins">Beispiel Projekt herunterladen</a></p>
+</body>
+</html>

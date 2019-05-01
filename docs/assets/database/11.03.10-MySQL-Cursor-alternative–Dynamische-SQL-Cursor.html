@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>vor kurzem stand ich vor dem Problem, dass ich in einer MySQL Stored Procedure einen Cursor benötigt habe. Das Problem an der ganzen Sache war, dass für die Cursor Deklatraion einige Abfragen (u.a insert into, select usw.) vorausgesetzt wurden. Das Cursor-Statment wird quais während der Laufzeit &quot;generiert&quot;.</p>
+<p>Das hat zur Folge, dass man einen Deklaration Block hat auf den eben die nötigen Abfragen zum Zusammenstellen des Cursor-Statments machen muss. Erst dann kann der Cursor mit DECLARE definiert werden. Das Problem wie folgt:</p>
+<pre><code>CREATE PROCEDURE `tsc_sp_add_page` (in idfolder int(11), in title varchar(65), in template varchar(100))
+COMMENT &#39;creates a new page and adds all wildcards which will be shown infolder,InLanguage,InAll,InPage&#39;
+BEGIN
+
+--id of the inserted page
+
+DECLARE pageid INT(11);
+
+//...ein paar Deklaration
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+//...dann die vorausgesetzten Abfragen für die Definition des Cursors
+
+--get the language of the page
+set pagelangid = (SELECT f.idlanguage as pagelangid FROM tsc_folder AS f WHERE f.id=idfolder LIMIT 0 , 1);
+
+--first we create the page record
+INSERT INTO `tsc_page` (`id` ,`idfolder` , `title` , `template`) VALUES (NULL , idfolder, title , template);
+set pageid = LAST_INSERT_ID();
+
+//...cursor deklaration ist abhänig vom insert into statment
+declare c_wildcardInAll cursor FOR select distinct w.id from tsc_wildcard AS w, tsc_page_have_wildcard AS wh, tsc_page AS p, tsc_folder AS f
+WHERE wh.idpage = p.id
+AND wh.idwildcard = w.id
+AND p.idfolder = f.id
+AND w.InLanguage =1
+AND f.idlanguage =pagelangid;</code></pre>
+<p>Laut MySQL Syntax müssen aber alle Deklaration ganz zu Beginn der SP stehen. Nach der ersten Abfrage darf keine weitere Deklaration mehr folgen. Mit dem obigen Code-Ausschnitt erhält man dann die Meldung:</p>
+<p><code>Error code 1064, SQL state 42000: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'declare c_wildcardInAll cursor FOR select distinct w.id from tsc_wildcard AS w, ' at line 29 Line 7, column 1</code></p>
+<p>Jetzt wäre es toll, wenn es so etwas wie dynamische Cursor oder Parameter Cursor geben würde, was aber in MySQL 5.0.24 nicht der Fall war (Evtl wird ein solches Feature bei der nächsten Version nachgereicht?, Orcael kennt z.B. Cursor mit Parameter).</p>
+<p>Um keine Cursor verwenden zu müssen, kann man eine temporäre Tabelle verwenden, die quasi als Cursor fungiert. Die temporäre Tabelle muss genau auf die Abfrage angepasst werden. Zusätzlich benötigt man eine weitere RowID Spalte um in der Schleife auf alle Datensätze zugreifen zu können, bzw. um iterieren zu können.</p>
+<h2 id="temporäre-tabelle-erstellen">1.) Temporäre Tabelle erstellen</h2>
+<p>Da ich bei meiner Abfrage nur eine Spalte abfrage, sieht meine temporäre Tabelle recht simpel aus.</p>
+<pre><code>CREATE TEMPORARY TABLE twildcardInLang (
+`RowID` int(11) NOT NULL auto_increment PRIMARY KEY,
+`id` int NOT NULL
+) ENGINE=MEMORY;</code></pre>
+<h2 id="daten-abfragen-und-in-die-tabelle-schreiben">2.) Daten abfragen und in die Tabelle schreiben</h2>
+<p>Wichtig ist, dass die RowID die Eigenschaften auto_increment und PRIMARY KEY hat. Ansonsten kann man nicht durch die Datensätze iterieren. Danach fügen wir die Datensätze in die temporäre Tabelle ein.</p>
+<pre><code>INSERT INTO twildcardInLang (id) select distinct w.id from tsc_wildcard AS w, tsc_page_have_wildcard AS wh, tsc_page AS p, tsc_folder AS f
+WHERE wh.idpage = p.id
+AND wh.idwildcard = w.id
+AND p.idfolder = f.id
+AND w.InLanguage =1
+AND f.idlanguage =pagelangid;</code></pre>
+<h2 id="hilfsvariable-für-die-schleife-setzen">3.)Hilfsvariable für die Schleife setzen</h2>
+<p>Nun müssen wir wissen wie oft wir die Schleife durchlaufen wollen. Dies entspricht logischerweise der Anzahl der Datensätze in unserer temporären Tabelle. Als nächstes setzen wir die Zähl-Variable auf 1 um die Schleife durchlaufen- und die Daten der Tabelle abfragen zu können.</p>
+<pre><code>SET @NumberRecords = (select count(id) as id from twildcardInLang);
+SET @RowCount = 1;</code></pre>
+<h2 id="die-schleife-erstellen">4.) Die Schleife erstellen</h2>
+<p>Der Code der Schleife sollte nun für sich sprechen.</p>
+<pre><code>WHILE @RowCount &lt;= @NumberRecords DO
+set @wildcardid = (SELECT id FROM twildcardInLang WHERE RowID = @RowCount);
+
+...irgendwas mit @wildcardid machen
+
+SET @RowCount := (@RowCount + 1);
+END WHILE;</code></pre>
+<h2 id="am-schluss-entfernen-wir-die-temporäre-tabelle-mit-drop-table-twildcardinlang">5.) Am Schluss entfernen wir die temporäre Tabelle mit DROP TABLE twildcardInLang;</h2>
+<p>Der komplette Code-Ausschnitt sieht dann in etwa so aus:</p>
+<pre><code>CREATE TEMPORARY TABLE twildcardInLang (
+`RowID` int(11) NOT NULL auto_increment PRIMARY KEY,
+`id` int NOT NULL
+) ENGINE=MEMORY;
+
+--get InLanguage=pagelangid wildcards with proper language wildcards and insert it into our temporary table (which we use as &quot;virtual curosr&quot;)
+
+INSERT INTO twildcardInLang (id) select distinct w.id from tsc_wildcard AS w, tsc_page_have_wildcard AS wh, tsc_page AS p, tsc_folder AS f
+
+WHERE wh.idpage = p.id
+AND wh.idwildcard = w.id
+AND p.idfolder = f.id
+AND w.InLanguage =1
+AND f.idlanguage =pagelangid;
+-- Get the number of records in the temporary table
+SET @NumberRecords = (select count(id) as id from twildcardInLang);
+SET @RowCount = 1;
+WHILE @RowCount &lt;= @NumberRecords DO
+set @wildcardid = (SELECT id FROM twildcardInLang WHERE RowID = @RowCount);
+-- link wildcard with page
+INSERT INTO `tsc_page_have_wildcard` (`idpage`, `idwildcard`) VALUES (pageid, @wildcardid);
+SET @RowCount := (@RowCount + 1);
+END WHILE;
+DROP TABLE twildcardInLang;</code></pre>
+<p>Links zum Thema:</p>
+<ul>
+<li><a href="http://www.sqlbook.com/SQL/Avoiding-using-SQL-Cursors-20.aspx" class="uri">http://www.sqlbook.com/SQL/Avoiding-using-SQL-Cursors-20.aspx</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.0/en/while-statement.html" class="uri">http://dev.mysql.com/doc/refman/5.0/en/while-statement.html</a></li>
+</ul>
+</body>
+</html>

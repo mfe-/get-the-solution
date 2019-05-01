@@ -50,6 +50,7 @@
         "Title": "Glassfish 4 and Realm",
         "Author": "Martin",
         "Release": "2014-02-07T00:00:00",
+        "Source":"assets/database/14.02.07-Glassfish-4-and-Realm.html",
         "Regards": ["Other"]
     },
     {
@@ -57,6 +58,7 @@
         "Title": "reinstall grub",
         "Author": "Martin",
         "Release": "2013-08-24T00:00:00",
+        "Source":"assets/database/13.08.24-reinstall-grub.html",
         "Regards": ["Infrastructure"]
     },
     {
@@ -64,6 +66,7 @@
         "Title": "MySQL Cursor alternative – Dynamische SQL Cursor",
         "Author": "Martin",
         "Release": "2011-03-10T00:00:00",
+        "Source":"assets/database/11.03.10-MySQL-Cursor-alternative–Dynamische-SQL-Cursor.html",
         "Regards": ["DBMS"]
     },
     {
@@ -71,6 +74,7 @@
         "Title": "Datenbank erstellen mit dem ER-Diagramm und MySql",
         "Author": "Martin",
         "Release": "2011-02-09T00:00:00",
+        "Source":"assets/database/11.02.09-Datenbank-erstellen-mit-dem-ER-Diagramm-und-MySql.html",
         "Regards": ["DBMS"]
     },
     {
@@ -78,6 +82,7 @@
         "Title": "Modelle in der Informatik",
         "Author": "Martin",
         "Release": "2011-02-09T00:00:00",
+        "Source":"assets/database/11.02.09-Modelle-in-der-Informatik.html",
         "Regards": ["Article"]
     },
     {
@@ -85,6 +90,7 @@
         "Title": "Subversion – Repositories zusammenlegen – exportieren",
         "Author": "Martin",
         "Release": "2010-12-15T00:00:00",
+        "Source":"assets/database/10.12.15-Subversion–Repositories-zusammenlegen–exportieren.html",
         "Regards": ["Infrastructure"]
     },
     {
@@ -92,6 +98,7 @@
         "Title": "C# Plugins mit AppDomains realisieren",
         "Author": "Martin",
         "Release": "2010-08-23T00:00:00",
+        "Source":"assets/database/10.08.23-Csharp-Plugins-mit-AppDomains-realisieren.html",
         "Regards": [".NET Framework","C#"]
     },
     {
@@ -99,6 +106,7 @@
         "Title": "C# Anwendung Plugin fähig machen",
         "Author": "Martin",
         "Release": "2010-07-23T00:00:00",
+        "Source":"assets/database/10.07.23-Anwendung-Plugin-faehig-machen.html",
         "Regards": [".NET Framework","C#"]
     },
     {
@@ -106,6 +114,7 @@
         "Title": "ONLINE COMMUNITIES",
         "Author": "Martin",
         "Release": "2010-04-07T00:00:00",
+        "Source":"assets/database/10.04.07-ONLINE COMMUNITIES.html",
         "Regards": ["Article"]
     },
     {

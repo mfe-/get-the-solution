@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h2 id="datenbanken-erstellen-modellieren-mit-dem-er-modell">Datenbanken erstellen / modellieren mit dem ER-Modell</h2>
+<p>Ein Modell ist ein Ausschnitt aus der Realität oder ein gedankliches Konzept. Das Entity-Relationship-Modell ist ein Modell das aus Gegenständen und Beziehungen besteht. Es wird häufig verwendet um eine Datebank zu designen.</p>
+<p>Beim ERM-Model handelt es sich bei den Entities meist um einen physikalischen Gegenstand, oder um ein gedankliches Konzept. Die Beziehungen zwischen den Gegenständen werden abstrahiert.</p>
+<ul>
+<li>Grundlagen</li>
+<li>Beziehungstypen</li>
+<li>Datenbank erstellen</li>
+<li>Literatur</li>
+</ul>
+<h3 id="grundlagen">Grundlagen</h3>
+<h4 id="entity">Entity</h4>
+<p>Ein Gegenstand wird im Modell durch ein Rechteck abgebildet. Der Gegenstand kann Eigenschaften enthalten die durch Attribute dargestellt werden. Attribute die zu einem Gegenstand gehören werden durch Linien verbunden.</p>
+<p>Schlüssel sind eine minimale Menge von Attributen, deren Wert eine Entity eindeutig innerhalb aller Entities eines Types identifizieren. Schlüssel werden durch unterstrichene Attributnamen dargestellt.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/Entity.gif" alt="Abb. Entity" />
+<p class="caption">Abb. Entity</p>
+</div>
+<h4 id="generalisierung">Generalisierung</h4>
+<p>Die Generalisierung soll für ein übersichtliches und strukturiertes Modell sorgen. Dies kann erzielt werden, in dem Entities mit den gleichen Attributen zu einem Basis Entity zusammengefasst werden. Die Unterentities „erben“ die Attribute des Basis Entitys. Das Erben der Unterenties kann symbolisch durch einen Pfeil dargestellt werden. Im unteren Beispiel erben Mitarbeiter und Kunde die Attribute von Person.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/generalisierung.gif" alt="Abb. Generalisierung" />
+<p class="caption">Abb. Generalisierung</p>
+</div>
+<h4 id="relationship">Relationship</h4>
+<p>Beziehungstypen werden durch Rauten dargestellt. Diese werden dazu passend beschriftet.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehung.gif" alt="Abb. Beziehungstypen" />
+<p class="caption">Abb. Beziehungstypen</p>
+</div>
+<h5 id="beziehungstypen">Beziehungstypen</h5>
+<p>Es gibt verschiedene Beziehungstypen.</p>
+<h6 id="beziehung">1:1 Beziehung</h6>
+<p>Jedem Entity m aus Mann wird höchstens ein Entity f aus Frau zugeordnet. Umgekehrt verhält es sich genauso. Jedem Entity f aus Frau wird maximal ein Entity m aus Mann zugeordnet. Es kann auch vorkommen, dass Entities keinen Partner haben.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehung11.gif" alt="Abb. 1:1 Beziehung" />
+<p class="caption">Abb. 1:1 Beziehung</p>
+</div>
+<p>Die Relation kann wie folgt in Worten beschrieben werden. Ein Mann ist mit einer Frau verheiratet. Eine Frau ist mit einem Mann verheiratet.</p>
+<h6 id="n-beziehung">1:n Beziehung</h6>
+<p>Jedem Entity h aus Haus wird kein oder beliebige viele Entities aus Bewohner zugeordnet. Jedes Entity b aus der Menge Bewohner steht maximal einem Entity aus Haus in einer Beziehung.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehung1n.gif" alt="Abb. 1:n Beziehung" />
+<p class="caption">Abb. 1:n Beziehung</p>
+</div>
+<p>Die Relation kann wie folgt in Worten beschrieben werden.</p>
+<p>Ein Haus hat mehrere Bewohner. Mehrere Bewohner können in einem Haus sein.</p>
+<h6 id="n1">n:1</h6>
+<p>Verhält sich wie die 1:n Beziehung nur umgekehrt.</p>
+<h6 id="nm">N:m</h6>
+<p>Wenn keine Einschränkungen und Begrenzungen gelten, also jedes Entity aus E1 mit beliebig vielen Entities aus E2 in Beziehung stehen kann und umgekehrt jedes Entity aus E2 mit beliebig vielen Entities aus E1 assoziiert ist, handelt es sich um eine n:m Beziehung. (vgl. Alfons Kempler 2009)</p>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehung1n-table.gif" alt="Abb. n:m" />
+<p class="caption">Abb. n:m</p>
+</div>
+<h5 id="min-max-notation">Min / Max Notation</h5>
+<p>Mit der Min / Max Notation kann man die Beziehungstypen genauer spezifizieren. Wir können z.B. sagen, dass kein oder ein Haus von genau einer Person besessen wird. Eine Person kann aber 0 oder mehrere Häuser besitzen. Die Notation würde dann wie folgt aussehen.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/min-max.gif" alt="Abb. n:m" />
+<p class="caption">Abb. n:m</p>
+</div>
+<p>Da wir beim Erstellen der Datenbank die Min / Max Notation außer Acht lassen, verweise ich deshalb für weitere Informationen auf den Wikipedia Artikel und auf das Kapitel 6.6 Die (min, max) – Notation von der Online-Kurs 'Datenbanken und Datenmodellierung' Print Version.</p>
+<h3 id="datenbank-erstellen">Datenbank erstellen</h3>
+<p>Nach dem also das Model nach den ER-Diagramm Richtlinien erstellt wurde, gilt es den Entwurf in eine Datenbank zu übertragen. Ich gehe ab hier davon aus, dass man das Grundlegende über Datenbanken weiß.</p>
+<p>Fremdschlüssel dienen als Verweis zwischen zwei Relationen, d. h. er zeigt an, welche Tupel / Zeile der Relationen inhaltlich miteinander in Verbindung stehen.</p>
+<p>Als erstes beginnt man damit, die Entities in Tabellen um zu wandeln. Als Tabellenamen werden vorzugsweise die Entitynamen verwendet. Alle Attribute werden in der Tabelle als Spalten dargestellt. Dabei muss man sich jetzt überlegen, welches Attribut welchen Datentyp verwenden soll.</p>
+<p>Folgendes Modell kann man wie folgt in eine Tabelle übersetzen (für das Beispiel wurde eine MySQL DB verwendet):</p>
+<div class="figure">
+<img src="assets/img/blog/erm/Entity-table.gif" alt="Abb. Entity-table" />
+<p class="caption">Abb. Entity-table</p>
+</div>
+<pre><code>CREATE TABLE `Autor` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Name` VARCHAR( 50 ) NULL
+) ENGINE = InnoDB;</code></pre>
+<p>Wie man sehen kann wurde der Attributname „Identifikationsnr“ auf id verkürzt und als Primary Key gesetzt. Für den Name wurde der Datentyp varchar verwendet. So werden die Entities der Reihe nach in die Datenbank „übersetzt“.</p>
+<p>Als nächstes muss man in der Datenbank die Voraussetzungen dafür schaffen, dass die Beziehungen abgebildet werden können. Am Einfachsten ist die n:m Beziehung ab zu bilden.</p>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehungnm-table.gif" alt="Abb. Entity-table" />
+<p class="caption">Abb. Entity-table</p>
+</div>
+<p>Aus der Min / Max Notation „(0,*)“ erkennen wir, dass es sich um eine „m:n“ Beziehung handelt.</p>
+<p>N:M Beziehungen benötigen immer eine Hilfstabelle! In der Hilfstabelle müssen wir sogenannte Fremdschlüssel verwenden, um auf die jeweilige Tabelle zu verweisen. In die Hilfstabelle erstellen wir also zwei Spalten, die jeweils die Bezeichnung auf der zu verweisenden Schlüssel verwenden. Da die Beziehung „besuchen“ heißt, erstellen wir passenderweise eine Tabelle namens besuchen. Darin erstellen wir die zwei Spalten Schuelerid und Fachid. Das sieht dann so aus:</p>
+<pre><code>CREATE TABLE `Schueler` (
+`Schuelderid` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Name` VARCHAR( 100 ) NOT NULL
+) ENGINE = InnoDB;
+CREATE TABLE `Unterrichtsfach` (
+`Fachid` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Name` VARCHAR( 50 ) NOT NULL
+) ENGINE = InnoDB;
+CREATE TABLE `besuchen` (
+  `Schuelderid` int(11) NOT NULL,
+  `Fachid` int(11) NOT NULL
+) ENGINE=InnoDB;</code></pre>
+<p>Anbei noch ein paar Testeinträge:</p>
+<pre><code>INSERT INTO `Schueler` (
+`Schuelderid` ,
+`Name`
+)
+VALUES (
+NULL , &#39;Martin&#39;
+), (
+NULL , &#39;Simon&#39;
+);
+INSERT INTO `Unterrichtsfach` (
+`Fachid` ,
+`Name`
+)
+VALUES (
+NULL , &#39;Betriebssysteme&#39;
+), (
+NULL , &#39;Datenmodellierung&#39;
+);</code></pre>
+<p>Wenn Martin jetzt die die Unterrichtsfächer 'Betriebssysteme' und 'Datenmodellierung' besuchen soll, müssen wir die entsprechenden Einträge in die Tabelle 'besuchen' machen. Z.B. mit:</p>
+<pre><code>INSERT INTO `besuchen` (
+`Schuelderid` ,
+`Fachid`
+)
+VALUES (
+&#39;1&#39;, &#39;1&#39;
+), (
+&#39;1&#39;, &#39;2&#39;
+);
+
+INSERT INTO `besuchen` (
+`Schuelderid` ,
+`Fachid`
+)
+VALUES (
+&#39;2&#39;, &#39;2&#39;
+);</code></pre>
+<p>Nun fragen wir ab welche Fächer Martin besucht.</p>
+<pre><code>SELECTs.name,u.name
+FROM`besuchen`ASb,UnterrichtsfachASu,SchuelerASs
+WHEREb.fachid=u.fachid
+ANDs.Schuelderid=b.Schuelderid
+ANDs.name=&#39;Martin&#39;;</code></pre>
+<p>Aus der unteren Abbildung ist erkenntlich, dass ein Schüler 0 oder maximal einen Computer verwenden kann. Ein Computer ist 0 oder mehreren Schüler zugeordnet. Es handelt sich also hier um eine 1:N Beziehung. Da wir im ersten Schritt alle Entities in der Datenbank implementiert haben, sieht unsere Computer Tabelle so aus:</p>
+<pre><code>CREATE TABLE `Computer` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Name` VARCHAR( 10 ) NOT NULL
+) ENGINE = InnoDB;</code></pre>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehung1nv-table.gif" alt="Abb. Entity-table" />
+<p class="caption">Abb. Entity-table</p>
+</div>
+<p>Anders wie bei einer N:M Beziehung muss nicht eine Hilfstabelle erstellt werden. Der Fremdschlüssel der Computertabelle kann direkt in die Tabelle des Schülers hinzugefügt werden.</p>
+<p><code>ALTERTABLE</code>Schueler<code>ADD</code>computerid<code>INTNULLCOMMENT'verweis auf tabelle computer'</code></p>
+<p>In die Computertabelle dürfte man keine Spalte erstellen um den Fremdschlüssel vom Schüler zu speichern, weil laut ER-Diagramm ein Computer mehreren Schüler zugeordnet sein kann.</p>
+<p>Bei dieser Abbildung wird davon ausgegangen, dass dem Schüler ein Computer zugeordnet sein kann, aber nicht muss. Deshalb sind in der Spalte computerid NULL Einträge erlaubt. Falls man davon ausgeht, dass ein Schüler 0 oder mehrere Computer verwendet, müsste man dies mit einer N:M Beziehung realisieren.</p>
+<p>Theoretisch könnte man eine 1:N Beziehung auch mit einer Hilfstabelle realisieren, jedoch versucht man in der Praxis, überflüssige Tabellen zu vermeiden. Denn wenn man bei größeren ER-Diagrammen alle Beziehungen mit Tabellen übersetzt, kann die Datenbank schnell unübersichtlich werden.</p>
+<p>Bei einer 1:1 Beziehung wird so vorgegangen wie im oberen 1:N Beispiel. Die Verwendung von Hilfstabellen ist nicht möglich. Um die Tabellen miteinander zu verknüpfen, wird in die jeweilige Tabelle für die man sich entscheidet, eine zusätzliche Spalte erstellt in die man den Fremdschlüssel speichert. Ein Beispiel dazu:</p>
+<div class="figure">
+<img src="assets/img/blog/erm/beziehung11-table.gif" alt="Abb. Entity-table" />
+<p class="caption">Abb. Entity-table</p>
+</div>
+<pre><code>CREATE TABLE `Mann` (
+`idmann` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+) ENGINE = InnoDB;
+
+CREATE TABLE `Frau` (
+`idfrau` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`Name` VARCHAR( 100 ) NOT NULL
+) ENGINE = InnoDB;</code></pre>
+<p>Die Beziehung kann folgendermaßen realisiert werden:</p>
+<p><code>ALTERTABLE</code>Mann<code>ADD</code>idfrau<code>INTNULLCOMMENT'verweis auf tabelle frau‘</code></p>
+<p>Dabei spielt es keine Rolle welche Tabelle verwendet wird. Wir hätten genauso zur Tabelle Frau die Spalte mit dem Fremdschlüssel hinzufügen können.</p>
+<p>Hat man alle Beziehungen in der Datenbank implementiert kann man als nächstes die <a href="https://de.wikipedia.org/wiki/Integrit%C3%A4tsbedingung">Integritätsbedingung</a> erstellen. Die Erstellung der <a href="https://de.wikipedia.org/wiki/Referentielle_Integrit%C3%A4t#Verwendung_in_Datenbanksystemen">Referenzielle Integritätsbedingung</a> hier auch noch auszuführen sprengt allerdings den Rahmen. Ich verweise deshalb vorerst auf den Wikipedia Artikel &quot;Referentielle Integrität&quot;.</p>
+<h3 id="literatur">Literatur</h3>
+<p>Beziehungen, 09.02.2011, http://sql.idv.edu/thema/dbgrundlagen/beziehungen.htm#5</p>
+<p>Referentielle Integrität, 09.02.2011, http://de.wikipedia.org/wiki/Referentielle_Integrit%C3%A4t#Verwendung_in_Datenbanksystemen</p>
+<p>Integritätsbedingung, 09.02.2011, http://de.wikipedia.org/wiki/Integrit%C3%A4tsbedingung</p>
+<p>A. Kemper A. Eickler Datenbanksysteme, 09.02.2011, http://www-db.in.tum.de/research/publications/books/DBMSeinf/</p>
+<p>Alfons Kempler. (2009) Datenbanksysteme - Eine Einführung 7 Auflage, Oldenbourg Wissenscahftsverlag GmbH München</p>
+</body>
+</html>

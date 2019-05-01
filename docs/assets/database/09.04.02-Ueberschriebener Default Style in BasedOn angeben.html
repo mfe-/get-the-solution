@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>Wenn man auf einen vorhandenen Style aufbauen will, verwendet man im XAML das Schlüsselwort BasedOn= gibt eine StaticResource oder DynamicResource, je nach bedarf, mit dem Namen des zu erbenden Style an.</p>
+<p>Was tut man aber, wenn der Style keinen Key (a la Name) hat. Das kann sein, wenn man den Default Style eines Controls wie zum Beispiel eines Buttons überschreiben will. So wird der Style automatisch von allen Buttons angenommen.</p>
+<p>Wenn man nun zu diesem Default Style einen mod. Style schreiben will, kann man beim BasedOn keinen Namen angeben, weil eben der Default Style keinen Namen hat.</p>
+<p>Wenn man in das BasedOn folgendes schreibt:</p>
+<pre><code>`...BasedOn={x:Type GroupBox}`</code></pre>
+<p>erhält man eine Exception. Die Lösung geht aber in diese Richtung die folgende wäre:</p>
+<pre><code>`...BasedOn={StaticResource {x:Type GroupBox}}`</code></pre>
+<p>Das macht sogar beim näheren betrachten der Code Zeile Sinn.</p>
+</body>
+</html>

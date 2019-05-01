@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>Vor kurzem habe ich eine MarkupExtension geschrieben, die aus einer Resource-Datei (resx.) Bilder lädt. Eine MarkupExtension zu schreiben ist nicht schwer. Man erbt von der Abstrakten Klasse MarkupExtension und muss die zwei Konstruktoren (einmal mit Parameter) implementieren und die Methode ProvideValue überschreiben.</p>
+<h2 id="einführung---eine-einfache-markupextension">1.0 Einführung - Eine einfache MarkupExtension</h2>
+<p>Im zweiten Konstruktor der wie folgt aussieht....</p>
+<pre><code>public ImageResourceConverterExtension(string pkey) : this()
+{ 
+  //Wert Propertie Key zuweisen
+  Key = pkey;
+}</code></pre>
+<p>....steht im Parameter der MarkupExtension Key.</p>
+<p>D.h. Wenn im XAML in der MarkupExtension STRING</p>
+<p><code>&lt;TextBlock Text=&quot;{GetCommon:MeineMarkupExtension STRING}&quot;/&gt;</code></p>
+<p>steht, erhält man diesen Wert &quot;STRING&quot; über den Konstruktor Parameter pkey. Diesen kann man dann, interpretieren parsen und vieles mehr :).</p>
+<p>In unserem Beispiel geben wir den Key einfach wieder als string an die Propertie zurück an der die MarkupExtension angewandt wurde.</p>
+<p>Die Funktion ProvideValue weist ein object der Propertie zu, an der die MarkupExtension gesetzt wurde. Z.B</p>
+<pre><code>public override object ProvideValue(IServiceProvider pserviceProvider)
+{
+  //Propertie in der wir unseren Key &quot;STRING&quot; gespeichert haben
+  return Key;
+}</code></pre>
+<p>Das heißt im TextBlock Text steht dann, wenn das Fenster geladen wurde, STRING.</p>
+<h3 id="imageresourceconverter-markupextension">1.1 ImageResourceConverter MarkupExtension</h3>
+<p>So und jetzt meine MarkupExtension die Bilder aus einer Resource.resx lädt.</p>
+<p>Achtung: die MarkupExtension funktioniert nur mit PNG Bilder!</p>
+<p>Verwendung wie folgt:</p>
+<p><code>&lt;Image Source=&quot;{GetCommon:ImageResourceConverter Get.Common.Resource.Image1}&quot;/&gt;</code></p>
+<p>Syntax: Namespace kann auch der ProjektName sein.ResourceName.Name des Bildes auf die man zugreifen will. Gibt man hinter dem Namespace.ResourceName.BildName kein @ an nimmt die MarkupExtension an, dass die Resource sich in der aktuellen Instanz befindet.</p>
+<p><code>&lt;Image Source=&quot;{GetCommon:ImageResourceConverter Get.Demo.Resource.Image1@Get.Demo.exe}&quot; Width=&quot;20&quot;/&gt;</code></p>
+<p>Syntax: <code>Namespace.ResourceName.BildName@DLLName</code> in der sich die Resource befindet Die Dll wird im Verzeichnis Environment.CurrentDirectory gesucht.</p>
+<p>Hier der Code der MarkupExtension:</p>
+<pre><code>    [MarkupExtensionReturnType(typeof(ImageSource)), Localizability(LocalizationCategory.NeverLocalize)]
+    public class ImageResourceConverterExtension : MarkupExtension
+    {
+        #region Members
+        /// &lt;summary&gt;
+        /// Seperator zwischen Namespace und Resource
+        /// &lt;/summary&gt;
+        private const char _point = &#39;.&#39;;
+
+        /// &lt;summary&gt;
+        /// Seperator zwischen ProjektName.ResourceName.Name und DLLName
+        /// &lt;/summary&gt;
+        private const char _ExternAssemblySpliter = &#39;@&#39;;
+        #endregion
+
+        #region Konstruktor
+        /// &lt;summary&gt;
+        /// Konstruktor - Initialisiert die Properties
+        /// &lt;/summary&gt;
+        public ImageResourceConverterExtension()
+        {
+            ImageName = string.Empty;
+            BaseName = string.Empty;
+        }
+        /// &lt;summary&gt;
+        /// Konstruktor
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;pkey&quot;&gt;Key der bei der MarkupExtension angegeben wurde.
+        ///  Z.B. &quot;Get.Demo.Resource.Image1@Get.Demo.exe&quot;&lt;/param&gt;
+        public ImageResourceConverterExtension(string pkey)
+            : this()
+        {
+            Key = pkey;
+
+            //PrÃ¼fen ob die Resource-Datei aus einer fremden Assembly geladen werden soll
+            if (!pkey.Contains(_ExternAssemblySpliter))
+            {
+                //Properties ImageName und BaseName setzen
+                SetImageNameAndBaseName(pkey);
+            }
+            else
+            {
+                //Fremde Assembly laden - Dateiname extrahieren
+                string filename = pkey.Split(_ExternAssemblySpliter).Last();
+                FileInfo fileInfo = new FileInfo(Environment.CurrentDirectory + &quot;&quot; + filename);
+
+                if (!fileInfo.Exists)
+                    throw new FileNotFoundException();
+
+                //Assembly laden
+                Assembly assembly = Assembly.LoadFrom(fileInfo.ToString());
+                ResourceAssembly = assembly;
+
+                SetImageNameAndBaseName(pkey.Replace(_ExternAssemblySpliter.ToString() 
+                + filename, string.Empty));
+            }
+
+        }
+        #endregion
+
+        #region Funktionen
+        /// &lt;summary&gt;
+        /// Extrahiert die Werte aus dem Ã¼bergeben Key und weist sie den jeweiligen Properties zu.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;pkey&quot;&gt;MarkupExtension Key Z.B. &quot;Get.Demo.Resource.Image1@Get.Demo.exe&quot;&lt;/param&gt;
+        private void SetImageNameAndBaseName(string pkey)
+        {
+            //Letzter Value ist der BildName
+            ImageName = pkey.Split(_point).Last();
+            //Der Rest besteht aus Namespace.ResourceName
+            BaseName = pkey.Replace(_point.ToString() + ImageName, string.Empty);
+        }
+        /// &lt;summary&gt;
+        /// Gibt ein ImageSource Objekt zurÃ¼ck an der die MarkupExtension gesetzt wurde.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;pserviceProvider&quot;&gt;Objekt, das Dienste fÃ¼r die 
+        /// Markuperweiterung bereitstellen kann.&lt;/param&gt;
+        /// &lt;returns&gt;ImageSource Objekt&lt;/returns&gt;
+        public override object ProvideValue(IServiceProvider pserviceProvider)
+        {
+            //Bild aus Resource laden
+            if (ResourceAssembly == null)
+                return GetBitmapImageFromResource(BaseName, ImageName, this.GetType().Assembly);
+            else
+                return GetBitmapImageFromResource(BaseName, ImageName, ResourceAssembly);
+        }
+        /// &lt;summary&gt;
+        /// Ladet mithilfe der Ã¼bergebenen Informationen ein Bild aus der
+        /// Resource (.resx) und konvertiert es in ein ImageSource Objekt
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;pBaseName&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;pImageName&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;pAssembly&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static ImageSource GetBitmapImageFromResource(string pBaseName, 
+        string pImageName, Assembly pAssembly)
+        {
+            ResourceManager resourceManager = new ResourceManager(pBaseName, pAssembly);
+
+            //System.Drawing.Bitmap aus Resource holen
+            object image = resourceManager.GetObject(pImageName);
+            if (image == null) return null;
+
+            if (!image.GetType().Equals(typeof(Bitmap))) return null;
+
+            Bitmap bitmap = image as Bitmap;
+
+            //Bitmap in ImageSource konvertieren
+            BitmapImage bitmapImage = new BitmapImage();
+            MemoryStream stream = new MemoryStream();
+
+            bitmap.Save(stream, ImageFormat.Png);
+
+            //ImageSource aus Stream holen
+            //http://cornucopia30.blogspot.com/2007/08/wpf-point-image-to-embedded-resource.html
+            PngBitmapDecoder bitmapDecoder = new PngBitmapDecoder(stream, 
+            BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            ImageSource imageSource = bitmapDecoder.Frames[0];
+            return imageSource;
+        }
+        #endregion Funktionen
+
+        #region Properties
+
+        /// &lt;summary&gt;
+        /// Gets or sets the resource key.
+        /// &lt;/summary&gt;
+        /// &lt;value&gt;The key.&lt;/value&gt;
+        [ConstructorArgument(&quot;pkey&quot;)]
+        public string Key { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Ruft den Namespace bzw. Projekt-Namen + Resourcename ab oder legt diesen fest.
+        /// &lt;/summary&gt;
+        public string BaseName { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Ruft den Wert des Bildnamens ab oder legt diesen fest.
+        /// &lt;/summary&gt;
+        public string ImageName { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Ruft die Externe Assembly ab oder legt diese fest.
+        /// Diese Propertie ist nur gesetzt wenn man in der MarkupExtension 
+        /// das @ mit dem DLLNamen festgelegt hat.
+        /// &lt;/summary&gt;
+        public Assembly ResourceAssembly { get; private set; }
+
+        #endregion
+    }</code></pre>
+<p>Hier eine kurze Beschreibung der MarkupExtension:</p>
+<p>Im Key wird angegeben wo sich das Bild in der Resource befindet. Die Resource wird in der Funktion GetBitmapImageFromResource mit dem ResourceManager geladen.</p>
+<p>Die Propertie Source der Image Klasse hat den Typ ImageSource. Deshalb muss man das geladene Bitmap in eine ImageSource umwandeln.</p>
+<p>Anschließend wird die erzeugte ImageSource in der Funktion ProvideValue zurück gegeben. Diese MarkupExtension habe ich im schnell verfahren geschrieben. Das heißt, dass wichtige Überprüfungen fehlen. Auch habe ich das Ganze nur für .PNG Dateien getestet bzw. Programmiert. Ich überprüfe auch nicht ob man die MarkupExtension bei einem Nicht Image Objekt anwendet.</p>
+<p><a href="https://onedrive.live.com/self.aspx/.Public/MarkupExtensionImageResourceConverter.zip?cid=a7082d0a1081e2f0&amp;id=documents">Download Projekt</a></p>
+</body>
+</html>

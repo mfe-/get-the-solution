@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>Manchmal ist es praktisch in einer ListBox beim SelectedItem zusätzlich noch mehr Informationen anzuzeigen.</p>
+<p>Hier ein Beispiel:</p>
+<pre><code>    public class Class
+    {
+        public string Artikelname { get; set; }
+        public string Foto { get; set; }
+    }</code></pre>
+<p>Es soll nur die Property Artikelname in der ListBox angezeigt werden. Wurde ein Item &quot;Selected&quot; wäre es toll, wenn zusätzlich noch das Foto vom Artikel eingeblendet wird. Im DataTemplate habe ich zwei TextBlöcke die den Inhalt vom Artikelname und vom Foto anzeigen. Der TextBlock der das Foto representiert wird ausgeblendet. Erst wenn das Item &quot;Selected&quot; ist, soll der TextBlock eingeblendet werden. Das Problem im DataTemplate von der Class ist, dass wir im aktuellen DataContext nicht abfragen können, ob das aktuell gewählte Item Selected ist. Der DataContext enthält nämlich die Klasse Class (Zugegebenermaßen der Name ist nicht gut gewählt). Wir benötigen aber den DataContext vom ListBoxItem, da es dort eine Property für IsSelected gibt.</p>
+<p>Über die RelativSource kann man auf das ListBoxItem zugreifen, und somit die Property IsSelected abfragen. Per DataTrigger schalten wir, dann die Visibility.</p>
+<pre><code>&lt;DataTemplate DataType=&quot;{x:Type local:Class}&quot;&gt;
+            &lt;StackPanel Orientation=&quot;Vertical&quot; &gt;
+                &lt;TextBlock Text=&quot;{Binding Artikelname}&quot;&gt;&lt;/TextBlock&gt;
+                &lt;TextBlock x:Name=&quot;Foto&quot; Text=&quot;{Binding Foto}&quot; Visibility=&quot;Collapsed&quot;&gt;&lt;/TextBlock&gt;
+            &lt;/StackPanel&gt;
+            &lt;DataTemplate.Triggers&gt;
+                &lt;DataTrigger Binding=&quot;{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}&quot; Value=&quot;True&quot;&gt;
+                    &lt;Setter TargetName=&quot;Foto&quot; Property=&quot;Visibility&quot; Value=&quot;Visible&quot;&gt;&lt;/Setter&gt;
+                &lt;/DataTrigger&gt;
+            &lt;/DataTemplate.Triggers&gt;
+&lt;/DataTemplate&gt;</code></pre>
+<p>Das ging relativ einfach. Ein anderer Lösungsweg wäre, die Zusatzinformationen über den ItemTemplateSelector an zu zeigen. Wie man die Zusatzinformationen über den ItemTemplateSelector anzeigt wird hier erklärt.</p>
+<p><a href="http://www.developingfor.net/net/dynamically-switch-wpf-datatemplate.html" class="uri">http://www.developingfor.net/net/dynamically-switch-wpf-datatemplate.html</a></p>
+</body>
+</html>

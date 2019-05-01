@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h2 id="itemssource">1. ItemsSource</h2>
+<p>wenn man ein (User)Control erstellt, benötigt dieses meistens Daten die es verarbeiten bzw. anzeigen soll. Dabei stellt sich die Frage, wie man dem UserControl die zu verarbeitenden Daten übergeben soll. Soll man dies über den DataContext, über eine Methode oder über eine Propertie übergeben.</p>
+<p>Meine Idee ist, eine DependencyProperty namens ItemsSource zu erstellen. So kann man die Daten bequem im XAML Code dem UserControl &quot;übergeben&quot;. Man setzt dieses Propertie damit das UserControl die Daten verarbeiten und anzeigen kann. Warum die Propertie ItemsSource heißt, hat einen bestimmten Grund.</p>
+<p>Eine ListBox, ListView... wird z.B. auch über das Property ItemsSource mit Daten gefüllt. Somit würden wir uns in gewisserweise an die Namenskonventionen von Microsoft halten. Jeder Dritte der unser UserControl verwendet, weiß sofort was er mit diesem Propertie machen kann oder sollte. Eine Propertie besteht aus einem Modifizierer DatenTyp und Name. Somit weiß der Anwender auch, mit welchem DatenTyp das UserControl arbeiten kann.</p>
+<p>Theoretisch könnte man auch mit dem setzten des DataContext die Daten des UserControls anzeigen lassen. Allerdings ist der DataContext vom Typ object und der Anwender der das UserControl verwendet weiß nicht, welchen DatenTyp das UserControl erwartet.</p>
+<h3 id="richtiger-datentyp-für-die-propertie-itemssource-wählen">1.1 Richtiger DatenTyp für die Propertie ItemsSource wählen</h3>
+<p>Wenn man meint, dass man bei der Wahl des DatenTyps bei der ItemsSource nichts besonderes beachten muss, dann ist man etwas zu voreilig. Das UserControl sollte wenn möglich mit so vielen DatenTyp wie möglich arbeiten können. Das beste Beispiel dazu ist die ListBox oder die ListView. Sie unterstützen Listen, Arrays eben alle DatenTypen welche das Interface IEnumerable implementieren. Deshalb sollte als DatenTyp für die Propertie ItemsSource immer ein Interface zum Einsatz kommen.</p>
+<h3 id="itemssource---daten-für-die-anzeige-vorbereiten">1.2 ItemsSource - Daten für die Anzeige vorbereiten</h3>
+<p>Die ItemsSource im UserControl kann die übergebenen Daten als DataContext setzten. Das erleichter das Binden im UserControl. Besser wäre aber, wenn im UserControl das Binding immer mittels RelativeSource gesetzt wird. Was für einen Grund das hat wird im nächsten Abschnitt erklärt.</p>
+<p>Das UserControl hat eine DependencyProperty ItemsSource. Das UserControl setzt den DataContext auf sich selber. Somit kann man im XAML einfach auf die ItemsSource binden.</p>
+<p><code>&lt;TextBlock Text=&quot;{Binding Path=ItemsSource.Text}&quot;&gt;&lt;/TextBlock&gt;</code></p>
+<p>Folgendes Problem kann auftreten. Das UserControl wird in einem Window verwendet welches sich in einem DataTemplate oder in einem anderem verschachtelt Element befindet. Wenn wir z.B. an unser UserControl irgend ein Binding setzen kommt es zu einem Binding Error. Aber warum?</p>
+<p>Wir gehen davon aus, dass das UserControl genau den gleichen DataContext wie das Window besitzt. Sämtliche Standard UserControls, wie zum Beispiel TextBox'es, ListViews, erben den DataContext vom Übergeordneten Control. Weil aber das UserControl den DataContext auf sich selber setzt, haben wir einen anderen DataContext wie beim Window.</p>
+<p>Diese Problem kann man mithilfe der RelativeSource umgehen. Hätte das Binding wie folgt ausgeshene, wäre es egal, welchen DataContext das UserControl besitzt.</p>
+<pre><code>&lt;TextBlock Text=&quot;{Binding Path=ItemsSource.Text,RelativeSource=
+            {RelativeSource Mode=FindAncestor,AncestorType={x:Type local:UserControlName}}}&quot;&gt;&lt;/TextBlock&gt;</code></pre>
+<p>Dennoch gibt es Gegebenheit in dem ein Binding ohne RelativeSource berechtigt ist.</p>
+<h3 id="usercontrol-mit-der-itemsource-vom-type-ienumerable">1.3 UserControl mit der ItemSource vom Type IEnumerable</h3>
+<p>Das erstellen einer ItemsSource für das UserControl welches eine Liste von Objekten anzeigen soll, ist dabei wesentlich einfacher als das erstellen einer ItemsSource für ein UserControl welches ein ViewModel oder sonst einen spezifischen DatenType verwendet.</p>
+<p>Dann muss man nämlich ein Interface für den DatenTyp bzw. das Objekt erstellen und sich als nächstes überlegen, ob das Binding mittels RelativeSource oder das sonst übliche Binden auf den DataContext verwendet wird um das Vorhaben zu realisieren.</p>
+<p>Im folgenden Beispiel wird eine ItemsSource für ein UserControl erstellt, welches eine Liste von Objekten anzeigt. Die ItemsSource ist eine DependencyProperty und verwendet als DatenTyp das Interface IEnumerable. Somit wird gewährleistet, dass man die Objekte in einer Liste, Array usw. übergeben kann.</p>
+<p>Im Beispiel Projekt habe ich eine Solution angelegt, welches ein ClassControl Projekt (beinhaltet UserControl und ObjektTyp) und ein WPF Window Projekt enthält um das UserControl zu testen.</p>
+<p>Das UserControl zeigt eine Liste vom Objekttyp Class an. Zugegebenermaßen - der Name ist unpassend gewählt. Der ObjektTyp Class sieht wie folgt aus:</p>
+<pre><code>    [assembly: XmlnsDefinition(&quot;http://schemas.get.com/winfx/2009/xaml&quot;, &quot;ClassControl&quot;)]
+    namespace ClassControl
+    {
+        public class Class
+        {
+            public Class()
+            {
+                StringList = new ObservableCollection&lt;string&gt;();
+            }
+            public string Artikelname { get; set; }
+            public string Foto { get; set; }
+            public ObservableCollection&lt;string&gt; StringList { get; set; }
+        }
+     
+    }</code></pre>
+<p>Informationen zum Attribut XmlnsDefinition siehe <a href="https://blog.pixelingene.com/2006/10/xmlnsdefinition-for-a-cool-namespace-mapping">hier</a>. Das UserControl hat eine DependencyPropertie mit dem DatenTyp IEnumerable. Als ContentProperty wird die Propertie ItemsSource angegeben. Damit man im XAML beim übergeben der Daten nicht den Tag <ItemsSource> angeben muss. Mehr dazu nach dem CodeBehind.</p>
+<p>UserControl1.xaml.cs:</p>
+<pre><code>    using System.Collections;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Markup;
+     
+    [assembly: XmlnsDefinition(&quot;http://schemas.get.com/winfx/2009/xaml&quot;, &quot;ClassControl&quot;)]
+    namespace ClassControl
+    {
+        /// &lt;summary&gt;
+        /// Interaction logic for UserControl1.xaml
+        /// http://msdn.microsoft.com/de-de/library/system.windows.markup.contentpropertyattribute.aspx
+        /// &lt;/summary&gt;
+        [ContentProperty(&quot;ItemsSource&quot;)]
+        public partial class UserControl1 : UserControl
+        {
+            public UserControl1()
+            {
+                InitializeComponent();
+            }
+            public IEnumerable ItemsSource
+            {
+                get { return (IEnumerable)GetValue(_ItemsSourceProperty); }
+                set { SetValue(_ItemsSourceProperty, value); }
+            }
+     
+            // IEnumerable als Type verwenden - damit werden die verschiedensten Typen unterstÃ¼tzt wie List&lt;Class&gt;, Array&lt;Class&gt; ...
+            public static readonly DependencyProperty _ItemsSourceProperty =
+                DependencyProperty.Register(&quot;ItemsSource&quot;, typeof(IEnumerable), typeof(UserControl1), new UIPropertyMetadata(null));
+        }
+    }</code></pre>
+<p>Das Binding wird mittels RelativeSource umgesetzt. UserControl1.xaml:</p>
+<pre><code>&lt;UserControl
+        x:Class=&quot;ClassControl.UserControl1&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:local=&quot;clr-namespace:ClassControl&quot;
+        Background=&quot;Red&quot;&gt;
+        &lt;UserControl.Resources&gt;
+            &lt;DataTemplate DataType=&quot;{x:Type local:Class}&quot;&gt;
+                &lt;StackPanel&gt;
+                    &lt;Border BorderBrush=&quot;Black&quot; BorderThickness=&quot;1&quot;&gt;
+                        &lt;TextBlock Text=&quot;{Binding Path=Artikelname}&quot;&gt;&lt;/TextBlock&gt;
+                    &lt;/Border&gt;
+                    &lt;Border BorderBrush=&quot;Black&quot; BorderThickness=&quot;1&quot;&gt;
+                        &lt;TextBlock Text=&quot;{Binding Path=Foto}&quot;&gt;&lt;/TextBlock&gt;
+                    &lt;/Border&gt;
+                &lt;/StackPanel&gt;
+            &lt;/DataTemplate&gt;
+        &lt;/UserControl.Resources&gt;
+        &lt;StackPanel Orientation=&quot;Vertical&quot;&gt;
+            &lt;!-- Wir verwenden den DataContext vom UserControl nicht;
+            Mit RelativeSource funktioniert das Binding immer, auch wenn der falsche DataContext gesetzt ist. --&gt;
+            &lt;ItemsControl VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;2&quot; ItemsSource=&quot;{Binding Path=ItemsSource,
+                RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:UserControl1}}}&quot; /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/UserControl&gt;</code></pre>
+<p>Und so bindet man das UserControl im Window ein:</p>
+<pre><code>            &lt;!--UserControl mit ItemsSource vom Typ IEnumerable--&gt;
+            &lt;controls:UserControl1 Name=&quot;_ClassControl&quot;&gt;
+                &lt;!-- Weil das UserControl das Attribut [ContentProperty(&quot;ItemsSource&quot;)] besitzt,
+                mÃ¼ssen wir den Array nicht implizit der ItemsSource zuweisen z.B. so
+     
+                &lt;controls:UserControl1.ItemsSource&gt;
+    
+                    &lt;x:Array Type=&quot;{x:Type controls:Class}&quot;&gt;
+                        &lt;controls:Class Artikelname = &quot;Amazon Buch&quot; Foto = &quot;Buch.jpg&quot;&gt;&lt;/controls:Class&gt;
+                    &lt;/x:Array&gt;
+                &lt;/controls:UserControl1.ItemsSource&gt;
+                --&gt;
+                &lt;x:Array Type=&quot;{x:Type controls:Class}&quot;&gt;
+                    &lt;controls:Class Artikelname = &quot;Amazon Buch&quot; Foto = &quot;Buch.jpg&quot;&gt;&lt;/controls:Class&gt;
+                    &lt;controls:Class Artikelname = &quot;C#&quot; Foto = &quot;Foto.jpg&quot;&gt;&lt;/controls:Class&gt;
+                    &lt;controls:Class Artikelname = &quot;Lebenslauf Buch&quot; Foto = &quot;Me.jpg&quot;&gt;&lt;/controls:Class&gt;
+                &lt;/x:Array&gt;
+            &lt;/controls:UserControl1&gt;</code></pre>
+<p>Da das UserControl das ContentPropertie Attribut angegeben hat, muss man nicht zwingend den ItemsSource Tag angeben. Das wars.</p>
+<p>Im Prinzip gibt es bei dieser Thematik nichts kompliziertes, man sollte jedoch die kleinen aber feinen Details genug Beachtung schenken, damit man sich später änderungen am UserControl ersparen kann.</p>
+<p>Im Beispiel Projekt wird eine WPF-Benutzersteuerelementbibliothek verwendet. Es sollte beachtet werden, dass ein UserControl keine ControlTemplates unterstützt. Die alternative dazu wäre ein Benutzerdefiniertes WPF-Steuerelementbibliothek Projekt.</p>
+<p>Verwandte Themen:</p>
+<p>UserControl in UserControl erbt DataContext <a href="http://msdn.microsoft.com/de-de/library/system.windows.controls.usercontrol.aspx" class="uri">http://msdn.microsoft.com/de-de/library/system.windows.controls.usercontrol.aspx</a> <a href="http://www.wpftutorial.net/CustomVsUserControl.html" class="uri">http://www.wpftutorial.net/CustomVsUserControl.html</a></p>
+<p>kick it on dotnet-kicks.de Beispiel Projekt <a href="https://onedrive.live.com/redir.aspx?cid=a7082d0a1081e2f0&amp;resid=A7082D0A1081E2F0!139&amp;parId=A7082D0A1081E2F0!134">herunterladen</a></p>
+</body>
+</html>

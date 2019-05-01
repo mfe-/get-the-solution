@@ -1,11 +1,5 @@
 [
     {
-        "BlogEntry": 180,
-        "Title": "exercises with the R exams package",
-        "Author": "Simon",
-        "Source": "assets/database/ExercisesWithExamsPackage.html"
-    },
-    {
         "BlogEntry": 176,
         "Title": "Add Token Authorization to AngularJS and WebApi",
         "Author": "Martin",
@@ -130,6 +124,7 @@
         "Title": "MarkupExtension – Bilder aus Resource direkt ins XAML laden",
         "Author": "Martin",
         "Release": "2009-09-02T00:00:00",
+        "Source":"assets/database/09.09.02-MarkupExtension - Bilder aus Resource direkt ins XAML laden.html",
         "Regards": [".NET Framework","C#","XAML"]
     },
     {
@@ -137,6 +132,7 @@
         "Title": "Überschriebener Default Style in BasedOn angeben",
         "Author": "Martin",
         "Release": "2009-04-02T00:00:00",
+        "Source": "assets/database/09.04.02-Ueberschriebener Default Style in BasedOn angeben.html",
         "Regards": [".NET Framework","C#","XAML"]
     },
     {
@@ -144,6 +140,7 @@
         "Title": "ListBox – SelectedItem Zusatzinformationen anzeigen",
         "Author": "Martin",
         "Release": "2009-03-28T00:00:00",
+        "Source":"assets/database/09.03.28-ListBox – SelectedItem Zusatzinformationen anzeigen.html",
         "Regards": [".NET Framework","C#","XAML"]
     },
     {
@@ -151,6 +148,7 @@
         "Title": "Einführung in die Programmierung",
         "Author": "Martin",
         "Release": "2009-03-21T00:00:00",
+        "Source":"assets/database/09.03.21-Einfuehrung in die Programmierung.html",
         "Regards": ["Article"]
     },
     {
@@ -158,6 +156,7 @@
         "Title": "ItemsSource zu UserControl hinzufügen",
         "Author": "Martin",
         "Release": "2009-02-20T00:00:00",
+        "Source":"assets/database/09.02.20-ItemsSource zu UserControl hinzufuegen.html",
         "Regards": [".NET Framework","C#","XAML"]
     },
     {
@@ -165,6 +164,7 @@
         "Title": "Subklassen in XAML ansprechen",
         "Author": "Martin",
         "Release": "2009-02-02T00:00:00",
+        "Source":"assets/database/09.02.02-Subklassen in XAML ansprechen.html",
         "Regards": [".NET Framework","C#","XAML"]
     }
 ]

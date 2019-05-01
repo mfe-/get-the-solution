@@ -1,0 +1,21 @@
+<p>Hier möchte ich kurz einige Begriffe und Möglichkeiten in den Raum werfen die bei Datenbankoptimierungen eine Rolle spiele können. Hier noch ein guter Link <a href="http://www.codeproject.com/Articles/35665/Top-steps-to-optimize-data-access-in-SQL-Serv" class="uri">http://www.codeproject.com/Articles/35665/Top-steps-to-optimize-data-access-in-SQL-Serv</a></p>
+<ul>
+<li>Query optimieren (z.B. mit Include Actual Execution Plan)</li>
+<li>Tabelle partitionieren wenn es Sinn macht</li>
+<li>Indexes anlegen
+<ul>
+<li>Geht auch bei Views</li>
+<li>Sollten von Zeit zu Zeit aktualisiert werden ansonsten hat man gleich wieder Performance einbußen
+<ul>
+<li>z.B. mit einem User Agent Job</li>
+</ul></li>
+</ul></li>
+<li>DB Schema anpassen
+<ul>
+<li>Schneeflockenschema</li>
+<li>Computed Values durch statisch Werte ersetzen - &gt; die Werte können dann von einem Agent Job aktualisiert werden</li>
+<li>Kimball and Ross <a href="http://www.codeproject.com/Articles/647950/Create-and-Populate-Date-Dimension-for-Data-Wareho" class="uri">http://www.codeproject.com/Articles/647950/Create-and-Populate-Date-Dimension-for-Data-Wareho</a></li>
+</ul></li>
+<li>Hardware des Datenbank Server upgraden</li>
+</ul>
+<p>Verwandte Themen: Datenbank erstellen mit dem ER-Diagramm und MySql</p>

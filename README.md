@@ -4,6 +4,7 @@
 
 - nodejs
 - `npm install`
+- copy assets folder from `docs` to `src` 
 
 ## Build for github with
 

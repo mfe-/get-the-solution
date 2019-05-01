@@ -58,6 +58,7 @@
         "Title": "reinstall grub",
         "Author": "Martin",
         "Release": "2013-08-24T00:00:00",
+        "Source":"assets/database/13.08.24-reinstall-grub.html",
         "Regards": ["Infrastructure"]
     },
     {
@@ -65,6 +66,7 @@
         "Title": "MySQL Cursor alternative – Dynamische SQL Cursor",
         "Author": "Martin",
         "Release": "2011-03-10T00:00:00",
+        "Source":"assets/database/11.03.10-MySQL-Cursor-alternative–Dynamische-SQL-Cursor.html",
         "Regards": ["DBMS"]
     },
     {

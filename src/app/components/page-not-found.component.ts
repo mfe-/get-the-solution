@@ -29,8 +29,10 @@ export class PageNotFoundComponent implements OnInit {
           autoforward = false;
           this.blogService.GetBlogEntries(false).subscribe((b: BlogEntry[]) => {
             let blogentry: BlogEntry = b.find((blog) => blog.BlogEntryId == blogid);
-            this.Link = "/blog/" + blogentry.Title;
-            this.router.navigate([this.Link]);
+            if (blogentry != null) {
+              this.Link = "/blog/" + blogentry.Title;
+              this.router.navigate([this.Link]);
+            }
           });
         }
       }

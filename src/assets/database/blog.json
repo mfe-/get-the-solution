@@ -166,5 +166,12 @@
         "Release": "2009-02-02T00:00:00",
         "Source":"assets/database/09.02.02-Subklassen in XAML ansprechen.html",
         "Regards": [".NET Framework","C#","XAML"]
+    },
+    {
+    	"Source":"assets/database/19.04.05-ExercisesWithExamsPackage.html",
+    	"Title":"Creating exercises with the R exams package",
+    	"Authro": "Simon",
+    	"Release": "2019-04-05T00:00:00",
+    	"Reagrds": ["R", "education"]
     }
 ]

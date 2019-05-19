@@ -1,0 +1,37 @@
+<p>Logische Schaltungen oder auch Schaltnetze arbeiten nach dem EVA Prinzip. Die Signale die am Eingang anliegen werden von der Schaltungslogik verarbeitet und Ausgegeben.</p>
+<p>Diese Schaltungssysteme basieren auf der booleschen Algebra und bilden die Wahrheitswerte „0“ und „1“ mit physikalischen Größen ab. Die Zustände können mit elektrischen Spannung Niveaus, mithilfe der Position eines Stabes, Druckpegel in der Pneumatik, Lichtstrom bei der Optoelektronik oder chemischen Prozessen abgebildet werden.</p>
+<p>Mit der Verknüpfung physikalischer Signale werden die booleschen Funktionen implementiert. Diese booleschen Funktionen werden durch Gatter dargestellt. (vgl. Vorlesungsfolie 04_Digitalschaltungen.pdf, 2013,S. 3) Logische Gatter sind eine abstrakt Darstellung, und können in unterschiedlichen Technologien realisiert werden.</p>
+<p>Je nach verwendeter Schaltkreistechnologie sind die Funktionen der Gatter unterschiedlich implementiert.</p>
+<p>Z3, ein Computer von Zuse, 1941 entwickelt, basierte noch auf Relais. Diese Schaltelemente schalteten mechanisch und hatten somit eine kurze Lebensdauer, die Baugröße und das Gewicht usw. waren einer der vielen Nachteile.</p>
+<p>Mit der Entwicklung der von Halbleiterbauelementen wurde es möglich, Logische Verknüpfungsglieder viel kleiner, raumsparender und billiger herzustellen. Sie arbeiten kontaktlos, schalten sehr schnell und der Leistungsverbrauch ist relativ gering. Der Aufbau Logischer Verknüpfungsglieder aus einzelnen Widerständen, Dioden und Transistoren war der Ausgangspunkt für die bedeutsame Entwicklung der gesamten Digitaltechnik. (Mitschrift Einführung in die Digitaltechnik, HTL, 2003) Die Schaltkreisfamilien unterscheiden sich in Power dissipataion (Verlustleistung eines Gatters), der Propagation delay und dem Fan out. (vgl. Schildt, Einführung in die technische Informatik, S. 10-11)</p>
+<p>Die bekanntesten Schaltkreisfamilien sind die TTL-Schaltkreisfamilie (bipolare Transistoren), die ECL-Schaltkreisfamilie (bipolare Transistoren) und die Metall-Oxid-Halbleiter (MOS) (Feldeffekt-Transistoren). Die genannten Technologien sind integrierbar und können mehrere Verknüpfungsmitglieder zu einem Halbleiterelement zusammenfassen. (vgl. Dirk W. Hoffmann, Grundlagen der Technischen Informatik, S. 141-142)</p>
+<p>Heute werden Logische Verknüpfungsglieder fast nur noch in integrierter Schaltungstechnik hergestellt und angeboten. Sie sind dadurch erheblich kleiner billiger und universeller einsetzbar geworden.</p>
+<p>Im Folgenden beschränken wir uns auf digitale Systeme welche zum Abbilden der Wahrheitswerte die elektrischen Spannung Niveaus verwenden.</p>
+<p>Damit überhaupt eine Schaltung über eine Spannung verfügt wird eine Versorgungsspannung (VDD, VCC) angelegt. Daraus ergibt sich, dass eine Eingangsspannung UE und eine Ausgangsspannung UA vorhanden ist. Die Masse wird auch als Ground oder GND bezeichnet.</p>
+<p>In der Regel wird die Versorgungsspannung als High-Pegel und die 0 Volt (GND) als Low-Pegel definiert.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Pegeltyp</th>
+<th align="center">Beschreibung</th>
+<th align="left">Wert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Logische Pegel</td>
+<td align="center">0 =False 1 =True</td>
+<td align="left">Mathematischewerte</td>
+</tr>
+<tr class="even">
+<td align="center">Physikalische Pegel</td>
+<td align="center">L=LOW H=HIGH</td>
+<td align="left">Spannungswerte</td>
+</tr>
+</tbody>
+</table>
+<p>L…niedrige Spannung<br />
+H…höhere Spannung</p>
+<p>Die Spannungspegel LOW (L) und HIGH (H) sind keine genormten Spannungen, sondern Spannungsbereiche, die von den verwendeten Technologien abhängen. (vgl. Mitschrift Einführung in die Digitaltechnik, HTL, 2003).</p>
+<p>Damit es bei der Zuordnung der Zustände 0 und 1 zu keinen Verwechslungen kommt, gibt es die positive und negative Logik.</p>
+<p>Das heißt bei der positiven Logik ist der Spannungswerte ULow dem logischen Zustand 0 und dem Spanungswert U<sup>High</sup> dem logischen Zustand 1 zugeordnet. Wenn nicht anders angegeben geht man von der positiven Logik aus. Bei der negativen Logik verhält es sich umgekehrt.</p>

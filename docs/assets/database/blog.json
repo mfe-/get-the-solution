@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId": 177,
+    	"Source":"assets/database/19.04.05-ExercisesWithExamsPackage.html",
+    	"Title":"Creating exercises with the R exams package",
+    	"Authro": "Simon",
+    	"Release": "2019-04-05T00:00:00",
+    	"Reagrds": ["R", "education"]
+    },
+    {
         "BlogEntryId": 176,
         "Title": "Add Token Authorization to AngularJS and WebApi",
         "Author": "Martin",

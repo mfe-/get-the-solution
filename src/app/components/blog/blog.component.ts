@@ -24,7 +24,6 @@ export class BlogComponent implements OnInit {
       this.blogService.GetBlogEntries(true).subscribe(this.ApplyBlogEntry.bind(this));
     }
   }
-  protected Get
   protected ApplyBlogEntry(blogEntries: BlogEntry[]): void {
     let title = this.route.snapshot.paramMap.get("title");
     let year = this.route.snapshot.paramMap.get("year");
@@ -42,6 +41,7 @@ export class BlogComponent implements OnInit {
       
       if (blogentry != undefined) {
         this.BlogEntry = [blogentry];
+        
       }
 
     }

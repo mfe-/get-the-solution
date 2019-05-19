@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <h2 id="einführung">1. Einführung</h2>
 <p>Im letzten Post konnte man ein einfaches Beispiel sehen, wie während der Laufzeit „Plugins“ geladen und ausgeführt wurden.</p>
 <p>Wir möchten aber die Plug-Ins von unserer Hauptanwendung isolieren und eigene Sicherheitsrichtlinien für diese festlegen. So heißt es z.B. in der MSDN</p>
@@ -271,5 +261,3 @@
 <p>Ist in einer AppDomain ein oder noch mehrere Threads aktiv wird eine ThreadAbortException geworfen. Das bedeudet, dass beim „unloaden“ einer AppDomain eine ThreadAbortException auftreten kann. Mehr Informationen siehe dazu in der MSDN. Nachdem entladen der AppDomain macht sich der GC auf, um die Ressourcen von der AppDomain frei zu geben.</p>
 <p>Am besten ihr schaut euch noch die Demo an. In der Demo ist ein Plugin vorhanden, das via Timer eine ArgumentNullException wirft. Die Domain wird anschließend entladen. Die aktivierte Abwärtskompatibilität verhindert, dass die Host-Anwendung abstürzt. Über eine Rückmeldung freue ich mich.</p>
 <p><a href="https://github.com/mfe-/PluginManager">Source Code PluginManager</a></p>
-</body>
-</html>

@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <p>In diesem Beispiel sieht man wie man ein einfaches Plugin-System realisiert. Demonstriert wird das ganze anhand eines „Mathematikprogramms“.</p>
 <p>Das Mathematikprogramm lädt zu Beginn alle Plugins. Wenn der Benutzer z.B. die Wurzelfunktion aufruft mit „sqrt(3)“ durchsucht das Mathematikprogramm alle Plugins und schaut nach ob eines der Plugins die Funktion „sqrt“ berechnen kann. Der Pluginname verrät, für welche Mathematikfunktion das Plugin zu ständig ist. Wurde kein zuständiges Plugin gefunden, wird die Meldung „unbekannte Funktion“ ausgegeben.</p>
 <p>Gibt der Benutzer als Eingabe z.B. „sqrt(4)“ ein, wird dem Plugin, das die Funktion „sqrt“ implementiert, „sqrt(4)“ übergeben. Somit weiß das Plugin was es überhaupt berechnen soll. Zurück gibt es das berechnete Ergebnis der Eingabe.</p>
@@ -118,5 +108,3 @@
 <p>Anbei ein paar Links:</p>
 <p><a href="http://www.mycsharp.de/wbb2/thread.php?threadid=34472" class="uri">http://www.mycsharp.de/wbb2/thread.php?threadid=34472</a> <a href="http://www.codeproject.com/KB/cs/pluginsincsharp.aspx" class="uri">http://www.codeproject.com/KB/cs/pluginsincsharp.aspx</a></p>
 <p><a href="https://github.com/mfe-/ApplicationWithPlugins">Beispiel Projekt herunterladen</a></p>
-</body>
-</html>

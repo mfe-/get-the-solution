@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <h2 id="issues-when-setting-a-glassfish-4-with-jdbcrealm-with-a-jsf-project">Issues when setting a Glassfish 4 with JDBCRealm with a JSF Project</h2>
 <h3 id="or-why-glassfish-4-and-jdbcrealm-drove-me-nuts">OR WHY GLASSFISH 4 AND JDBCREALM DROVE ME NUTS</h3>
 <p>Die Benutzerauthentifizierung kann in einer Java-EE-Webapplikationen theoretisch ohne großen Aufwand realisiert werden, da die Java Authentication and Authorization Service(JAAS) von Haus aus mitgeliefert wird. Grundsätzlich gibt es mehrere Realm Typen, wobei ich mich aber auf den JDBCRealm beschränke der es erlaubt die Benutzer samt Rollen in einer Datenbank zu hinterlegen.</p>
@@ -134,5 +124,3 @@ INSERT INTO `c_user_role` (`ROLENAME`) VALUES
 <li>SEVERE: jdbcrealm.invaliduserreason WEB9102: Web Login Failed <a href="http://stackoverflow.com/questions/11007071/" class="uri">http://stackoverflow.com/questions/11007071/</a></li>
 <li>LoginException: Login failed: Security Exception <a href="http://stackoverflow.com/questions/7941713/loginexception-login-failed-security-exception">http://stackoverflow.com/questions/7941713/</a></li>
 </ul>
-</body>
-</html>

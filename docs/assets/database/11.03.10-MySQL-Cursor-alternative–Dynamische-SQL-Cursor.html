@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <p>vor kurzem stand ich vor dem Problem, dass ich in einer MySQL Stored Procedure einen Cursor benötigt habe. Das Problem an der ganzen Sache war, dass für die Cursor Deklatraion einige Abfragen (u.a insert into, select usw.) vorausgesetzt wurden. Das Cursor-Statment wird quais während der Laufzeit &quot;generiert&quot;.</p>
 <p>Das hat zur Folge, dass man einen Deklaration Block hat auf den eben die nötigen Abfragen zum Zusammenstellen des Cursor-Statments machen muss. Erst dann kann der Cursor mit DECLARE definiert werden. Das Problem wie folgt:</p>
 <pre><code>CREATE PROCEDURE `tsc_sp_add_page` (in idfolder int(11), in title varchar(65), in template varchar(100))
@@ -100,5 +90,3 @@ DROP TABLE twildcardInLang;</code></pre>
 <li><a href="http://www.sqlbook.com/SQL/Avoiding-using-SQL-Cursors-20.aspx" class="uri">http://www.sqlbook.com/SQL/Avoiding-using-SQL-Cursors-20.aspx</a></li>
 <li><a href="http://dev.mysql.com/doc/refman/5.0/en/while-statement.html" class="uri">http://dev.mysql.com/doc/refman/5.0/en/while-statement.html</a></li>
 </ul>
-</body>
-</html>

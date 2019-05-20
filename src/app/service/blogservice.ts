@@ -49,7 +49,7 @@ export class BlogService implements IBlogService {
         else
         {
             blogEntry = blogEntries.find(b => {
-                return (b.Title.toLowerCase() == title.toLowerCase()
+                return (b.Title.toLowerCase() == decodeURI(title.toLowerCase())
                     //replace all " " with "-"
                     || b.Title.replace(/\ /g, "-").toLowerCase() == title.toLowerCase());
             });

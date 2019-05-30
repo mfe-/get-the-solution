@@ -9,7 +9,9 @@ import { BlogEntry } from '../model/BlogEntry';
   styleUrls: []
 })
 export class PageNotFoundComponent implements OnInit {
-  private readonly REGEXLINK: string = "index-blog-[0-9]+-[0-9]+-([0-9]+)-.+";
+  private readonly REGEXLINKBLOG: string = "index-blog-[0-9]+-[0-9]+-([0-9]+)-.+";
+  private readonly REGEXLINKPAGE: string = "index-[0-9]+-[0-9]+-(.+).html";
+
   constructor(private route: ActivatedRoute, private router: Router, @Inject('IBlogService') private blogService: IBlogService) { }
 
   ngOnInit() {
@@ -20,11 +22,12 @@ export class PageNotFoundComponent implements OnInit {
     }
     else {
       //check if the link was from the predecessor website get-the-solution.net v1
-      let regeex = new RegExp(this.REGEXLINK);
+      //example index-blog-1-14-52-Einführung-in-die-Programmierung
+      let regeex = new RegExp(this.REGEXLINKBLOG);
       if (regeex.test(id)) {
         let regexmatch = regeex.exec(id);
         if (regexmatch.length > 1) {
-          //we found the id
+          //we found the blog id
           let blogid = +regexmatch[1];
           autoforward = false;
           this.blogService.GetBlogEntries(false).subscribe((b: BlogEntry[]) => {
@@ -36,7 +39,20 @@ export class PageNotFoundComponent implements OnInit {
           });
         }
       }
-
+      //example index-1-3-Image Resizer.html
+      regeex = new RegExp(this.REGEXLINKPAGE);
+      if (regeex.test(id)) {
+        let regexmatch = regeex.exec(id);
+        if (regexmatch.length > 1) {
+          //we got the page title
+          let pagetitle = regexmatch[1];
+          autoforward = false;
+          pagetitle = decodeURI(pagetitle);
+          if (pagetitle.toLowerCase().includes("image resizer")) {
+            this.router.navigate(["/projects"]);
+          }
+        }
+      }
       this.Link = "/" + this.route.snapshot.paramMap.get('p');
     }
     if (autoforward) {

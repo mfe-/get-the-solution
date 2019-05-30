@@ -51,6 +51,11 @@ export class PageNotFoundComponent implements OnInit {
           if (pagetitle.toLowerCase().includes("image resizer")) {
             this.router.navigate(["/projects"]);
           }
+          else if (pagetitle.toLowerCase().includes("blog")) {
+            this.router.navigate(["/blog"]);
+          } 
+          //todo
+          // index-1-37-Privacy-Policy.html
         }
       }
       this.Link = "/" + this.route.snapshot.paramMap.get('p');

@@ -29,6 +29,7 @@ nav ul {
     list-style-type: none;
     list-style: none;
     overflow: hidden;
+    margin: 0;
 }
 
 nav ul li {
@@ -42,6 +43,17 @@ nav ul li a {
     padding: 14px 16px;
     text-decoration: none;
 }
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #ffffff;
+}
+hr.sticky
+{
+    top:40px;
+}
+
 pre
 {
    font-size: 1.0em;
@@ -82,9 +94,6 @@ section h2 a:link, section h2 a:visited, section h2  a:active {
 main {
     font-family: 'Spectral', serif;
     font-size: 1.2em;
-    /**position: relative;
-    transform: translate(-50%);
-    float: left;**/
     left: 50%;
 
 }
@@ -138,7 +147,6 @@ footer {
     width: 100%;
     font-family: 'Josefin Sans', sans-serif;
     padding: 1rem;
-    /*background-color: #efefef;*/
     text-align: center;
 }
 

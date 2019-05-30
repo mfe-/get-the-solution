@@ -18,7 +18,12 @@ import { FooterComponent } from './components/footer.component';
 import { BlogService } from './service/blogservice';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 
-
+// The @NgModule decorator identifies AppModule as an NgModule class.
+// @NgModule takes a metadata object that tells Angular how to compile and launch the application.
+// declarations—this application's lone component.
+// imports—import BrowserModule to have browser specific services such as DOM rendering, sanitization, and location.
+// providers—the service providers.
+// bootstrap—the root component that Angular creates and inserts into the index.html host web page.
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,5 +45,33 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
     { provide: 'IBlogService', useClass: BlogService }
   ],
   bootstrap: [AppComponent]
+
+
 })
-export class AppModule { }
+export class AppModule {
+
+  public constructor()
+  {
+    window.onscroll =  this.stickyHeader;
+  }
+
+  private shrinkHeader()
+  {
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+      document.getElementsByTagName("header")[0].style.fontSize = "1em";
+    } else {
+      document.getElementsByTagName("header")[0].style.fontSize = "2em";
+    }
+  }
+  private stickyHeader()
+  {
+    if (window.pageYOffset > 20) {
+      document.getElementsByTagName("hr")[0].classList.add("sticky");
+      document.getElementsByTagName("nav")[0].classList.add("sticky");
+    } else {
+      document.getElementsByTagName("nav")[0].classList.remove("sticky");
+      document.getElementsByTagName("hr")[0].classList.remove("sticky");
+    }
+  }
+  
+}

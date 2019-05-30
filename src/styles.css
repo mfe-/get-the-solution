@@ -49,9 +49,9 @@ nav ul li a {
     width: 100%;
     background: #ffffff;
 }
-hr.sticky
+.sticky hr
 {
-    top:40px;
+    margin:0;
 }
 
 pre

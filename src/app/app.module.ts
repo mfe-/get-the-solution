@@ -17,6 +17,8 @@ import { FooterComponent } from './components/footer.component';
 
 import { BlogService } from './service/blogservice';
 import { PageNotFoundComponent } from './components/page-not-found.component';
+import { PrivacyComponent } from './components/privacy.component';
+import { ImpressumComponent } from './components/impressum.component';
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
 // @NgModule takes a metadata object that tells Angular how to compile and launch the application.
@@ -34,7 +36,9 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
     BlogEntryComponent,
     ContactComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PrivacyComponent,
+    ImpressumComponent
   ],
   imports: [
     HttpClientModule,

@@ -10,7 +10,7 @@ import { BlogEntry } from '../model/BlogEntry';
 })
 export class PageNotFoundComponent implements OnInit {
   private readonly REGEXLINKBLOG: string = "index-blog-[0-9]+-[0-9]+-([0-9]+)-.+";
-  private readonly REGEXLINKPAGE: string = "index-[0-9]+-[0-9]+-(.+).html";
+  private readonly REGEXLINKPAGE: string = "index-[0-9]+-[0-9]+-(.+)";
 
   constructor(private route: ActivatedRoute, private router: Router, @Inject('IBlogService') private blogService: IBlogService) { }
 
@@ -60,7 +60,7 @@ export class PageNotFoundComponent implements OnInit {
           else if (pagetitle.includes("impressum")) {
             this.router.navigate(["/impressum"]);
           } 
-          else if (pagetitle.includes("kontakt")) {
+          else if (pagetitle.includes("kontakt") || pagetitle.includes("team")) {
             this.router.navigate(["/contact"]);
           } 
           else if (pagetitle.includes("c#") && pagetitle.includes("plugins") 

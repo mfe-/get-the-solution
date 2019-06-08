@@ -58,6 +58,7 @@
                 { "glob": "**/*.jpg", "input": "src/assets/", "output": "/assets/" },
                 { "glob": "**/*.png", "input": "src/assets/", "output": "/assets/" },
                 { "glob": "**/*.gif", "input": "src/assets/", "output": "/assets/" },
+                { "glob": "**/*.svg", "input": "src/assets/", "output": "/assets/" },
                 { "glob": "favicon.ico", "input": "src/", "output": "./" },
                 { "glob": "404.html", "input": "src/", "output": "./" },
                 { "glob": "CNAME", "input": "./", "output": "./" }

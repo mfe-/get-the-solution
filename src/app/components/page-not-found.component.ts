@@ -47,15 +47,26 @@ export class PageNotFoundComponent implements OnInit {
           //we got the page title
           let pagetitle = regexmatch[1];
           autoforward = false;
-          pagetitle = decodeURI(pagetitle);
-          if (pagetitle.toLowerCase().includes("image resizer")) {
+          pagetitle = decodeURI(pagetitle).toLowerCase();
+          if (pagetitle.includes("image resizer")) {
             this.router.navigate(["/projects"]);
           }
-          else if (pagetitle.toLowerCase().includes("blog")) {
+          else if (pagetitle.includes("blog")) {
             this.router.navigate(["/blog"]);
           } 
-          //todo
-          // index-1-37-Privacy-Policy.html
+          else if (pagetitle.includes("privacy") && pagetitle.includes("policy")) {
+            this.router.navigate(["/privacy"]);
+          } 
+          else if (pagetitle.includes("impressum")) {
+            this.router.navigate(["/impressum"]);
+          } 
+          else if (pagetitle.includes("kontakt")) {
+            this.router.navigate(["/contact"]);
+          } 
+          else if (pagetitle.includes("c#") && pagetitle.includes("plugins") 
+          && pagetitle.includes("appdo")) {
+            this.router.navigate(["/2010/08/23/c-plugins-mit-appdomains-realisieren"]);
+          } 
         }
       }
       this.Link = "/" + this.route.snapshot.paramMap.get('p');

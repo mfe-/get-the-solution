@@ -69,7 +69,7 @@ export class AppModule {
   }
   private stickyHeader()
   {
-    if (window.pageYOffset > 20) {
+    if (window.pageYOffset > 85) {
       document.getElementsByTagName("nav")[0].classList.add("sticky");
     } else {
       document.getElementsByTagName("nav")[0].classList.remove("sticky");

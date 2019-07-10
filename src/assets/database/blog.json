@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId": 178,
+    	"Source":"assets/database/13.11.27-TGI-Logische-Schaltungen.html",
+    	"Title":"Logische-Schaltungen",
+    	"Author": "Simon",
+    	"Release": "2019-04-05T00:00:00",
+    	"Regards": ["education"]
+    },
+    {
         "BlogEntryId": 177,
     	"Source":"assets/database/19.04.05-ExercisesWithExamsPackage.html",
     	"Title":"Creating exercises with the R exams package",

@@ -1,29 +1,4 @@
 [
-    
-    {
-        "BlogEntryId": 180,
-    	"Source":"assets/database/13.11.27-TGI-Sequenzielle-Logik.html",
-    	"Title":"Sequenzielle Logik",
-    	"Author": "Martin",
-    	"Release": "2013-11-27T00:00:00",
-    	"Regards": ["TGI","education"]
-    },
-    {
-        "BlogEntryId": 179,
-    	"Source":"assets/database/13.11.27-TGI-Digitale-Standardbaugruppen.html",
-    	"Title":"Digitale Standardbaugruppen",
-    	"Author": "Martin",
-    	"Release": "2013-11-27T00:00:00",
-    	"Regards": ["TGI","education"]
-    },
-    {
-        "BlogEntryId": 178,
-    	"Source":"assets/database/13.11.27-TGI-Logische-Schaltungen.html",
-    	"Title":"Logische Schaltungen",
-    	"Author": "Martin",
-    	"Release": "2013-11-27T00:00:00",
-    	"Regards": ["TGI","education"]
-    },
     {
         "BlogEntryId": 177,
     	"Source":"assets/database/19.04.05-ExercisesWithExamsPackage.html",
@@ -87,6 +62,30 @@
         "Release": "2013-08-24T00:00:00",
         "Source":"assets/database/13.08.24-reinstall-grub.html",
         "Regards": ["Infrastructure"]
+    },
+    {
+        "BlogEntryId": 133,
+    	"Source":"assets/database/13.11.27-TGI-Logische-Schaltungen.html",
+    	"Title":"Logische Schaltungen",
+    	"Author": "Martin",
+    	"Release": "2013-11-27T00:00:00",
+    	"Regards": ["TGI","education"]
+    },
+    {
+        "BlogEntryId": 132,
+    	"Source":"assets/database/13.11.27-TGI-Digitale-Standardbaugruppen.html",
+    	"Title":"Digitale Standardbaugruppen",
+    	"Author": "Martin",
+    	"Release": "2013-11-27T00:00:00",
+    	"Regards": ["TGI","education"]
+    },
+    {
+        "BlogEntryId": 131,
+    	"Source":"assets/database/13.11.27-TGI-Sequenzielle-Logik.html",
+    	"Title":"Sequenzielle Logik",
+    	"Author": "Martin",
+    	"Release": "2013-11-27T00:00:00",
+    	"Regards": ["TGI","education"]
     },
     {
         "BlogEntryId": 130,

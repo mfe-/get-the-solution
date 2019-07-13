@@ -10,8 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BlogComponent implements OnInit {
 
+  protected loadedBlogEntries = 0;
+  protected maxloadBlogEntries = 10;
+  protected BlogEntry: BlogEntry[];
+  public FiltertedBlogEntry: BlogEntry[];
   constructor(@Inject('IBlogService') private blogService: IBlogService, private route: ActivatedRoute) {
-
+    this.BlogEntry = [];
+    this.FiltertedBlogEntry = [];
   }
   public ngOnInit() {
     let year = this.route.snapshot.paramMap.get("year");
@@ -38,17 +43,32 @@ export class BlogComponent implements OnInit {
       else {
         blogentry = this.blogService.GetBlogEntry(0, 0, 0, title, blogEntries);
       }
-      
       if (blogentry != undefined) {
         this.BlogEntry = [blogentry];
-        
+      }
+    }
+    if (this.loadedBlogEntries < this.maxloadBlogEntries) {
+      for (let blogEntry of this.BlogEntry) {
+        if (this.loadedBlogEntries < this.maxloadBlogEntries) {
+          this.FiltertedBlogEntry.push(blogEntry);
+          this.loadedBlogEntries++;
+        }
+      }
+    }
+  }
+  public AddBlogEntry() {
+    if (this.maxloadBlogEntries < this.BlogEntry.length) {
+      this.maxloadBlogEntries++;
+      if (this.BlogEntry.length > this.loadedBlogEntries) {
+        this.FiltertedBlogEntry.push(this.BlogEntry[this.loadedBlogEntries]);
+        this.loadedBlogEntries++;
+      }
+      else {
+        alert("empty");
       }
 
     }
-
   }
-  public BlogEntry: BlogEntry[];
-
   ngOnDestroy() {
 
   }

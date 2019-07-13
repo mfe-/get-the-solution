@@ -10,8 +10,10 @@ import { BlogEntry } from 'src/app/model/BlogEntry';
 export class BlogService implements IBlogService {
 
     private readonly baseUri: string = "assets/database/blog.json";
-
-    constructor(protected httpClient: HttpClient) { }
+    public BlogEntry: BlogEntry[];
+    constructor(protected httpClient: HttpClient) {
+        this.BlogEntry = [];
+     }
 
     public GetBlogEntries(getContent: boolean = true): Observable<BlogEntry[]> {
         let observable = this.httpClient.get<BlogEntry[]>(this.baseUri)
@@ -26,6 +28,7 @@ export class BlogService implements IBlogService {
                         if (contentObservable) {
                             contentObservable.subscribe((content) => {
                                 blogEntry.Content = content;
+                                this.BlogEntry.push(blogEntry);
                             });
                         }
                     }
@@ -40,14 +43,13 @@ export class BlogService implements IBlogService {
     public GetBlogEntry(year: number, month: number, day: number, title: string, blogEntries: BlogEntry[], getContent: boolean = true): BlogEntry {
         let blogEntry: BlogEntry = null;
         if (year != 0 || month != 0 || day != 0) {
-            blogEntry = blogEntries.find(b=>
-                b.Release!=null &&
-                new Date(b.Release).getFullYear() == year && 
-                new Date(b.Release).getMonth()==(month-1) &&
-                new Date(b.Release).getDate()==day)
+            blogEntry = blogEntries.find(b =>
+                b.Release != null &&
+                new Date(b.Release).getFullYear() == year &&
+                new Date(b.Release).getMonth() == (month - 1) &&
+                new Date(b.Release).getDate() == day)
         }
-        else
-        {
+        else {
             blogEntry = blogEntries.find(b => {
                 return (b.Title.toLowerCase() == decodeURI(title.toLowerCase())
                     //replace all " " with "-"

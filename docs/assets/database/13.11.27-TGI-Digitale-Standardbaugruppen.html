@@ -1,0 +1,1093 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p><strong>Hinweis: Abbildungen die aus externen Quellen stammen, stehen nicht unter der CC Lizenzbedingung zuverfügung, sondern unterliegen den jeweiligen Urheberrechten des Verlages!</strong></p>
+<p>Text aus der Reihe <a href="category/TGI">Technische Grundlagen der Informatik</a>. Vorgängertext &quot;Logische Schaltungen&quot;. Hinweise auf Fehler, Verbesserungsvorschläge gerne per Email oder per PR auf die .md File.</p>
+<h1 id="digitale-standardbaugruppen">Digitale Standardbaugruppen</h1>
+<p>Standardbaugruppen implementierten standardisierte Grundschaltungen. Das sind immer wiederkehrende Grundschaltungen wie z.B. die des Halbaddierers, Encoders, Komperators und so weiter. Wenn man beispielsweise einen Halbaddierer in seiner eigenen Schaltung benötigt, der wie oben erwähnt zu den digitalen Standardabaugruppen gehört, reicht es nur noch das Ersatz Schaltbild zu zeichnen, da die Funktion jedem bekannt ist.</p>
+<p>Wie diese Funktionen implementiert sein können wird in den nächsten Abschnitten beschrieben. Wenn man weiß, welchen Zweck der Standardbaustein erfüllt reicht es in den meisten Fällen aus die Funktion her zu leiten oder eine Wahrheitstabelle auf zu stellen. Die dabei erstellte logische Schaltung die der Standardbaustein implementiert wäre dann die standardisierte Grundschaltung.</p>
+<h2 id="encodierer">Encodierer</h2>
+<p>Ein Encodierer (oder Codierer) verdichtet Informationen in dem er bei n Eingängen am Ausgang die Bitfolge angibt, welcher der Eingänge aktiv ist. Beim Codierer darf nur ein Eingang aktiv sein! Ein Codierer mit n Eingängen hat genau log_2(n)=m Ausgänge (vgl. Schildt, Einführung in die technische Informatik, S. 20-21).</p>
+<table>
+<thead>
+<tr class="header">
+<th>E7</th>
+<th align="center">E6</th>
+<th>E5</th>
+<th>E4</th>
+<th>E3</th>
+<th>E2</th>
+<th>E1</th>
+<th>E0</th>
+<th>A2</th>
+<th>A1</th>
+<th>A0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Ein Codierer mit 8 Eingängen hat also 3 Ausgänge (ld(8)=3). Ist nun der Eingang E4 aktiv gibt er die Binärzahl 1002 aus was im Dezimal der Zahl 4 entspricht. Die Funktion der drei Ausgänge lautet</p>
+<p>A0=e1+e3+e5+e7</p>
+<p>A1=e2+e3+e6+e7</p>
+<p>A2=e4+e5+e6+e7</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.7-Codierer-8I.png" alt="Abb. 7 Codierer mit 8 Eingängen" />
+<p class="caption">Abb. 7 Codierer mit 8 Eingängen</p>
+</div>
+<p>Die Schaltung kann somit mit drei OR Gatter realisiert werden. Der Schalter e7 ist in der obigen Abbildung aktiv und die Schaltung gibt in Form von 3 aktiven Glühbirnen die binäre Zahl 1112 = 7 aus. Der Schalter e0 hätte man auch mit einem log 0 verbinden können da bei e0 nie „1“ ausgegeben wird.</p>
+<p>Es besteht in dieser Form aber noch das Problem, dass theoretisch mehr als nur ein Eingang aktiv sein kann. Dies führt zu falschen Ausgaben.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.8-Codierer-8I-with-more-then-one-active-inputs.png" alt="Abb. 8 Codierer" />
+<p class="caption">Abb. 8 Codierer</p>
+</div>
+<p>Um dies zu verhindern wurde der sogenannte Valid Ausgang, der angibt ob die Ausgabe gültig ist, eingeführt. Sobald mehr als ein Eingang aktiv ist, gibt er 0 für not Valid aus und 1 für Valid, womit man erkennt ob die Ausgabe gültig ist. Da nur das höchstwertige Bit im Eingang zählt sind alle dahinterliegenden Bits als „don’t cares“ gesetzt. Man spricht dann auch von einem Priority Encoder.</p>
+<table>
+<thead>
+<tr class="header">
+<th>E7</th>
+<th align="center">E6</th>
+<th>E5</th>
+<th>E4</th>
+<th>E3</th>
+<th>E2</th>
+<th>E1</th>
+<th>E0</th>
+<th>A2</th>
+<th>A1</th>
+<th>A0</th>
+<th>V</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Um die Schaltfunktion mit dem Validbit Ausgang zu realisieren würde man eine 2^8 also eine Wahrheitstabelle mit 256 Zeilen benötigen. Das dazugehörige KV-Diagramm wäre dafür zu unübersichtlich, deshalb spalten wird die Eingänge in jeweils 2 Gruppen E0-E3 und E4-E7 auf. Der Valid Ausgang darf nur dann 1 ausgeben, wenn nur ein Eingang logisch 1 ist. Somit ergibt sich für die Eingänge E0-E3 folgende Wahrheitstabelle.</p>
+<table>
+<thead>
+<tr class="header">
+<th>E0</th>
+<th align="center">E1</th>
+<th>E2</th>
+<th>E3</th>
+<th>V</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>KV Diagramm</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">!e4</th>
+<th>e4</th>
+<th>E4</th>
+<th>!e4</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>!e3</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>e2</td>
+</tr>
+<tr class="even">
+<td>e3</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>e2</td>
+</tr>
+<tr class="odd">
+<td>e3</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>!e2</td>
+</tr>
+<tr class="even">
+<td>!e3</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>!e2</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">e1</td>
+<td>e1</td>
+<td>!e1</td>
+<td>!e1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Aus dem KV Diagramm liest man dann folgende Funktion V(E0,E1,E2,E3)=!e1.e2.!e3.!e4+!e1.!e2.e3.!e4+!e1.!e2.!e3.e4+e1.!e2.!e3.!e4</p>
+<p>Daraus lässt sich ableiten, dass die Funktion mit 8 Eingängen wie folgt aussieht.</p>
+<p>V(E0,E1,E2,E3,E4,E5,E6,E7)=e0.!e1.!e2.!e3.!e4.!e5.!e6.!e7+ !e0.e1.!e2.!e3.!e4.!e5.!e6.!e7+ !e0.!e1.e2.!e3.!e4.!e5.!e6.!e7+!e0.!e1.!e2.e3.!e4.!e5.!e6.!e7+!e0.!e1.!e2.!e3.e4.!e5.!e6.!e7+ !e0.!e1.!e2.!e3.!e4.e5.!e6.!e7+!e0.!e1.!e2.!e3.!e4.!e5.e6.!e7+!e0.!e1.!e2.!e3.!e4.!e5.!e6.e7</p>
+<p>Die Schaltung um die Valid Funktion sieht dann wie folgt aus.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.9-Codierer-with-valid-output.png" alt="Abb. 9 Codierer mit Valid Funktion" />
+<p class="caption">Abb. 9 Codierer mit Valid Funktion</p>
+</div>
+<p>Für den Encoder wird vereinfachend folgendes Symbol verwendet.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.10-Codierer.png" alt="Abb. 10 Codierer" />
+<p class="caption">Abb. 10 Codierer</p>
+</div>
+<h2 id="decodierer">Decodierer</h2>
+<p>Der Decoder ist das Gegenstück zum Encoder. Über den Eingang kann angegeben werden, auf welcher Ausgangsleitung ein aktives Signal „hinausgeschickt“ werden soll. Oder anders gesagt, ein Ausgang geht genau dann auf logisch 1, wenn die Binärzahl, die am Eingang anliegt, gleich seiner Nummer i ist (Schildt, Einführung in die technische Informatik, S. 21). Damit das Bauelement aktiv werden kann, gibt es einen Enable Eingang. Solange der Enable Eingang 0 ist bleiben die Ausgänge 0. Daraus ergibt sich folgende Wahrheitstabelle:</p>
+<p>Mit zwei Eingängen kann man 2^2 Ausgänge bedienen.</p>
+<table>
+<thead>
+<tr class="header">
+<th>E</th>
+<th align="center">E1</th>
+<th>E2</th>
+<th>A3</th>
+<th>A2</th>
+<th>A1</th>
+<th>A0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">X</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Die Schaltungsfunktion kann mit AND Gatter implementiert werden, in dem man schrittweise für jeden Ausgang die Funktion realisiert. Die Funktionen für die Ausgänge lauten:</p>
+<p>A0(E1,E2,E)= !E1.!E2.E</p>
+<p>A1(E1,E2,E)=!E1.E2.E</p>
+<p>A2(E1,E2,E)=E1.!E2.E</p>
+<p>A3(E1,E2,E)=E1.E2.E</p>
+<p>Am Eingang liegt durch das Umkippen beider Schalter 11<sub>2</sub> an, was der Zahl 3 im Dezimal entspricht. Die Schaltungsfunktion gibt am Ausgang mit der Nummer 3 eins aus.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.11-2to4decoder.png" alt="Abb. 11 &quot;2 zu 4 Decoder&quot;" />
+<p class="caption">Abb. 11 &quot;2 zu 4 Decoder&quot;</p>
+</div>
+<p>Dieser 2 zu 4 Decoder können wir auch mit folgendem Blockschaltbild darstellen:</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.12-2to4decoder-gatter.png" alt="Abb. 12 &quot;2 zu 4 Decoder&quot;" />
+<p class="caption">Abb. 12 &quot;2 zu 4 Decoder&quot;</p>
+</div>
+<p>Durch das Hintereinanderschalten mehrerer Decoder kann man die Eingangs- sowie die Ausgangsanzahl des Decoders erhöhen. Im folgenden Beispiel wird aus einem 2 to 4 Decoder ein 4 to 16 Decoder gebaut.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.13-4to16Decoder.png" alt="Abb. 13 &quot;4 zu 16 Decoder&quot;" />
+<p class="caption">Abb. 13 &quot;4 zu 16 Decoder&quot;</p>
+</div>
+<p>Bei der Eingabe der binären Zahl 0101_2 wird der Ausgang mit der Nummer a5 aktiv.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.14-4to16Decoder-gatter.png" alt="Abb. 14 &quot;4 zu 16 Decoder&quot;" />
+<p class="caption">Abb. 14 &quot;4 zu 16 Decoder&quot;</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th>E</th>
+<th align="center">E3</th>
+<th>E2</th>
+<th>E1</th>
+<th>E0</th>
+<th>A0</th>
+<th>A1</th>
+<th>A2</th>
+<th>A3</th>
+<th>A4</th>
+<th>A5</th>
+<th>A6</th>
+<th>A7</th>
+<th>A8</th>
+<th>A9</th>
+<th>A10</th>
+<th>A11</th>
+<th>A12</th>
+<th>A13</th>
+<th>A14</th>
+<th>A15</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="multiplexer">Multiplexer</h2>
+<p>Ein Multiplexer bzw. MUX ist eine Erweiterung des Codierers (vgl. Schildt, Einführung in die technische Informatik, S. 22). Mit ihm ist es möglich zu bestimmen welche Eingangssignale zum Ausgang weitergeleitet werden sollen. Über das Steuersignal wählt man den jeweiligen Eingang aus.</p>
+<p>Da die meisten Informationen mehr als nur 1 Bit lang sind, werden die zusammengehörigen Eingangssignale durch Indizes zusammengefasst. Zusammengehörige binäre Informationen werden auch Codewort genannt. (vgl. Schildt, Einführung in die technische Informatik, S. 23). Das heißt, dass das Steuersignal bestimmt welche der zusammengefassten Eingänge bzw. welches Codewort durchgeschalten wird. Über die Anzahl der Ausgangsleitungen beim MUX lässt sich ablesen aus wie vielen Bit ein Codewort besteht.</p>
+<p>Über log_2(Anzahl der Codewörter) erhält man die Anzahl der erforderlichen Steuerleitungen. Zum Beispiel braucht man bei 4 Eingängen 2 Steuersignale um diese zu „adressieren“, da man mit 2 Steuerleitungen 2^2 Adressierungen durchführen kann. Das MUX verfügt wie die bereits vorgestellten Bauelemente über einen Enable Eingang um festzulegen, wann Informationen durchgeschalten werden sollen.</p>
+<p>Im Folgenden wollen wir einen 4 to 1 MUX entwerfen. Wir haben 4 Eingänge von denen einer je nach Steuersignal zum Ausgang durchgeschalten wird. Um jeweils einen der 4 Eingänge auswählen zu können benötigen wir 2 Steuereingänge. Daraus ergibt sich folgende Wahrheitstabelle:</p>
+<table>
+<thead>
+<tr class="header">
+<th>E</th>
+<th align="center">S0</th>
+<th>S1</th>
+<th>A</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(0</td>
+<td align="center">X</td>
+<td>X</td>
+<td>0)</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>O</td>
+<td>E0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>E1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>E2</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>E3</td>
+</tr>
+</tbody>
+</table>
+<p>A(E,S0,S1,E0,E1,E2,E3)=!S0.!S1.E0.E + !S0.S1.E1.E + S0.!S1.E2.E + S0.S1.E3.E</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.16-4to1MUX.png" alt="Abb. 16 &quot;4 to 1 MUX&quot;" />
+<p class="caption">Abb. 16 &quot;4 to 1 MUX&quot;</p>
+</div>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.15-4to1MUX-gatter.png" alt="Abb. 15 &quot;4 to 1 MUX&quot;" />
+<p class="caption">Abb. 15 &quot;4 to 1 MUX&quot;</p>
+</div>
+<p>Da beim Steuereingang die Kombination 102 anliegt wird der Eingang E2 durchgeschaltet. Da aktuell der Schalter gekippt ist wird die 1 am Ausgang ausgegeben. Genauso würde auch eine logische 0 (Schalter nicht gekippt) zum Ausgang weitergeleitet werden, würde diese am zweiten Eingang anliegen.</p>
+<p>Es gibt beliebige MUX Varianten, das folgende Abbild stellt ein 2 to 1 MUX deren Codebreite 4 Bit beträgt, dar. Das bedeutet, dass 2 Eingänge also E1 und E2 vorhanden sind, wobei ein Eingang über eine 4 Bit Wortbreite verfügt. Der erste Eingang ist an der Indexnummer 1.x erkennbar.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.17-2to1MUXCodebreite4Bit.png" alt="Abb. 17 &quot;2 to 1 MUX deren Codebreite 4 Bit&quot; )" />
+<p class="caption">Abb. 17 &quot;2 to 1 MUX deren Codebreite 4 Bit&quot; )</p>
+</div>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.18-2to1MUXCodebreite4Bit-gatter.png" alt="Abb. 18 &quot;2 to 1 MUX deren Codebreite 4 Bit&quot; )" />
+<p class="caption">Abb. 18 &quot;2 to 1 MUX deren Codebreite 4 Bit&quot; )</p>
+</div>
+<p>Wie mit allen anderen Bausteinen kann man diese gegenseitig kombinieren und neue Varianten kreieren. Einen 8 to 1 MUX kann man z.B. mit zwei 4 to 1 MUX und mit einem verknüpfenden 2 to 1 MUX bauen.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.19-8to1MUX.png" alt="Abb. 19 &quot;8 to 1 MUX&quot; )" />
+<p class="caption">Abb. 19 &quot;8 to 1 MUX&quot; )</p>
+</div>
+<h2 id="demultiplexer">Demultiplexer</h2>
+<p>Ein Demultiplexer ist das analoge Gegenstück zum MUX. Mit ihm ist es möglich ein Eingangssignal durch die Steuerleitungen auf einen bestimmten Ausgang weiterzuleiten. Die Anzahl der Steuerleitungen ist hier abhängig von der Anzahl der Ausgänge. Oder anders gesagt, mit n Steuerleitungen kann man 2n Ausgänge ansteuern.</p>
+<p>Um die Schaltung des Demultiplexer zu realisieren erstellen wir wieder eine Wahrheitstabelle.</p>
+<table>
+<thead>
+<tr class="header">
+<th>E</th>
+<th align="center">S0</th>
+<th>S1</th>
+<th>E0</th>
+<th>A0</th>
+<th>A1</th>
+<th>A2</th>
+<th>A3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(0</td>
+<td align="center">X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0)</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>O</td>
+<td>X</td>
+<td>E0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>X</td>
+<td>0</td>
+<td>E0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>E0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>E0</td>
+</tr>
+</tbody>
+</table>
+<p>A0(E,S0,S1,E)=!S0.!S1.E0.E</p>
+<p>A1(E,S0,S1,E)=!S0.S1.E0.E</p>
+<p>A2(E,S0,S1,E)=S0.!S1.E0.E</p>
+<p>A3(E,S0,S1,E)=S0.S1.E0.</p>
+<p>Man erkennt hier, dass die Ausgangsfunktionen der eines Decoders entsprechen. Folgendes Einsatzszenario lässt sich vorstellen: man soll über die Steuerleitung bestimmen können, welche Rechenoperation auf das Eingangssignal durchgeführt werden soll. Am Ausgang hängt man dann, je nach definierter Operation, das jeweilige Hardwareelement an. Wie bei dem Multiplexer ist es auch hier wieder möglich, dass der Eingang über eine höhere Wortbreite wie nur 1 Bit verfügt.</p>
+<p>Mit dem Multiplexer und dem Demultiplexer stehen uns zwei Standardschaltnetze zur Verfügung mit deren Hilfe sich der Datenfluss innerhalb einer Hardware-Schaltung auf einfache Weise steuern lässt (dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 206).</p>
+<h2 id="halbaddierer">Halbaddierer</h2>
+<p>Wir wollen mit dem Halbaddierer eine Funktion implementieren mit der es möglich ist über die Eingangssignale Binärzahlen zu addieren. Dazu stellen wir folgende Wahrheitstabelle auf:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th align="center"></th>
+<th></th>
+<th>e<sub>1</sub>+e<sub>2</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>e<sub>1</sub></td>
+<td align="center">e<sub>2</sub></td>
+<td>c<sub>arry</sub></td>
+<td>s<sub>um</sub></td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Da es bei der Addition der Zahl 1+1 zu einem Übertrag kommen kann, müssen wir zusätzlich einen Carry Ausgang zum Gatter hinzufügen.</p>
+<p>Anhand der Wahrheitstabelle erkennt man, dass der Carry Ausgang mit einem AND Gatter und der Sum Ausgang mit einem XOR Gatter realisiert werden kann.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.20-HA.png" alt="Abb. 20 &quot;HA&quot;" />
+<p class="caption">Abb. 20 &quot;HA&quot;</p>
+</div>
+<p>Um nicht immer die komplette Schaltung des Halbaddierers zeichnen zu müssen, kann man vereinfachend folgendes Symbol verwenden:</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.21-HA-gatter.png" alt="Abb. 21 &quot;HA&quot;" width="0" />
+<p class="caption">Abb. 21 &quot;HA&quot;</p>
+</div>
+<p>Möchte man zwei-bitige Zahlen addieren, benötigt man einen erweiterten Addierbaustein. Außerdem soll dieser erweiterte Addierbaustein hintereinander schaltbar sein. Dazu wird ein weiterer Eingang benötigt der den Übertrag der vorherigen Rechnung mit berücksichtigt. Ein Baustein mit dieser Fähigkeit nennt man auch Volladdierer.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.22-VA.png" alt="Abb. 22 &quot;HA&quot;" />
+<p class="caption">Abb. 22 &quot;HA&quot;</p>
+</div>
+<p>Im obigen Schaltbild sieht man die Implementation eines Volladdieres. Der erste Halbaddierer berechnet das Ergebnis von e<sub>1</sub> und e<sub>2</sub>. Dieses Ergebnis wird dann noch mit dem Carry Eingang addiert. Ein Volladdierer kann also durch zwei Halbaddierer die mit einem OR Gatter verknüpft sind realisiert werden. Das vollständige Schaltbild eines Volladdierers sieht folgendermaßen aus:</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.23-VA-implementierung.png" alt="Abb. 23 &quot;HA&quot;" />
+<p class="caption">Abb. 23 &quot;HA&quot;</p>
+</div>
+<p>Daraus ergibt sich folgende Wahrheitstabelle für den Full Adder:</p>
+<table>
+<thead>
+<tr class="header">
+<th>e<sub>1</sub></th>
+<th align="center">e<sub>2</sub></th>
+<th>c<sub>i-1</sub></th>
+<th>c<sub>i</sub></th>
+<th>sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h1 id="quellen">Quellen</h1>
+<ul>
+<li>dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser</li>
+<li>Schildt, Einführung in die technische Informatik</li>
+</ul>
+</body>
+</html>

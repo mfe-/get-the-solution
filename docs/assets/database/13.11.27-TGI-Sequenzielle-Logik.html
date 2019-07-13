@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p><strong>Hinweis: Abbildungen die aus externen Quellen stammen, stehen nicht unter der CC Lizenzbedingung Zuverfügung, sondern unterliegen den jeweiligen Urheberrechten des Verlages!</strong></p>
+<p>Text aus der Reihe <a href="category/TGI">Technische Grundlagen der Informatik</a>. Vorgängertext &quot;Digitale Standardbaugruppen&quot;. Hinweise auf Fehler, Verbesserungsvorschläge gerne per Email oder per PR auf die .md File.</p>
+<h1 id="lesespeicherbausteine">Lesespeicherbausteine</h1>
+<p>Lese Speicherbausteine, besser bekannt als Festwertspeicher, Nur-Lese-Speicher oder Read only Memory (ROM) sind Datenspeicher, auf die im normalen Betrieb nur lesend zugegriffen werden kann. Sie sind im normalen Betrieb nicht schreibbar und nicht flüchtig (Festwertspeicher, 2014.08.01, <a href="http://de.wikipedia.org/wiki/Festwertspeicher" class="uri">http://de.wikipedia.org/wiki/Festwertspeicher</a> )</p>
+<p>Prinzipiell können diese Speicher in zwei Kategorien unterteilt werden und zwar in die <strong>Funktionalspeicher</strong> und in die <strong>Tabellenspeicher</strong>.</p>
+<h3 id="funktionalspeicher">Funktionalspeicher</h3>
+<p>Praktisch sämtliche kombinatorische Schaltungen können als funktionale Speicher betrachtet werden. Bei einem Funktionalspeicher wird der „gespeicherte“ Wert erst während der Laufzeit ermittelt. Speicherbausteine können immer nur eine gewisse Anzahl an Informationen speichern. Über die Anzahl der Eingänge lässt berechnen, wieviel Wörter der Baustein gespeichert hat. Der Ausgang gibt jeweils die Bit Breite der Information bzw. des Wortes an.</p>
+<h3 id="tabellenspeicher">Tabellenspeicher</h3>
+<p>Die Tabellenspeicher können immer nur eine gewisse Anzahl an Informationen speichern. Über die Anzahl der Eingänge lässt sich berechnen wieviele Wörter der Baustein gespeichert hat. Am Eingang gibt man die Zeilenadresse an von der man die Information abrufen will. Für diese Funktionalität wird ein Decoder verwendet. Der Ausgang gibt die Wortbreite der Information an. Das Symbolbild für eine 16 x 2 Rom sieht wie folgt aus:</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.29-ROM-gatter.png" alt="Abb. 29 ROM Gatter" />
+<p class="caption">Abb. 29 ROM Gatter</p>
+</div>
+<p>Eine Rom die 16 Adressen besitzt kann man mit 2^4 also 4 Bit ansteuern. Die Wortbreite beträgt 2 Bit. Der Decoder in der ROM sorgt dafür, dass nur eine Adresszeile aktiv sein kann. Mit einem AND Gatter wird die Information mit der Adressleitung des Decoders verknüpft. So wird gewährleistet, dass die Information nur ausgegeben wird, wenn die Zeile vom Decoder aktiv geschaltet ist. Die Zeilen werden alle mit einem OR Gatter „zusammengeschlossen“ und am Ausgang ausgegeben.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.28-ROM.png" alt="Abb. 28 ROM" />
+<p class="caption">Abb. 28 ROM</p>
+</div>
+<h1 id="sequenzielle-logik">Sequenzielle Logik</h1>
+<p>Bisher war der Signalfluss der logischen Schaltungen von links nach rechts und der Ausgang der Schaltungen war rein vom Eingangssignal abhängig. Außerdem wurde die Gatterdurchlaufzeit vernachlässigt.</p>
+<p>Da wir im vorherigen Kapitel ausschließlich nur lesbare Speicherbausteine behandelt haben, widmen wir uns in diesem den Speicherbausteinen die während der Laufzeit verschiedene Werte annehmen können. Im Folgenden Kapitel beziehen wir uns immer auf die beschreibbaren Speicherbausteine.</p>
+<p>Mithilfe von beschreibbaren Speicherbausteinen, die in verschiedenen Varianten existieren, ist es möglich der Schaltung ein Gedächtnis zu geben. Somit kann eine Schaltung in verschiedenen Zuständen sein in dem sie binäre Werte speichern kann. Das Ausgangssignal ist somit nicht mehr nur vom Eingangssignal abhängig, sondern auch vom Zustand, (also den gespeicherten Werten) der Schaltung.</p>
+<p>Schaltungen die beschreibbare Speicherelemente enthalten, heißen Sequentielle Schaltungen. (Schildt, Einführung in die technische Informatik, S. 25) Die Informationen der folgenden beschreibbaren Speicherbausteine sind für die Dauer einer anliegenden Betriebsspannung vorhanden.</p>
+<p>Speicherelemente die Wert am Eingang sofort übernehmen gehören zu den asynchronen Speicherelementen. Durch die nicht bestimmbaren Schaltzeitpunkte und unter der Berücksichtigung der Gatterdurchlaufzeit, kann sich die kombinatorische Schaltung in einen nicht gewünschten Zustand versetzen. Deshalb werden Schaltungen mit synchronen Speicherelementen bevorzugt. Die Schaltung kann dann synchron betrieben werden. Synchrone Speicherbausteine haben einen Takteingang der taktzustandsgesteuert oder flankengesteuert reagiert. Flankengesteuerte Speicherbaugruppen werden als FlipFlops bezeichnet, ansonsten spricht man von Latches. Bei synchronen Schaltungen müssen nur diskrete Zeitpunkte betrachtet werden. Zwischen den diskreten Zeitpunkten darf sich die Schaltung nicht ändern. Die Synchronisierung der Schaltung wird dadurch erreicht, dass die Zustandsübergänge nur zu einem bestimmten Taktzeitpunkt erfolgen. Bei der Wahl des Taktes müssen die Durchlaufzeiten der Schaltung berücksichtigt werden.</p>
+<p>FlipFlops werden beim Prozessor Register und Prozessor Cache, bei Zählschaltungen und vielem mehr eingesetzt.</p>
+<p>Ein Taktsignal kann abstrakt durch Generierung einer Verzögerung und durch eine anschließende Rückführung erzeugt werden. In der unteren Abbildung kann man sich z.B. vorstellen, dass am Eingang anfangs 1 anliegt, welches verzögert am Delay Bauteil unverändert ausgegeben wird. Das Signal wird anschließend invertiert und an die Schaltung wird 0 als Taktsignal 0 ausgeben. Die 0 wandert weiter wieder zum Eingang e und wird Verzögert und invertiert. Die Schaltung erhält nun als Taktsignal eine 1 und das Spiel beginnt wieder von neuem.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.30-Delay.png" alt="Abb. 30 ROM" />
+<p class="caption">Abb. 30 ROM</p>
+</div>
+<p>Ein Takt ist durch 1/T definiert wobei T die Periode angibt. 1/T hat als SI Einheit Herz.</p>
+<h2 id="beschreibbare-speicherbausteine">Beschreibbare Speicherbausteine</h2>
+<h3 id="rs-latch">RS-Latch</h3>
+<p>Das RS Speicherelement wird mithilfe der Rückkopplung realisiert (siehe Abbildung). Der Name leitet sich von den zwei Eingängen Reset und Set ab. Die Schaltung kann nicht mit den herkömmlichen Mitteln der booleschen Algebra analysiert werden, da die Eingangssignale der Bausteine jeweils vom Ausgang des anderen Bauelements abhängig sind. Man kann man aber, die Rückkopplung auftrennen und deren Eingänge separat behandelt bzw. beschriften. Dann ist eine Analyse mit der booleschen Algebra möglich. (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 268).</p>
+<p>Der Ausgang Q beschreibt den Zustand des Speicherbausteins. Q-1 bezeichnet den vorherigen Zustand. Um den Wert 1 im R-S Speicherelement zu speichern setzt man S=1 und R=0. Will man den gespeicherten Zustand abrufen, legt man am Eingang S=0 und R=0 an. Will man hingegen den Wert 0, im R-S Baustein speichern, muss man R=1 und S=0 setzen. Die Kombination R=1 und S=1 ist als verbotener Zustand definiert. In diesem Zustand gerät die Schaltung in einen instabilen Zustand in dem beide Ausgänge zwischen 0 und 1 wechseln. Man nennt diesen Zustand auch metastabil.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.31-RS-Latch.png" alt="Abb. 31 RS-Latch" />
+<p class="caption">Abb. 31 RS-Latch</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th>S</th>
+<th align="center">R</th>
+<th>Q<sub>t-1</sub></th>
+<th>Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>X</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.31-RS-Latch-gatter.png" alt="Abb. 31 RS-Latch" />
+<p class="caption">Abb. 31 RS-Latch</p>
+</div>
+<p>Da das RS Speicherelement die Signale am Eingang sofort übernimmt (in der Praxis gibt es hier natürlich auch eine Propagation Delay) spricht man auch von einem asynchronen RS-Latch. Es gibt auch eine Implementation des RS Speicherelements mit zwei NANDS. Ein RS-Flip-Flop mit NAND-Verknüpfungen erkennt man an den negierten Eingängen (RS-Flip-Flop / SR-Flip-Flop (nicht-taktgesteuert), 2014.07.13, <a href="http://www.elektronik-kompendium.de/sites/dig/0205301.htm" class="uri">http://www.elektronik-kompendium.de/sites/dig/0205301.htm</a> ).</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.32-RS-Latch-Control.png" alt="Abb. 32 RS-Latch" />
+<p class="caption">Abb. 32 RS-Latch</p>
+</div>
+<p>Man erkennt aus der Abbildung, dass der Eingang S und R abhängig vom Controleingang ist. Solange der Controleingang 0 ist, übernimmt das RS Latch keinen neuen Wert. Damit sind die möglichen Zustandswechsel auf bestimmte Zeitintervalle festgelegt (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 272).</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.33-RS-Latch-Gatter-C.png" alt="Abb. 33 RS-Latch" />
+<p class="caption">Abb. 33 RS-Latch</p>
+</div>
+<p>Man erkennt aus der Abbildung, dass der Eingang S und R abhängig vom Controleingang ist. Solange der Controleingang 0 ist, übernimmt das RS Latch keinen neuen Wert. Damit sind die möglichen Zustandswechsel auf bestimmte Zeitintervalle festgelegt (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 272).</p>
+<h3 id="d-latch-und-d-flip-flop">D-Latch und D-Flip Flop</h3>
+<p>Das D-Latch ist eine Erweiterung des RS-Latch und löst das Problem der Metastabilität, indem aus dem taktpegelgesteuerten RS-Latch, für den neuen Eingang D=S=!R gesetzt wird. Das D-Latch hat somit nur einen Eingang, an dem der zu speichernde Wert gesetzt wird. Der Eingang wird auch Data Eingang genannt.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.34-D-Latch.png" alt="Abb. 34 RS-Latch" />
+<p class="caption">Abb. 34 RS-Latch</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th>C</th>
+<th align="center">D</th>
+<th>Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">X</td>
+<td>Q</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>Q=0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>Q=1</td>
+</tr>
+</tbody>
+</table>
+<p>Mit der obigen Schaltung werden nur Werte gespeichert wenn das Signal am Controleingang high ist. Speicherelemente die auf positive Taktsignale reagieren sind positiv zustandsgesteuert. Ist der Controleingang bzw. der Takteingang invertiert, ist das Speicherlement negativ zustandsgesteuert und reagiert folglich auf negative Taktsignale. Wenn nicht anders angegeben gehen wir von positiv taktzustandsgesteuerten bzw. taktflankengesteuerten Bauelementen aus.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.35-D-Latch-Gatter.png" alt="Abb. 31 RS-Latch" />
+<p class="caption">Abb. 31 RS-Latch</p>
+</div>
+<p>Das Problem bei taktzustandsgesteuerten Speicherbaugruppen ist, dass diese zwar in einem bestimmten Taktintervall einen Wert übernehmen können, aber der Zeitpunkt innerhalb diesem Zeitintervall beliebig ist. Bei einer positiven Taktphase wird das anliegende Signal direkt übernommen und durchgeschalten (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 273). Die Schalung ist somit immer noch nicht zu 100% deterministisch.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Schaltbild</th>
+<th align="center">Zeitdiagramm Ausschnitt</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="assets/img/blog/tgi/Abb.35-D-Latch-Gatter.png" /></td>
+<td align="center"><img src="assets/img/blog/tgi/Abb.36-positiv-taktzustandsgesteuertes-D-Latch.png" /></td>
+<td>positiv taktzustandsgesteuertes D-Latch</td>
+</tr>
+<tr class="even">
+<td><img src="assets/img/blog/tgi/Abb.37-negatives-D-Latch-gatter.png" /></td>
+<td align="center"><img src="assets/img/blog/tgi/Abb.38-negativ-taktzustandsgesteuertes-D-Latch.png" /></td>
+<td>negativ taktzustandsgesteuertes D-Latch</td>
+</tr>
+<tr class="odd">
+<td><img src="assets/img/blog/tgi/Abb.39-positiv-D-FlipFlop-gatter.png" /></td>
+<td align="center"><img src="assets/img/blog/tgi/Abb.40-positives-taktflankengesteuertes-D-FlipFlop.png" /></td>
+<td>positives taktflankengesteuertes D-FlipFlop</td>
+</tr>
+<tr class="even">
+<td><img src="assets/img/blog/tgi/Abb.41-negatives-taktflankengesteuertes-D-FlipFlop.png" /></td>
+<td align="center"><img src="assets/img/blog/tgi/Abb.42-negatives-taktflankengesteuertes-D-FlipFlop.png" /></td>
+<td>negativ taktflankengesteuertes D-FlipFlop</td>
+</tr>
+</tbody>
+</table>
+<p>Bei einem taktflankengesteuertes Speicherelement passiert der Zustandswechsel nur noch zu den Taktflanken. Das heißt der Zustand darf nur noch geändert werden wenn eine Taktflanke kommt. Der Wirkintervall ist kürzer als bei taktpegelgesteurten Latches.</p>
+<p>Für die Transformation von einem D-Latch in ein Taktflankengesteuertes D-FlipFlop gibt es verschiedene Varianten wie zum Beispiel die Master Slave Schaltung und die Univibrator-Implementation auch bekannt als Monoflop.</p>
+<h3 id="univibrator">Univibrator</h3>
+<p>Mit einer Vorschaltung, die aus einem Inverter besteht, wird durch die Gatterlaufzeit ein kurzer Impuls erzeugt. Für eine minimale Zeitspanne wird der Control Eingang aktiviert und nur zu dieser kurzen Zeit wird der Wert vom Data Eingang übernommen. Somit verliert die Schaltung die Eigenschaft, Signale transparent durch zu schalten, wenn der Controleingang High ist.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.43-Univibrator.png" alt="Abb. 43 Univibrator" />
+<p class="caption">Abb. 43 Univibrator</p>
+</div>
+<h3 id="master-slave-schaltung">Master-Slave Schaltung</h3>
+<p>Eine bessere Variante stellt die Master-Slave Schaltung dar. Das erste Latch ist das Master Latch gefolgt vom Slave Latch. Es ist immer nur eines der beiden Latches aktiv. Das erste Latch ist aktiv wenn der Takt Low ist. Der Data Eingang D wird durchgeschaltet und liegt beim Slave an. Erst wenn der Takt 1 ist, wird der zwischengespeicherte Wert vom Slave übernommen und durchgeschalten.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.44-Master-Slave-Schaltung.png" alt="Abb. 44 Univibrator" />
+<p class="caption">Abb. 44 Univibrator</p>
+</div>
+<p>Master-Slave Schaltungen müssen nicht zwingend mit D-Latche realisiert werden. Es ist auch möglich diese mit anderen Latch typen zu realisieren. In der Praxis gibt es bei den Flip Flops außer der Durchlaufzeit, die etwas größer ist als bei Standardgattern, die tsetup und die thold Zeit. Die Zeiten sind definiert rund um die Controlflanke. Es muss beim Eingang D sichergestellt werden, dass das Signal, mindestens die Setuptime vor der Flanke und mindestens die Holdtime nach der Flanke, stabil anliegt. Ansonsten verhält sich die Schaltung nicht stabil.</p>
+<h3 id="jk-latch-und-jk-flip-flop">JK Latch und JK Flip Flop</h3>
+<p>Vollständigkeitshalber sei hier noch das JK-Latch bzw. das JK-FlipFlop erwähnt.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.45-JK-Schaltung.png" alt="Abb. 45 Univibrator" />
+<p class="caption">Abb. 45 Univibrator</p>
+</div>
+<p>Die Eingänge sind mit Jump und Kill, was für 1 bzw. 0 setzen steht. Ist J=K=0 wird der zuletzt gespeicherte Wert ausgegeben. Beim Wert J=K=1 toggelt das JK Speicherelement und gibt den invertierten letzten gespeicherten Wert zurück.</p>
+<table>
+<thead>
+<tr class="header">
+<th>J</th>
+<th align="center">K</th>
+<th>Q<sub>t-1</sub></th>
+<th>Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h1 id="quellen">Quellen</h1>
+<ul>
+<li>dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser</li>
+<li>2014.07.13, http://www.elektronik-kompendium.de/sites/dig/0205301.htm</li>
+<li>Schildt, Einführung in die technische Informatik, S. 25</li>
+<li>2014.08.01, http://de.wikipedia.org/wiki/Festwertspeicher</li>
+</ul>
+</body>
+</html>

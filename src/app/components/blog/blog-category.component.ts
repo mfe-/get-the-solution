@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blogcategory',
-  templateUrl: './blogCategory.component.html'
+  templateUrl: './blog-category.component.html'
 })
 export class BlogCategoryComponent implements OnInit {
 

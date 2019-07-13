@@ -7,7 +7,7 @@ import { ContactComponent } from './components/contact.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { PrivacyComponent } from './components/privacy.component';
 import { ImpressumComponent } from './components/impressum.component';
-import { BlogCategoryComponent } from './components/blog/blogcategory.component';
+import { BlogCategoryComponent } from './components/blog/blog-category.component';
 
 
 // https://mfe-.github.io/get-the-solution/?p=/blog/Add%20Token%20Authorization%20to%20AngularJS%20and%20WebApi

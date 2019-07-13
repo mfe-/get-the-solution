@@ -1,20 +1,34 @@
-<p>Logische Schaltungen oder auch Schaltnetze arbeiten nach dem EVA Prinzip. Die Signale die am Eingang anliegen werden von der Schaltungslogik verarbeitet und Ausgegeben.</p>
-<p>Diese Schaltungssysteme basieren auf der booleschen Algebra und bilden die Wahrheitswerte „0“ und „1“ mit physikalischen Größen ab. Die Zustände können mit elektrischen Spannung Niveaus, mithilfe der Position eines Stabes, Druckpegel in der Pneumatik, Lichtstrom bei der Optoelektronik oder chemischen Prozessen abgebildet werden.</p>
-<p>Mit der Verknüpfung physikalischer Signale werden die booleschen Funktionen implementiert. Diese booleschen Funktionen werden durch Gatter dargestellt. (vgl. Vorlesungsfolie 04_Digitalschaltungen.pdf, 2013,S. 3) Logische Gatter sind eine abstrakt Darstellung, und können in unterschiedlichen Technologien realisiert werden.</p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p><strong>Hinweis: Abbildungen die aus externen Quellen stammen, stehen nicht unter der CC Lizenzbedingung zuverfügung, sondern unterliegen den jeweiligen Urheberrechten des Verlages!</strong></p>
+<p>Text aus der Reihe <a href="category/TGI">Technische Grundlagen der Informatik</a>. Hinweise auf Fehler, Verbesserungsvorschläge gerne per Email oder per PR auf die .md File.</p>
+<h1 id="logische-schaltungen">Logische Schaltungen</h1>
+<p>Logische Schaltungen basieren auf der booleschen Algebra und bilden die Wahrheitswerte „0“ und „1“ mit physikalischen Größen ab. Die Zustände können mit elektrischen Spannung Niveaus, mithilfe der Position eines Stabes, Druckpegel in der Pneumatik, Lichtstrom bei der Optoelektronik oder chemischen Prozessen abgebildet werden.</p>
+<p>Diese Logische Schaltungen oder auch Schaltnetze arbeiten nach dem EVA Prinzip. Die Signale die am <strong>Eingang</strong> anliegen werden von der Schaltungslogik <strong>verarbeitet</strong> und <strong>Ausgegeben</strong>.</p>
+<p>Die Verarbeitung der Signale passiert über der Verknüpfung physikalischer Signale. Die Verknüpfung der Signale können mit booleschen Funktionen beschrieben werden. Diese booleschen Funktionen können wiederum durch Symbole (&quot;Gatter&quot;) dargestellt werden. (vgl. Vorlesungsfolie 04_Digitalschaltungen.pdf, 2013,S. 3) Logische Gatter sind eine abstrakt Darstellung, und können in unterschiedlichen Technologien realisiert werden.</p>
 <p>Je nach verwendeter Schaltkreistechnologie sind die Funktionen der Gatter unterschiedlich implementiert.</p>
 <p>Z3, ein Computer von Zuse, 1941 entwickelt, basierte noch auf Relais. Diese Schaltelemente schalteten mechanisch und hatten somit eine kurze Lebensdauer, die Baugröße und das Gewicht usw. waren einer der vielen Nachteile.</p>
-<p>Mit der Entwicklung der von Halbleiterbauelementen wurde es möglich, Logische Verknüpfungsglieder viel kleiner, raumsparender und billiger herzustellen. Sie arbeiten kontaktlos, schalten sehr schnell und der Leistungsverbrauch ist relativ gering. Der Aufbau Logischer Verknüpfungsglieder aus einzelnen Widerständen, Dioden und Transistoren war der Ausgangspunkt für die bedeutsame Entwicklung der gesamten Digitaltechnik. (Mitschrift Einführung in die Digitaltechnik, HTL, 2003) Die Schaltkreisfamilien unterscheiden sich in Power dissipataion (Verlustleistung eines Gatters), der Propagation delay und dem Fan out. (vgl. Schildt, Einführung in die technische Informatik, S. 10-11)</p>
-<p>Die bekanntesten Schaltkreisfamilien sind die TTL-Schaltkreisfamilie (bipolare Transistoren), die ECL-Schaltkreisfamilie (bipolare Transistoren) und die Metall-Oxid-Halbleiter (MOS) (Feldeffekt-Transistoren). Die genannten Technologien sind integrierbar und können mehrere Verknüpfungsmitglieder zu einem Halbleiterelement zusammenfassen. (vgl. Dirk W. Hoffmann, Grundlagen der Technischen Informatik, S. 141-142)</p>
+<p>Mit der Entwicklung der von Halbleiterbauelementen wurde es möglich, Logische Verknüpfungsglieder viel kleiner, raumsparender und billiger herzustellen. Sie arbeiten kontaktlos, schalten sehr schnell und der Leistungsverbrauch ist relativ gering. Der Aufbau Logischer Verknüpfungsglieder aus einzelnen Widerständen, Dioden und Transistoren war der Ausgangspunkt für die bedeutsame Entwicklung der gesamten Digitaltechnik. (Mitschrift Einführung in die Digitaltechnik, HTL, 2003) Die Schaltkreisfamilien unterscheiden sich in <strong>Power dissipataion</strong> (Verlustleistung eines Gatters), der <strong>Propagation delay</strong> und dem <strong>Fan out</strong>. (vgl. Schildt, Einführung in die technische Informatik, S. 10-11)</p>
+<p>Die bekanntesten Schaltkreisfamilien sind die <strong>TTL-Schaltkreisfamilie</strong> (bipolare Transistoren), die <strong>ECL-Schaltkreisfamilie</strong> (bipolare Transistoren) und die <strong>Metall-Oxid-Halbleiter</strong> (MOS) (Feldeffekt-Transistoren). Die genannten Technologien sind integrierbar und können mehrere Verknüpfungsmitglieder zu einem Halbleiterelement zusammenfassen. (vgl. Dirk W. Hoffmann, Grundlagen der Technischen Informatik, S. 141-142)</p>
 <p>Heute werden Logische Verknüpfungsglieder fast nur noch in integrierter Schaltungstechnik hergestellt und angeboten. Sie sind dadurch erheblich kleiner billiger und universeller einsetzbar geworden.</p>
+<h2 id="spannung-niveaus">Spannung Niveaus</h2>
 <p>Im Folgenden beschränken wir uns auf digitale Systeme welche zum Abbilden der Wahrheitswerte die elektrischen Spannung Niveaus verwenden.</p>
-<p>Damit überhaupt eine Schaltung über eine Spannung verfügt wird eine Versorgungsspannung (VDD, VCC) angelegt. Daraus ergibt sich, dass eine Eingangsspannung UE und eine Ausgangsspannung UA vorhanden ist. Die Masse wird auch als Ground oder GND bezeichnet.</p>
+<p>Damit überhaupt eine Schaltung über eine Spannung verfügt wird eine Versorgungsspannung (VDD, VCC) angelegt. Daraus ergibt sich, dass eine Eingangsspannung U<sub>E</sub> und eine Ausgangsspannung U<sub>A</sub> vorhanden ist. Die Masse wird auch als Ground oder GND bezeichnet.</p>
 <p>In der Regel wird die Versorgungsspannung als High-Pegel und die 0 Volt (GND) als Low-Pegel definiert.</p>
 <table>
 <thead>
 <tr class="header">
-<th align="center">Pegeltyp</th>
-<th align="center">Beschreibung</th>
-<th align="left">Wert</th>
+<th align="center"><strong>Pegeltyp</strong></th>
+<th align="center"><strong>Beschreibung</strong></th>
+<th align="left"><strong>Wert</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -32,6 +46,297 @@
 </table>
 <p>L…niedrige Spannung<br />
 H…höhere Spannung</p>
-<p>Die Spannungspegel LOW (L) und HIGH (H) sind keine genormten Spannungen, sondern Spannungsbereiche, die von den verwendeten Technologien abhängen. (vgl. Mitschrift Einführung in die Digitaltechnik, HTL, 2003).</p>
-<p>Damit es bei der Zuordnung der Zustände 0 und 1 zu keinen Verwechslungen kommt, gibt es die positive und negative Logik.</p>
-<p>Das heißt bei der positiven Logik ist der Spannungswerte ULow dem logischen Zustand 0 und dem Spanungswert U<sup>High</sup> dem logischen Zustand 1 zugeordnet. Wenn nicht anders angegeben geht man von der positiven Logik aus. Bei der negativen Logik verhält es sich umgekehrt.</p>
+<p>Die Spannungspegel <strong>LOW (L)</strong> und <strong>HIGH (H)</strong> sind keine genormten Spannungen, sondern Spannungsbereiche, die von den verwendeten Technologien abhängen. (vgl. Mitschrift Einführung in die Digitaltechnik, HTL, 2003).</p>
+<p>Damit es bei der Zuordnung der Zustände <strong>0</strong> und <strong>1</strong> zu keinen Verwechslungen kommt, gibt es die <strong>positive</strong> und <strong>negative Logik</strong>.</p>
+<p>Das heißt bei der <strong>positiven Logik</strong> ist der Spannungswerte <strong>U<sub>Low</sub></strong> dem logischen Zustand <strong>0</strong> und dem Spanungswert <strong>U<sub>High</sub></strong> dem logischen Zustand <strong>1</strong> zugeordnet. Wenn nicht anders angegeben geht man von der positiven Logik aus. Bei der negativen Logik verhält es sich umgekehrt.</p>
+<p>Positive Logik: 1=H und 0=L auch aktiv High bezeichnet Negative Logik: 0=H und 1=L auch aktiv Low bezeichnet</p>
+<p>In der Theorie besitzen elektronische Bauelemente, sowie elektronische Leitungen keinen Widerstand und das Schalten der Signale passiert unmittelbar (In der Praxies besitzen diese aber sehr wohl einen Widerstand und die Zeit ist ebenso relevant - siehe weiter unten).</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.1-kennlinie.png" alt="Abb. 1 (Fricke,Digitaltechnik: Lehr- und Übungsbuch für Elektrotechniker und Informatiker, S34)" />
+<p class="caption">Abb. 1 (Fricke,Digitaltechnik: Lehr- und Übungsbuch für Elektrotechniker und Informatiker, S34)</p>
+</div>
+<p>Die Kennlinie eines Gatters stelle den Zusammenhang zwischen Ein- und Ausgangsspannung her. In obiger Abbildung 1 erkennt man, dass die ideale Kennlinie in der Theorie abrupt wechselt. Die reale Kennlinie hingegen fällt. Damit die Logiksignale aus der Analogenwelt eindeutig in die digitale überführt werden kann, wird für UHigh als auch ULow ein Toleranzbereich definiert. Dazwischen liegt die „verbotene Zone“ deren Spannungswerte nicht zulässig sind.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.2-AusgangsEingangsdiagramm.png" alt="Abb. 2 (Schildt, Einführung in die Technische Informatik 2003,S. 8)" />
+<p class="caption">Abb. 2 (Schildt, Einführung in die Technische Informatik 2003,S. 8)</p>
+</div>
+<p>In Abbildung 2 ist ein Ausgangs- Eingangsdiagramm von einem Inverter gegeben. Beim Ausgang sind nur die Werte 5V-4,5V und 1,5V -0V zulässig. Bei einem Ausgang mit 4,5V braucht man zumindest 1,5-0V.</p>
+<p>Der Störabstand ist die Differenz aus dem Intervall der zulässigen Eingangsspannung und Intervall der Ausgansspannung. (Vorlesungsfolie 04_Digitalschaltungen.pdf, 2014,S. 34)</p>
+<p>Oder anders gesagt der Störabstand gibt an wie groß bzw. wie stark die Störungen zwischen den Toleranzbereichen sein darf, damit die Schaltung erwartungsgemäß funktioniert. Der Störabstand kann aus dem Datenblatt des jeweiligen Bauelements entnommen werden. Je größer der Störabstand desto robuster ist die Schaltung.</p>
+<p>Wie bereits angesprochen weichen Theorie und Praxis voneinander ab. Sämtliche Bauelemente und Leitungen besitzen einen Innenwiderstand, eine Verlustleistung (Power dissipation), eine Induktiven und kapazitive Eigenschaften und auch das Umschalten der Spannung geschieht mit Verzögerung. Es sei an dieser Stelle auch kurz das Ohmsche Gesetz U=R.I erwähnt.</p>
+<p>Man spricht von der <strong>Propagation delay</strong>, also jener Zeit die beim Anlegen eines Eingangssignals an einem Gatter vergeht, bis das Ausgangssignal am Ausgang des Gatters anliegt.</p>
+<p>Ein <strong>Propergation delay</strong> kann Hazards auslösen, in dem sie die Schaltung in einen nicht definierten Zustand versetzt. Dies passiert wenn die Gatter Auswertungen unterschiedlich lange dauern.</p>
+<p>Der <strong>Fan out</strong> gibt an wie viele Eingänge man an einen Ausgang anschließen kann, ohne die Funktionalität der Gatter zu beeinträchtigen. Dies hat damit zu tun, dass der Ausgangsstrom sich auf alle nachfolgenden Eingänge verteilt.</p>
+<p>Der <strong>Fan in</strong> hingegen gibt an mit wieviel Eingängen der Gatter umgehen kann. Je mehr Eingänge ein Gatter zu Verfügung stellt desto mehr Strom muss das Gatter aufnehmen. Dieser Strom verursacht Verlustleistung und somit Wärme. (vgl. Vorlesungsfolie 04_Digitalschaltungen.pdf, 2014,S. 39)</p>
+<h2 id="gatter">Gatter</h2>
+<p>Das Gatter wird durch Schaltungssymbole dargestellt welche sich je nach verwendeter Norm oder Literatur unterscheiden können. Wir werden uns an die Schaltsymbole der IEC (International Electrotechnical Commission) halten. Die Grundgatter sind AND (Symbol &amp;), OR (Symbol ≥), NOT (Symbol 1). Die Versorgungsanschlüße der Gatter werden der Übersichtlichkeit weggelassen.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.2-AusgangsEingangsdiagramm.png" alt="Abb. 3 (http://de.wikipedia.org/wiki/Logikgatter 2014.04.08)" />
+<p class="caption">Abb. 3 (<a href="http://de.wikipedia.org/wiki/Logikgatter" class="uri">http://de.wikipedia.org/wiki/Logikgatter</a> 2014.04.08)</p>
+</div>
+<p>Bei Gattern wird noch zwischen „0“- und „1“- aktiven Bauelementen unterschieden. Der Wahrheitswert gibt dabei an, bei welchem anliegenden Signal beim Eingang das Element aktiv wird.</p>
+<p>Das Logiksymbol, gibt an, welche boolesche Funktion das Gatter hat, und wie viel Eingänge und Ausgänge vorhanden sind. Der Signalfluss ist von links nach rechts definiert.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>or</td>
+<td>nor</td>
+</tr>
+<tr class="even">
+<td><img src="assets/img/blog/tgi/or.gatter.png" alt="or gatter" /></td>
+<td><img src="assets/img/blog/tgi/nor.gatter.png" alt="nor gatter" /></td>
+</tr>
+<tr class="odd">
+<td>not</td>
+<td>buffer</td>
+</tr>
+<tr class="even">
+<td><img src="assets/img/blog/tgi/not.gatter.png" alt="not gatter" /></td>
+<td><img src="assets/img/blog/tgi/buffer.gatter.png" alt="buffer gatter" /></td>
+</tr>
+<tr class="odd">
+<td>and</td>
+<td>nand</td>
+</tr>
+<tr class="even">
+<td><img src="assets/img/blog/tgi/and.gatter.png" alt="and gatter" /></td>
+<td><img src="assets/img/blog/tgi/nand.gatter.png" alt="nand gatter" /></td>
+</tr>
+<tr class="odd">
+<td>xor</td>
+<td>xnor</td>
+</tr>
+<tr class="even">
+<td><img src="assets/img/blog/tgi/xor.gatter.png" alt="xor gatter" /></td>
+<td><img src="assets/img/blog/tgi/xnor.gatter.png" alt="xnor gatter" /></td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://de.wikipedia.org/wiki/Logikgatter">(http://de.wikipedia.org/wiki/Logikgatter 2014.04.08)</a></p>
+<table>
+<thead>
+<tr class="header">
+<th>A</th>
+<th align="center">B</th>
+<th align="center">AND</th>
+<th>NAND</th>
+<th>OR</th>
+<th>NOR</th>
+<th>NOT</th>
+<th>XOR</th>
+<th>XNOR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Ein Not bzw. ein Nicht kann durch einen Ring am Ein- oder Ausgang gekennzeichnet werden. Somit muss man nicht immer extra ein NOT Gatter vor den jeweiligen Ein- bzw. Ausgang zeichnen. Die Gatter Ein- und Ausgänge können mit anderen Gatter durch Verbindungen verbunden werden. Namensgleiche Eingänge bzw. Signale sind impliziert verbunden. Mit einem Punkt kann man Verzweigungen kennzeichnen. Busleitungen werden mit einem Strich durch die Leitung und der Anzahl der zusammengefassten Leitungen notiert.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.4-gatter-connection.png" alt="Abb. 4 gatter connection (Vorlesungsfolie 04_Digitalschaltungen.pdf, 2013,S. 15)" />
+<p class="caption">Abb. 4 gatter connection (Vorlesungsfolie 04_Digitalschaltungen.pdf, 2013,S. 15)</p>
+</div>
+<p>Wird ein Gatter mit mehreren Eingängen benötigt kann dies bei AND und OR Gattern durch hintereinanderschalten realisiert werden. Bei anderen Gattern kann sich die boolesche Funktion ändern.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.5-extend-gatter-input.png" alt="Abb. 5 Gatter erweitern" />
+<p class="caption">Abb. 5 Gatter erweitern</p>
+</div>
+<p>Sollen bestimmte Eingänge eines Gatters nur einen bestimmten Wahrheitswert also z.B. 0 oder 1 liefern kann dies durch die Notation „log 0“ oder „log 1“ gekennzeichnet werden. Es ist auch möglich statt dem „log 0“ eine Verbindung zum GND und bei einer „log 1“ eine Verbindung zur Versorgungsspannung herzustellen. Die Eingänge dürfen nicht offen und müssen immer definiert sein. (vgl. Vorlesungsfolie 04_Digitalschaltungen.pdf, 2014,S. 17)</p>
+<p>Besonders interessant sind für die Industrie sind das NOR und NAND Gatter. Diese Gatter gehören zu den universellen Gattern, sind somit Funktionalvollständig d.h. sie können die drei Grundgatter nachbilden. Somit kann man das NOR und NAND Gatter als Standardbaustein verwenden.</p>
+<p>Ein NAND/NOR Gatter benötigt in der CMOS Technologie nur vier Transistoren folglich kann durch die weniger verwendete Chipfläche an Kosten gespart werden.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Gatter</th>
+<th align="center">Transistoren</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inverter</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td>NAND /NOR</td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td>XOR</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td>AND</td>
+<td align="center">6</td>
+</tr>
+<tr class="odd">
+<td>OR</td>
+<td align="center">6</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.6-7400-Quad-2input-gates.png" alt="Abb. 6 TGI Übungsblatt 3 SS14" />
+<p class="caption">Abb. 6 TGI Übungsblatt 3 SS14</p>
+</div>
+<p>Bei einfachen Logikschaltungsbeispielen wird zuerst die Aufgabenstellung auf mögliche Eingangs und Ausgangsvariablen analysiert. Anschließend wird die Funktion der Ausgabe aufgestellt, das mithilfe einer Wahrheitstabelle geschehen kann. Zum Schluss folgt das Minimierung der Funktion und das Erstellen des Schaltplans.</p>
+<p>Um zu testen ob die theoretisch erstellte Schaltung die richtige boolesche Funktion abbildet kann man verschiedene Schaltungssimulationssoftware verwenden. Sämtliche Beispiele wurden hier mit http://logic.ly/demo/ erstellt und getestet. Mit den Schaltern kann man jeweils Strom ein bzw. aus, also 0/1 bei den Eingängen, abbilden. Das Ausgangssignal wird mit einer Lampe angezeigt.</p>
+<p>Im folgenden Transformationsbeispiel soll die Funktion f(a,b,c)=(a+b)+(b.c) mit ausschließlich NAND-Gatter realisiert werden.</p>
+<table>
+<thead>
+<tr class="header">
+<th>A</th>
+<th align="center">B</th>
+<th>C</th>
+<th>A+b</th>
+<th>b.c</th>
+<th>(A+B)+(b.c)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p>Gatterschaltung aufstellen</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/bsp1-transform-gatter-1.png" alt="Abbildung 7 Gatterschaltung aufstellen" />
+<p class="caption">Abbildung 7 Gatterschaltung aufstellen</p>
+</div></li>
+<li><p>Schrittweises ersetzen der OR Gatter mit dem De Morgan‘sches Gesetz</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/bsp1-transform-gatter-2.1.png" alt="Abbildung 8 Gatterschaltung aufstellen" />
+<p class="caption">Abbildung 8 Gatterschaltung aufstellen</p>
+</div>
+<div class="figure">
+<img src="assets/img/blog/tgi/bsp1-transform-gatter-2.2.png" alt="Abbildung 9 Gatterschaltung aufstellen" />
+<p class="caption">Abbildung 9 Gatterschaltung aufstellen</p>
+</div></li>
+<li><p>Negation verschieben</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/bsp1-transform-gatter-3.png" alt="Abbildung 10 Gatterschaltung aufstellen" />
+<p class="caption">Abbildung 10 Gatterschaltung aufstellen</p>
+</div></li>
+<li><p>NOT Gatter durch NAND Gatter ersetzen</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/bsp1-transform-gatter-4.png" alt="Abbildung 11 Gatterschaltung aufstellen" />
+<p class="caption">Abbildung 11 Gatterschaltung aufstellen</p>
+</div></li>
+</ol>
+<h2 id="quellen">Quellen</h2>
+<ul>
+<li>TGI Übungsblatt 3 SS14</li>
+<li>Vorlesungsfolie 04_Digitalschaltungen.pdf, 2013,S. 15</li>
+<li>http://de.wikipedia.org/wiki/Logikgatter 2014.04.08</li>
+<li>Schildt, Einführung in die Technische Informatik 2003,S. 8</li>
+<li>Mitschrift Einführung in die Digitaltechnik, HTL, 2003</li>
+<li>Dirk W. Hoffmann, Grundlagen der Technischen Informatik, S. 141-142</li>
+<li>Fricke,Digitaltechnik: Lehr- und Übungsbuch für Elektrotechniker und Informatiker, S34</li>
+</ul>
+</body>
+</html>

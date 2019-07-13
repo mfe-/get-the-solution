@@ -53,7 +53,7 @@
         "Author": "Martin",
         "Release": "2014-02-07T00:00:00",
         "Source":"assets/database/14.02.07-Glassfish-4-and-Realm.html",
-        "Regards": ["Other"]
+        "Regards": ["Java"]
     },
     {
         "BlogEntryId": 163,
@@ -62,6 +62,30 @@
         "Release": "2013-08-24T00:00:00",
         "Source":"assets/database/13.08.24-reinstall-grub.html",
         "Regards": ["Infrastructure"]
+    },
+    {
+        "BlogEntryId": 133,
+    	"Source":"assets/database/13.11.27-TGI-Logische-Schaltungen.html",
+    	"Title":"Logische Schaltungen",
+    	"Author": "Martin",
+    	"Release": "2013-11-27T00:00:00",
+    	"Regards": ["TGI","education"]
+    },
+    {
+        "BlogEntryId": 132,
+    	"Source":"assets/database/13.11.27-TGI-Digitale-Standardbaugruppen.html",
+    	"Title":"Digitale Standardbaugruppen",
+    	"Author": "Martin",
+    	"Release": "2013-11-27T00:00:00",
+    	"Regards": ["TGI","education"]
+    },
+    {
+        "BlogEntryId": 131,
+    	"Source":"assets/database/13.11.27-TGI-Sequenzielle-Logik.html",
+    	"Title":"Sequenzielle Logik",
+    	"Author": "Martin",
+    	"Release": "2013-11-27T00:00:00",
+    	"Regards": ["TGI","education"]
     },
     {
         "BlogEntryId": 130,
@@ -157,7 +181,7 @@
         "Author": "Martin",
         "Release": "2009-03-21T00:00:00",
         "Source":"assets/database/09.03.21-Einfuehrung in die Programmierung.html",
-        "Regards": ["Article"]
+        "Regards": ["Article","education"]
     },
     {
         "BlogEntryId": 49,

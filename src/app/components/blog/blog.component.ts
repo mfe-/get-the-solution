@@ -10,9 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BlogComponent implements OnInit {
 
-  protected loadedBlogEntries = 0;
+  public loadedBlogEntries = 0;
   protected maxloadBlogEntries = 10;
-  protected BlogEntry: BlogEntry[];
+  public BlogEntry: BlogEntry[];
   public FiltertedBlogEntry: BlogEntry[];
   constructor(@Inject('IBlogService') private blogService: IBlogService, private route: ActivatedRoute) {
     this.BlogEntry = [];

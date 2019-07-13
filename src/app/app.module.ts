@@ -19,7 +19,8 @@ import { BlogService } from './service/blogservice';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { PrivacyComponent } from './components/privacy.component';
 import { ImpressumComponent } from './components/impressum.component';
-import { BlogCategoryComponent } from './components/blog/blogcategory.component';
+import { BlogCategoryComponent } from './components/blog/blog-category.component';
+
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
 // @NgModule takes a metadata object that tells Angular how to compile and launch the application.

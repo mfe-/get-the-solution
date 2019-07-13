@@ -102,8 +102,9 @@ span.regards a:link, span.regards a:visited, span.regards a:hover  {
   text-decoration: inherit; 
   font-family:inherit;
 }
-article {
-
+article img {
+    max-width: 100%;
+    width: 80%;
 }
 
 .author {

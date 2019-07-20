@@ -9,7 +9,7 @@
 </head>
 <body>
 <p><strong>Hinweis: Abbildungen die aus externen Quellen stammen, stehen nicht unter der CC Lizenzbedingung Zuverfügung, sondern unterliegen den jeweiligen Urheberrechten des Verlages!</strong></p>
-<p>Text aus der Reihe <a href="category/TGI">Technische Grundlagen der Informatik</a>. Vorgängertext &quot;Digitale Standardbaugruppen&quot;. Hinweise auf Fehler, Verbesserungsvorschläge gerne per Email oder per PR auf die .md File.</p>
+<p>Text aus der Reihe <a href="category/TGI">Technische Grundlagen der Informatik</a>. Vorgängertext <a href="blog/Digitale%20Standardbaugruppen">&quot;Digitale Standardbaugruppen&quot;</a>. Hinweise auf Fehler, Verbesserungsvorschläge gerne per Email oder per PR auf die .md File.</p>
 <h1 id="lesespeicherbausteine">Lesespeicherbausteine</h1>
 <p>Lese Speicherbausteine, besser bekannt als Festwertspeicher, Nur-Lese-Speicher oder Read only Memory (ROM) sind Datenspeicher, auf die im normalen Betrieb nur lesend zugegriffen werden kann. Sie sind im normalen Betrieb nicht schreibbar und nicht flüchtig (Festwertspeicher, 2014.08.01, <a href="http://de.wikipedia.org/wiki/Festwertspeicher" class="uri">http://de.wikipedia.org/wiki/Festwertspeicher</a> )</p>
 <p>Prinzipiell können diese Speicher in zwei Kategorien unterteilt werden und zwar in die <strong>Funktionalspeicher</strong> und in die <strong>Tabellenspeicher</strong>.</p>
@@ -18,7 +18,7 @@
 <h3 id="tabellenspeicher">Tabellenspeicher</h3>
 <p>Die Tabellenspeicher können immer nur eine gewisse Anzahl an Informationen speichern. Über die Anzahl der Eingänge lässt sich berechnen wieviele Wörter der Baustein gespeichert hat. Am Eingang gibt man die Zeilenadresse an von der man die Information abrufen will. Für diese Funktionalität wird ein Decoder verwendet. Der Ausgang gibt die Wortbreite der Information an. Das Symbolbild für eine 16 x 2 Rom sieht wie folgt aus:</p>
 <div class="figure">
-<img src="assets/img/blog/tgi/Abb.29-ROM-gatter.png" alt="Abb. 29 ROM Gatter" />
+<img src="assets/img/blog/tgi/Abb.29-ROM-gatter.png" alt="Abb. 29 ROM Gatter" width="240" />
 <p class="caption">Abb. 29 ROM Gatter</p>
 </div>
 <p>Eine Rom die 16 Adressen besitzt kann man mit 2^4 also 4 Bit ansteuern. Die Wortbreite beträgt 2 Bit. Der Decoder in der ROM sorgt dafür, dass nur eine Adresszeile aktiv sein kann. Mit einem AND Gatter wird die Information mit der Adressleitung des Decoders verknüpft. So wird gewährleistet, dass die Information nur ausgegeben wird, wenn die Zeile vom Decoder aktiv geschaltet ist. Die Zeilen werden alle mit einem OR Gatter „zusammengeschlossen“ und am Ausgang ausgegeben.</p>
@@ -35,7 +35,7 @@
 <p>FlipFlops werden beim Prozessor Register und Prozessor Cache, bei Zählschaltungen und vielem mehr eingesetzt.</p>
 <p>Ein Taktsignal kann abstrakt durch Generierung einer Verzögerung und durch eine anschließende Rückführung erzeugt werden. In der unteren Abbildung kann man sich z.B. vorstellen, dass am Eingang anfangs 1 anliegt, welches verzögert am Delay Bauteil unverändert ausgegeben wird. Das Signal wird anschließend invertiert und an die Schaltung wird 0 als Taktsignal 0 ausgeben. Die 0 wandert weiter wieder zum Eingang e und wird Verzögert und invertiert. Die Schaltung erhält nun als Taktsignal eine 1 und das Spiel beginnt wieder von neuem.</p>
 <div class="figure">
-<img src="assets/img/blog/tgi/Abb.30-Delay.png" alt="Abb. 30 ROM" />
+<img src="assets/img/blog/tgi/Abb.30-Delay.png" alt="Abb. 30 ROM" width="240" />
 <p class="caption">Abb. 30 ROM</p>
 </div>
 <p>Ein Takt ist durch 1/T definiert wobei T die Periode angibt. 1/T hat als SI Einheit Herz.</p>
@@ -108,7 +108,7 @@
 </tbody>
 </table>
 <div class="figure">
-<img src="assets/img/blog/tgi/Abb.31-RS-Latch-gatter.png" alt="Abb. 31 RS-Latch" />
+<img src="assets/img/blog/tgi/Abb.31-RS-Latch-gatter.png" alt="Abb. 31 RS-Latch" width="240" />
 <p class="caption">Abb. 31 RS-Latch</p>
 </div>
 <p>Da das RS Speicherelement die Signale am Eingang sofort übernimmt (in der Praxis gibt es hier natürlich auch eine Propagation Delay) spricht man auch von einem asynchronen RS-Latch. Es gibt auch eine Implementation des RS Speicherelements mit zwei NANDS. Ein RS-Flip-Flop mit NAND-Verknüpfungen erkennt man an den negierten Eingängen (RS-Flip-Flop / SR-Flip-Flop (nicht-taktgesteuert), 2014.07.13, <a href="http://www.elektronik-kompendium.de/sites/dig/0205301.htm" class="uri">http://www.elektronik-kompendium.de/sites/dig/0205301.htm</a> ).</p>
@@ -118,7 +118,7 @@
 </div>
 <p>Man erkennt aus der Abbildung, dass der Eingang S und R abhängig vom Controleingang ist. Solange der Controleingang 0 ist, übernimmt das RS Latch keinen neuen Wert. Damit sind die möglichen Zustandswechsel auf bestimmte Zeitintervalle festgelegt (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 272).</p>
 <div class="figure">
-<img src="assets/img/blog/tgi/Abb.33-RS-Latch-Gatter-C.png" alt="Abb. 33 RS-Latch" />
+<img src="assets/img/blog/tgi/Abb.33-RS-Latch-Gatter-C.png" alt="Abb. 33 RS-Latch" width="240" />
 <p class="caption">Abb. 33 RS-Latch</p>
 </div>
 <p>Man erkennt aus der Abbildung, dass der Eingang S und R abhängig vom Controleingang ist. Solange der Controleingang 0 ist, übernimmt das RS Latch keinen neuen Wert. Damit sind die möglichen Zustandswechsel auf bestimmte Zeitintervalle festgelegt (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 272).</p>
@@ -156,8 +156,8 @@
 </table>
 <p>Mit der obigen Schaltung werden nur Werte gespeichert wenn das Signal am Controleingang high ist. Speicherelemente die auf positive Taktsignale reagieren sind positiv zustandsgesteuert. Ist der Controleingang bzw. der Takteingang invertiert, ist das Speicherlement negativ zustandsgesteuert und reagiert folglich auf negative Taktsignale. Wenn nicht anders angegeben gehen wir von positiv taktzustandsgesteuerten bzw. taktflankengesteuerten Bauelementen aus.</p>
 <div class="figure">
-<img src="assets/img/blog/tgi/Abb.35-D-Latch-Gatter.png" alt="Abb. 31 RS-Latch" />
-<p class="caption">Abb. 31 RS-Latch</p>
+<img src="assets/img/blog/tgi/Abb.35-D-Latch-Gatter.png" alt="Abb. 35 RS-Latch" width="240" />
+<p class="caption">Abb. 35 RS-Latch</p>
 </div>
 <p>Das Problem bei taktzustandsgesteuerten Speicherbaugruppen ist, dass diese zwar in einem bestimmten Taktintervall einen Wert übernehmen können, aber der Zeitpunkt innerhalb diesem Zeitintervall beliebig ist. Bei einer positiven Taktphase wird das anliegende Signal direkt übernommen und durchgeschalten (vgl. dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser, S. 273). Die Schalung ist somit immer noch nicht zu 100% deterministisch.</p>
 <table>

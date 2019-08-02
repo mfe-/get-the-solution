@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId": 178,
+    	"Source":"assets/database/19.08.02-ExamsGame.html",
+    	"Title":"Das Aufgabenkönig-Spiel (ExamsGame)",
+    	"Author": "Simon",
+    	"Release": "2019-08-02T00:00:00",
+    	"Regards": ["R", "education", "Angular", "TypeScript"]
+    },
+    {
         "BlogEntryId": 177,
     	"Source":"assets/database/19.04.05-ExercisesWithExamsPackage.html",
     	"Title":"Creating exercises with the R exams package",

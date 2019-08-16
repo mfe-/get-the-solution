@@ -18,7 +18,7 @@ export class BlogEntryComponent implements OnInit {
     public ngOnInit() {
     }
 
-    encodeURI(uri:string) { 
-      return encodeURI(uri);
+    encodeURIComponent(uri:string) { 
+      return encodeURIComponent(uri);
     }
 }

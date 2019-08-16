@@ -16,6 +16,10 @@ export class BlogCategoryComponent implements OnInit {
   constructor(@Inject('IBlogService') private blogService: IBlogService, private route: ActivatedRoute) {
     this.FiltertedBlogEntry = [];
     this.Category = this.route.snapshot.paramMap.get("category");
+    if(this.Category!=null)
+    {
+      this.Category = decodeURIComponent(this.Category);
+    }
   }
   public ngOnInit() {
     this.blogService.GetBlogEntries(false).subscribe(this.ApplyBlogEntry.bind(this));

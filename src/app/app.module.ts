@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 import { PrivacyComponent } from './components/privacy.component';
 import { ImpressumComponent } from './components/impressum.component';
 import { BlogCategoryComponent } from './components/blog/blog-category.component';
+import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer'
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -34,6 +35,7 @@ import { BlogCategoryComponent } from './components/blog/blog-category.component
     HeaderComponent,
     HomeComponent,
     ProjectsComponent,
+    ImageResizerComponent,
     BlogComponent,
     BlogEntryComponent,
     BlogCategoryComponent,

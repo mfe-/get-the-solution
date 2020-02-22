@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  git: "https://github.com/mfe-/get-the-solution/edit/master/src/"
 };

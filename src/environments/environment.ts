@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  git: "https://github.com/mfe-/get-the-solution/edit/master/src/"
 };
 
 /*

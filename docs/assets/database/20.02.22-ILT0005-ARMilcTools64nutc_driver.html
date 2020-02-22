@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<h1 id="possible-workaround-when-.net-native-fails">Possible workaround when .Net Native fails</h1>
+<p>When creating the app Packages for the windows store, the ARM version faild with:</p>
+<pre class="csharp"><code>   3&gt; Processing application code
+   3&gt; Computing application closure and generating interop code
+   3&gt; Loading 130 modules...
+   3&gt; Generating code...
+   3&gt; Interop code generated.
+   3&gt; Compiling interop code
+   3&gt; Generating System.Reflection.DispatchProxy proxy code.
+   3&gt; Cleaning up unreferenced code
+   3&gt; Generating native code
+   3&gt;C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\microsoft.net.native.compiler\2.2.7-rel-27913-00\tools\Microsoft.NetNative.targets(801,5): error : ILT0005: &#39;C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.native.compiler\2.2.7-rel-27913-00\tools\ARM\ilc\Tools64\nutc_driver.exe @&quot;C:\ResizeImage.UWP\Image.Manipulation.Shell\obj\ARM\Release\ilc\intermediate\MDIL\Get.the.solution.Image.Manipulation.Shell.rsp&quot;&#39; returned exit code -1073741819
+   ========== Build: 2 succeeded, 1 failed, 5 up-to-date, 0 skipped ==========
+   ========== Package: 0 succeeded, 1 failed ===========
+   ========== App Bundle: 0 succeeded, 1 failed ===========</code></pre>
+<p>Matt from .Net Native was so kind to help me out here with the following:</p>
+<p>It’s quite likely that the optimizer has botched something. One interesting check is:</p>
+<ul>
+<li>Set to DEBUG config</li>
+<li>Turn on .NET Native in the DEBUG config (Project Properties &gt; BUILD &gt; Enable .NET Native)</li>
+<li>Build and see if it repros!</li>
+</ul>
+<p>This config will disable the optimizer for your entire project. If it causes the issue to disappear then it’s just a hunt to see which methods/types we’re having trouble with. If it works in the DEBUG configuration but with .NET Native enabled then you may be able to get a working RELEASE build by selectively disabling the optimizer. Here’s an example of how to do this by Type/Namespace/Assembly:</p>
+<ul>
+<li>Open Properties.rd.xml</li>
+<li>Add: <code>&lt;Type Name=”FullyQualified.TypeName” DoNotOptimize=”true” DoNotInline=”true”/&gt;</code></li>
+<li>Or: <code>&lt;Namespace Name=”Name.Space” DoNotOptimize=”true” DoNotInline=”true”/&gt;</code></li>
+<li>Or: <code>&lt;Assembly Name=”Assembly.Name.Without.Extension” DoNotOptimize=”true” DoNotInline=”true”/&gt;</code></li>
+</ul>
+<p>Disabling things one assembly at a time lets you make reasonable progress without driving yourself mad. If that strategy ends up working out for you, then you’re good to go. The Default.rd.xml file comes along when you submit your application to the Store so the Store compile will look more or less identical to your local compile.</p>
+<p>I followed the above steps and was able to figure out that the <code>ImageSharp</code> assembly or one of its dependcies caused the issue. So I added the proper values to <code>Properties\Default.rd.xml</code> and volia, the ARM Release build is now working too!</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;Assembly</span><span class="ot"> Name=</span><span class="st">&quot;SixLabors.ImageSharp&quot;</span><span class="ot"> DoNotOptimize=</span><span class="st">&quot;true&quot;</span><span class="ot"> DoNotInline=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span></code></pre></div>
+<p>A downside of this workaround seems, that you have to create the app packges (when publishing) seperatly. Selecting x86, x64 and ARM with the modified <code>Default.rd.xml</code> didn't work out for me.</p>
+</body>
+</html>

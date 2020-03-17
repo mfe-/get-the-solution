@@ -69,21 +69,32 @@ pre
    overflow-x:scroll;
 }
 
-/* Change the link color to #111 (black) on hover */
-
 nav li a:hover {
     background-color: #111;
-    color: #E53F7B;
+    color: #C84884;
     text-decoration: none;
+}
+
+.green
+{
+    color: #78B68D
+}
+.pink
+{
+    color: #C84884
 }
 
 hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #78B68D;
     margin: 1em 0;
     padding: 0;
+}
+
+nav hr{
+    border-top: 1px solid #C84884;
 }
 
 section h2 {
@@ -120,6 +131,11 @@ a:link {
     color: #00a874;
     background-color: transparent;
 }
+p a:link {
+    padding-right: 11px;
+    background: url('assets/logo/pink.svg') no-repeat center right;
+    background-size: 8px;
+}
 
 a:visited {
     color: #00a874;
@@ -151,7 +167,7 @@ footer {
     margin: 0 !important;
     width: 100%;
     font-family: 'Josefin Sans', sans-serif;
-    padding: 1rem;
+    padding-top: 1rem;
     text-align: center;
 }
 

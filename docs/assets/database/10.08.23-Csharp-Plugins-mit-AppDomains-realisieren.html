@@ -260,4 +260,4 @@
 <p>Wurde eine AppDomain entladen, sind alle darin enthaltenen Typen nicht mehr verwendbar. Ein Zugriff auf einen entladenen Typ würde eine AppDomainUnloadedException auslösen. Die entladene AppDomain gibt alle geladenen Assemblies wieder frei.</p>
 <p>Ist in einer AppDomain ein oder noch mehrere Threads aktiv wird eine ThreadAbortException geworfen. Das bedeudet, dass beim „unloaden“ einer AppDomain eine ThreadAbortException auftreten kann. Mehr Informationen siehe dazu in der MSDN. Nachdem entladen der AppDomain macht sich der GC auf, um die Ressourcen von der AppDomain frei zu geben.</p>
 <p>Am besten ihr schaut euch noch die Demo an. In der Demo ist ein Plugin vorhanden, das via Timer eine ArgumentNullException wirft. Die Domain wird anschließend entladen. Die aktivierte Abwärtskompatibilität verhindert, dass die Host-Anwendung abstürzt. Über eine Rückmeldung freue ich mich.</p>
-<p><a href="https://github.com/mfe-/PluginManager">Source Code PluginManager</a></p>
+<p><a href="https://github.com/mfe-/ApplicationWithPlugins">Source Code PluginManager v1</a> <a href="https://github.com/mfe-/PluginManager">Source Code PluginManager v0</a></p>

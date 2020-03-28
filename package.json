@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
+    "@babel/compat-data": "^7.8.0",
     "core-js": "^2.6.9",
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.2",

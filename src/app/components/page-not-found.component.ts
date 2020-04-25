@@ -24,8 +24,13 @@ export class PageNotFoundComponent implements OnInit {
       //check if the link was from the predecessor website get-the-solution.net v1
       //example index-blog-1-14-52-Einführung-in-die-Programmierung
       let regeex = new RegExp(this.REGEXLINKBLOG);
-      if (regeex.test(id)) {
+      //example index-1-14-52-Einführung-in-die-Programmierung
+      let regeex1 = new RegExp(this.REGEXLINKBLOG.replace("blog-", ""));
+      if (regeex.test(id) || regeex1.test(id)) {
         let regexmatch = regeex.exec(id);
+        if (regexmatch == null) {
+          regexmatch = regeex1.exec(id);
+        }
         if (regexmatch.length > 1) {
           //we found the blog id
           let blogid = +regexmatch[1];
@@ -53,20 +58,20 @@ export class PageNotFoundComponent implements OnInit {
           }
           else if (pagetitle.includes("blog")) {
             this.router.navigate(["/blog"]);
-          } 
+          }
           else if (pagetitle.includes("privacy") && pagetitle.includes("policy")) {
             this.router.navigate(["/privacy"]);
-          } 
+          }
           else if (pagetitle.includes("impressum")) {
             this.router.navigate(["/impressum"]);
-          } 
+          }
           else if (pagetitle.includes("kontakt") || pagetitle.includes("team")) {
             this.router.navigate(["/contact"]);
-          } 
-          else if (pagetitle.includes("c#") && pagetitle.includes("plugins") 
-          && pagetitle.includes("appdo")) {
+          }
+          else if (pagetitle.includes("c#") && pagetitle.includes("plugins")
+            && pagetitle.includes("appdo")) {
             this.router.navigate(["/2010/08/23/c-plugins-mit-appdomains-realisieren"]);
-          } 
+          }
         }
       }
       this.Link = "/" + this.route.snapshot.paramMap.get('p');

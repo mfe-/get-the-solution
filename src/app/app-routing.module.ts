@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { HomeComponent } from './components/home.component';
 import { ProjectsComponent } from './components/projects/projects.component'
 import { BlogComponent } from './components/blog/blog.component';
@@ -9,6 +9,7 @@ import { PrivacyComponent } from './components/privacy.component';
 import { ImpressumComponent } from './components/impressum.component';
 import { BlogCategoryComponent } from './components/blog/blog-category.component';
 import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer';
+import { Title } from '@angular/platform-browser';
 
 
 // https://mfe-.github.io/get-the-solution/?p=/blog/Add%20Token%20Authorization%20to%20AngularJS%20and%20WebApi
@@ -22,8 +23,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'blog/:title', component: BlogComponent },
-  { path: 'category/:category', component: BlogCategoryComponent},
-  { path: 'category', component: BlogCategoryComponent},
+  { path: 'category/:category', component: BlogCategoryComponent },
+  { path: 'category', component: BlogCategoryComponent },
   { path: ':year/:month/:day/:title', component: BlogComponent },
   { path: ':p', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
@@ -35,8 +36,14 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-//mit router events feststellen was url ist zwischnespeichern und weiterleiten
-
-// https://ngrefs.com/en/latest/router/events
-
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  constructor(private router: Router, private titleService: Title) {
+    //set default page title using the url
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
+        if (ev.url.indexOf("blog") == -1)
+          titleService.setTitle("get-the-solution.net" + " - " + ev.url.replace("/", ""));
+      }
+    });
+  }
+}

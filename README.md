@@ -15,7 +15,7 @@
 ## Convert markdown files to html files
 Using pandoc in Linux: 
 
-	cd src/assets/database; for file in *.md; do pandoc "$file" -o "`basename -s .md $file`.html"; done
+	cd src/assets/database; for i in *.md; do pandoc "$i" -o "${i%.*}".html; done
 	
 	ng build --output-path=docs --prod --base-href "https://get-the-solution.net/"
 

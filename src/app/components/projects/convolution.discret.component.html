@@ -1,0 +1,9 @@
+<p>discret convolution works!</p>
+<p>x: <input [(ngModel)]="myX"> h: <input [(ngModel)]="myH" ng-pattern="^[0-9](,[0-9])*$"></p>
+<code>
+    x*h=sum(x[m]*h[n-m])
+</code>
+<p>conv1([{{_x}}] , [{{_h}}])=[{{conv}}]</p>
+<div *ngFor="let step of steps">
+    <br>{{step}}<br>
+</div>

@@ -20,7 +20,9 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 import { PrivacyComponent } from './components/privacy.component';
 import { ImpressumComponent } from './components/impressum.component';
 import { BlogCategoryComponent } from './components/blog/blog-category.component';
-import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer'
+import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer';
+import { ConvolutionDiscretComponent } from './components/projects/convolution.discret.component'
+import { FormsModule } from '@angular/forms';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -43,12 +45,14 @@ import { ImageResizerComponent } from './components/projects/image-resizer/image
     FooterComponent,
     PageNotFoundComponent,
     PrivacyComponent,
-    ImpressumComponent
+    ImpressumComponent,
+    ConvolutionDiscretComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     { provide: 'IBlogService', useClass: BlogService }

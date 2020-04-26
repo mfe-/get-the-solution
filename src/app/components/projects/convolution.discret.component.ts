@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-convolution',
@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ConvolutionDiscretComponent implements OnInit {
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this._x = [1, 2, 2, 1, 0, 0];
     this._h = [1, -1, 0, 0, -1, 1];
   }
@@ -21,7 +21,7 @@ export class ConvolutionDiscretComponent implements OnInit {
 
   conv1(x: number[], h: number[], only_overlap: boolean): number[] {
     var y: number[] = new Array();
-
+    this.steps = new Array();
     // https://dsp.stackexchange.com/questions/34434/vector-length-output-of-discrete-time-convolution?newreg=02494406a8bd4861a8f4f744be8d2a81
     var N = h.length;
     var M = x.length;
@@ -45,6 +45,8 @@ export class ConvolutionDiscretComponent implements OnInit {
       this.steps[i] = this.steps[i].substring(0, this.steps[i].length - 2) + "=" + y[i];
       console.log(this.steps[i]);
     }
+    //tell angular to rerender our steps loop
+    this.cdr.detectChanges();
     return y;
   }
   getX(m: number): number {
@@ -52,6 +54,10 @@ export class ConvolutionDiscretComponent implements OnInit {
   }
   getH(nM: number) {
     return nM <= this._h.length - 1 ? this._h[nM] : 0;
+  }
+
+  identify(index, item) {
+    return index;
   }
 
   private _myX: string = "";
@@ -66,10 +72,7 @@ export class ConvolutionDiscretComponent implements OnInit {
       this._x = array;
       this.conv = this.conv1(this._x, this._h, false)
     }
-    catch
-    {
-
-    }
+    catch (e) { }
   }
   private _myH: string = "";
   get myH(): string {
@@ -83,10 +86,7 @@ export class ConvolutionDiscretComponent implements OnInit {
       this._h = array;
       this.conv = this.conv1(this._x, this._h, false)
     }
-    catch
-    {
-
-    }
+    catch (e) { }
   }
 
   arrayToString(array: number[]): string {

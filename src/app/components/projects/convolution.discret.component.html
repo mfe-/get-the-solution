@@ -4,6 +4,6 @@
     x*h=sum(x[m]*h[n-m])
 </code>
 <p>conv1([{{_x}}] , [{{_h}}])=[{{conv}}]</p>
-<div *ngFor="let step of steps">
+<div *ngFor="let step of steps; index as i; ">
     <br>{{step}}<br>
 </div>

@@ -1,8 +1,19 @@
 <p>discret convolution works!</p>
 <p>x: <input [(ngModel)]="myX"> h: <input [(ngModel)]="myH" ng-pattern="^[0-9](,[0-9])*$"></p>
-<code>
-    x*h=sum(x[m]*h[n-m])
-</code>
+<p>
+    <input type="checkbox" name="only_overlap" [(ngModel)]="only_overlap" [ngModelOptions]="{standalone: true}">
+    <label for="only_overlap">only_overlap</label>
+</p>
+<span>See <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.convolve.html" target="_blank">numpy.convolve</a> for reference</span>
+<p [hidden]="only_overlap">This returns the convolution at each point of overlap, with an output shape of (N+M-1,).
+    At the end-points of the convolution, the signals do not overlap completely, and boundary effects may be seen.
+    <code>
+        x*h=sum(x[m]*h[n-m])
+    </code>
+</p>
+<p [hidden]="!only_overlap">
+    Mode ‘valid’ returns output of length max(M, N) - min(M, N) + 1. The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect.
+</p>
 <p>conv1([{{_x}}] , [{{_h}}])=[{{conv}}]</p>
 <div *ngFor="let step of steps; index as i; ">
     <br>{{step}}<br>

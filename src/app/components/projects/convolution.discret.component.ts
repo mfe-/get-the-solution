@@ -9,10 +9,14 @@ export class ConvolutionDiscretComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {
     this._x = [1, 2, 2, 1, 0, 0];
     this._h = [1, -1, 0, 0, -1, 1];
+    this._only_overlap = false;
   }
 
   ngOnInit(): void {
-    this.conv = this.conv1(this._x, this._h, false);
+    this.calculateConv1();
+  }
+  public calculateConv1(): void {
+    this.conv = this.conv1(this._x, this._h, this._only_overlap);
   }
   public _x: number[];
   public _h: number[];
@@ -25,30 +29,61 @@ export class ConvolutionDiscretComponent implements OnInit {
     // https://dsp.stackexchange.com/questions/34434/vector-length-output-of-discrete-time-convolution?newreg=02494406a8bd4861a8f4f744be8d2a81
     var N = h.length;
     var M = x.length;
-    //full mode
-    //This returns the convolution at each point of overlap, with an output shape of (N+M-1,).
-    //At the end-points of the convolution, the signals do not overlap completely, and boundary effects may be seen.
+
     var y_lenght = N + M - 1;
+    if (only_overlap == false) {
+      //full mode
+      //This returns the convolution at each point of overlap, with an output shape of (N+M-1,).
+      //At the end-points of the convolution, the signals do not overlap completely, and boundary effects may be seen.
+      y_lenght = N + M - 1;
+    }
+    else {
+      // Mode ‘valid’ returns output of length max(M, N) - min(M, N) + 1. 
+      // The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect.
+      y_lenght = Math.max(M, N) - Math.min(M, N) + 1.
+    }
+
+    var min_v = (N < M) ? h : x;
+    var max_v = (N < M) ? x : h;
 
     for (var i = 0; i < y_lenght; i++) {
 
       var n: number = 0;
       var m: number = 0;
       y[i] = 0;
-      this.steps[i] = "y[" + i + "]=";
+      if (only_overlap == false) {
+        this.steps[i] = "y[" + i + "]=";
 
-      //calculate sum(x[m]*h[n-m])
-      for (m = 0, n = i; m <= i; m++) {
-        this.steps[i] = this.steps[i] + ("x[" + m + "]*h[" + (n - m) + "](" + (this.getX(m) * this.getH(n - m)) + ") + ");
-        y[i] = y[i] + (this.getX(m) * this.getH(n - m));
+        //calculate sum(x[m]*h[n-m])
+        for (m = 0, n = i; m <= i; m++) {
+          this.steps[i] = this.steps[i] + ("x[" + m + "]*h[" + (n - m) + "](" + (this.getX(m) * this.getH(n - m)) + ") + ");
+          y[i] = y[i] + (this.getX(m) * this.getH(n - m));
+        }
+        this.steps[i] = this.steps[i].substring(0, this.steps[i].length - 2) + "=" + y[i];
       }
-      this.steps[i] = this.steps[i].substring(0, this.steps[i].length - 2) + "=" + y[i];
-      console.log(this.steps[i]);
+      else {
+        //Mode "valid"
+        var j = 0;
+        var k = i;
+        for (j = (min_v.length - 1), k = i; j >= 0; --j) {
+          y[i] += min_v[j] * max_v[k];
+          ++k;
+        }
+      }
     }
     //tell angular to rerender our steps loop
     this.cdr.detectChanges();
     return y;
   }
+  public _only_overlap: boolean;
+  get only_overlap(): boolean {
+    return this._only_overlap;
+  }
+  set only_overlap(value: boolean) {
+    this._only_overlap = value;
+    this.calculateConv1();
+  }
+
   getX(m: number): number {
     return m <= this._x.length - 1 ? this._x[m] : 0;
   }
@@ -70,7 +105,7 @@ export class ConvolutionDiscretComponent implements OnInit {
     try {
       array = this.stringToArray(value);
       this._x = array;
-      this.conv = this.conv1(this._x, this._h, false)
+      this.calculateConv1();
     }
     catch (e) { }
   }
@@ -84,7 +119,7 @@ export class ConvolutionDiscretComponent implements OnInit {
     try {
       array = this.stringToArray(value);
       this._h = array;
-      this.conv = this.conv1(this._x, this._h, false)
+      this.calculateConv1();
     }
     catch (e) { }
   }

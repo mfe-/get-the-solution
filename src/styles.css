@@ -18,6 +18,11 @@ header {
     text-align: center;
     max-height: 10%;
 }
+#nav_placeholder {
+    /* fix jumping scroll issue */
+    font-size: 1.5em;
+    padding: 14px 16px;
+}
 
 .center {
     margin: 0 auto;

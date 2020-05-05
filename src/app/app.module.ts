@@ -79,9 +79,12 @@ export class AppModule {
   private stickyHeader()
   {
     if (window.pageYOffset > 85) {
+      document.getElementById("nav_placeholder").style.display = "block";
       document.getElementsByTagName("nav")[0].classList.add("sticky");
     } else {
+      document.getElementById("nav_placeholder").style.display = "none";
       document.getElementsByTagName("nav")[0].classList.remove("sticky");
+
     }
   }
   

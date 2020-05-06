@@ -67,24 +67,32 @@ export class AppModule {
   {
     window.onscroll =  this.stickyHeader;
   }
-
-  private shrinkHeader()
-  {
-    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-      document.getElementsByTagName("header")[0].style.fontSize = "1em";
-    } else {
-      document.getElementsByTagName("header")[0].style.fontSize = "2em";
-    }
-  }
   private stickyHeader()
   {
+    var navElement = document.getElementsByTagName("nav").item(0);
+    var pElements = document.getElementsByTagName("footer").item(0).getElementsByTagName("p");
     if (window.pageYOffset > 85) {
-      document.getElementById("nav_placeholder").style.display = "block";
-      document.getElementsByTagName("nav")[0].classList.add("sticky");
-    } else {
-      document.getElementById("nav_placeholder").style.display = "none";
-      document.getElementsByTagName("nav")[0].classList.remove("sticky");
 
+      if(pElements.length<2)
+      {
+        //add new p element to avoid jumping scrollbar
+        var para = document.createElement("p");
+        para.setAttribute("style", "visibility:hidden;");
+        var node = document.createTextNode("This is a new paragraph.");
+        para.appendChild(node);
+        document.getElementsByTagName("footer").item(0).appendChild(para);
+      }
+      //add sticky header css
+      navElement.classList.add("sticky");
+    } else {
+      //remove p
+      var i =0;
+      for(i;i<pElements.length;i++)
+      {
+        document.getElementsByTagName("footer").item(0).removeChild(pElements[i]);
+      }
+      //remove sticky header
+      navElement.classList.remove("sticky");
     }
   }
   

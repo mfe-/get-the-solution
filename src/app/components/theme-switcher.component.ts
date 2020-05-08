@@ -41,6 +41,9 @@ export class ThemeSwitcherComponent implements OnInit {
     }
     if (localStorage.getItem(this.switchCssClassKey) != null) {
       if (localStorage.getItem(this.switchCssClassKey) != "") {
+        this.currentCssFile="";
+        this.defaultCssFile="";
+        //will switch off the light
         this.switch();
       }
     }

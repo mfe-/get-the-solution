@@ -3,7 +3,8 @@ import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-theme-switcher',
-  template: '<a [routerLink]="" queryParamsHandling="preserve" (click)="switch()">{{currentCssFile==defaultCssFile ? \'Turn Light off\' : \'Turn Light on\'}}</a>',
+  template: '<a [routerLink]="" queryParamsHandling="preserve" '
+  +'(click)="switch()">{{currentCssFile==defaultCssFile ? \'Turn Light off\' : \'Turn Light on\'}}</a>',
   styles: [
   ],
 })
@@ -18,6 +19,7 @@ export class ThemeSwitcherComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.defaultCssFile = this.getCssLink();
+    this.currentCssFile = this.defaultCssFile;
   }
 
   public getCssLink(): string {
@@ -34,7 +36,11 @@ export class ThemeSwitcherComponent implements OnInit {
     var links = document.getElementsByTagName("link");
     for (i; i < links.length; i++) {
       if (links[i].getAttribute("rel") == "stylesheet") {
-        links[i].setAttribute("href", cssLink);
+        var newlink = document.createElement("link");
+        newlink.setAttribute("rel", "stylesheet");
+        newlink.setAttribute("type", "text/css");
+        newlink.setAttribute("href", cssLink);
+        document.getElementsByTagName("head").item(0).replaceChild(newlink, links[i]);
         return;
       }
     }

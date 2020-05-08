@@ -72,7 +72,7 @@ export class AppModule {
     var navElement = document.getElementsByTagName("nav").item(0);
 
     var pElements = document.getElementsByTagName("footer").item(0).getElementsByTagName("p");
-    if (window.pageYOffset > navElement.offsetHeight) {
+    if (window.pageYOffset > (navElement.offsetHeight + 20)) {
 
       if (pElements.length < 3) {
         //add new p element to avoid jumping scrollbar

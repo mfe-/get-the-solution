@@ -17,7 +17,7 @@ export class ThemeSwitcherComponent implements OnInit {
   currentCssFile: string;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
-    this.currentCssFile = this.getCssLink();
+    this.defaultCssFile = this.getCssLink();
   }
 
   public getCssLink(): string {

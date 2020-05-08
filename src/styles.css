@@ -7,6 +7,19 @@
     font-family: 'Spectral';
     src: url(fonts/Spectral-Regular.ttf);
 }
+body.black
+{
+    color: #ffffff;
+    background-color: #111;
+}
+body.black nav.sticky {
+    background: #111111;
+}
+body.black code 
+{
+    background: #111111;
+}
+
 h1{
     font-size: 1.4em;
     margin-block-start:0;
@@ -54,6 +67,7 @@ nav ul li a {
     width: 100%;
     background: #ffffff;
 }
+
 .sticky hr
 {
     margin:0;

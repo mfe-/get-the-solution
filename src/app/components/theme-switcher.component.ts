@@ -35,30 +35,6 @@ export class ThemeSwitcherComponent implements OnInit {
     this.defaultCssFile = this.getCssLink();
     this.currentCssFile = this.defaultCssFile;
   }
-
-  public getCssLink(): string {
-    var i = 0;
-    var links = document.getElementsByTagName("link");
-    for (i; i < links.length; i++) {
-      if (links[i].getAttribute("rel") == "stylesheet") {
-        return links[i].getAttribute("href");
-      }
-    }
-  }
-  public setCssLink(cssLink: string) {
-    var i = 0;
-    var links = document.getElementsByTagName("link");
-    for (i; i < links.length; i++) {
-      if (links[i].getAttribute("rel") == "stylesheet") {
-        var newlink = document.createElement("link");
-        newlink.setAttribute("rel", "stylesheet");
-        newlink.setAttribute("type", "text/css");
-        newlink.setAttribute("href", cssLink);
-        document.getElementsByTagName("head").item(0).replaceChild(newlink, links[i]);
-        return;
-      }
-    }
-  }
   ngOnInit(): void {
     if (this.switchCssClass != undefined && this.switchCssFile != undefined) {
       throw new Error("Please set switchCssClass or switchCssFile. Can't use both combinations at the same time!");
@@ -98,6 +74,29 @@ export class ThemeSwitcherComponent implements OnInit {
       localStorage.setItem(this.switchCssClassKey, this.currentCssFile);
     }
 
+  }
+  public getCssLink(): string {
+    var i = 0;
+    var links = document.getElementsByTagName("link");
+    for (i; i < links.length; i++) {
+      if (links[i].getAttribute("rel") == "stylesheet") {
+        return links[i].getAttribute("href");
+      }
+    }
+  }
+  public setCssLink(cssLink: string) {
+    var i = 0;
+    var links = document.getElementsByTagName("link");
+    for (i; i < links.length; i++) {
+      if (links[i].getAttribute("rel") == "stylesheet") {
+        var newlink = document.createElement("link");
+        newlink.setAttribute("rel", "stylesheet");
+        newlink.setAttribute("type", "text/css");
+        newlink.setAttribute("href", cssLink);
+        document.getElementsByTagName("head").item(0).replaceChild(newlink, links[i]);
+        return;
+      }
+    }
   }
 
 }

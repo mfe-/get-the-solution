@@ -1,0 +1,196 @@
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url(fonts/JosefinSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Spectral';
+    src: url(fonts/Spectral-Regular.ttf);
+}
+body
+{
+    background-color: #111;
+    color: #ffffff;
+}
+h1{
+    font-size: 1.4em;
+    margin-block-start:0;
+    margin-block-end:0;
+}
+header {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2em;
+    text-align: center;
+    max-height: 10%;
+}
+code {
+    background-color: gray;
+}
+
+.center {
+    margin: 0 auto;
+    width: 70%;
+}
+
+nav {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+nav ul {
+    font-family: 'Josefin Sans', sans-serif;
+    list-style-type: none;
+    list-style: none;
+    overflow: hidden;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #111111;
+}
+.sticky hr
+{
+    margin:0;
+}
+
+pre
+{
+   font-size: 1.0em;
+   border:1px solid #ccc;
+   border-radius:.25rem;
+   background-color:#f9f9f9;
+   padding: .5em;
+   overflow-x:scroll;
+}
+
+nav li a:hover {
+    background-color: #111;
+    color: #C84884;
+    text-decoration: none;
+}
+
+.green
+{
+    color: #78B68D
+}
+.pink
+{
+    color: #C84884
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #78B68D;
+    margin: 1em 0;
+    padding: 0;
+}
+
+nav hr{
+    border-top: 1px solid #C84884;
+}
+
+section h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: left;
+}
+section h2 a:link, section h2 a:visited, section h2  a:active {
+  color: inherit; 
+  text-decoration: inherit; 
+  font-family:inherit;
+}
+
+main {
+    font-family: 'Spectral', serif;
+    font-size: 1.2em;
+    left: 50%;
+
+}
+span.regards a:link, span.regards a:visited, span.regards a:hover  {
+  color: inherit; 
+  text-decoration: inherit; 
+  font-family:inherit;
+}
+article img {
+    max-width: 100%;
+}
+
+.author {
+    white-space: nowrap;
+    display: inline;
+}
+
+a:link {
+    color: #00a874;
+    background-color: transparent;
+}
+p a:link {
+    padding-right: 11px;
+    background: url('assets/logo/pink.svg') no-repeat center right;
+    background-size: 8px;
+}
+
+a:visited {
+    color: #00a874;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #E53F7B;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #00a874;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+footer {
+    margin: 0 !important;
+    width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .center
+    {
+        margin:initial;
+        width:initial;
+        padding:0.9em;
+    }
+    .wp-pagenavi {
+        font-size: 1.5em;
+    }
+    .wp-pagenavi a, .wp-pagenavi span
+    {
+        padding: 10px 5px;
+    }
+}

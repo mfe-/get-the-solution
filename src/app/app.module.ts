@@ -23,6 +23,7 @@ import { BlogCategoryComponent } from './components/blog/blog-category.component
 import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer';
 import { ConvolutionDiscretComponent } from './components/projects/convolution.discret.component'
 import { FormsModule } from '@angular/forms';
+import { ThemeSwitcherComponent } from './components/theme-switcher.component';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -46,7 +47,8 @@ import { FormsModule } from '@angular/forms';
     PageNotFoundComponent,
     PrivacyComponent,
     ImpressumComponent,
-    ConvolutionDiscretComponent
+    ConvolutionDiscretComponent,
+    ThemeSwitcherComponent
   ],
   imports: [
     HttpClientModule,
@@ -63,18 +65,15 @@ import { FormsModule } from '@angular/forms';
 })
 export class AppModule {
 
-  public constructor()
-  {
-    window.onscroll =  this.stickyHeader;
+  public constructor() {
+    window.onscroll = this.stickyHeader;
   }
-  private stickyHeader()
-  {
+  private stickyHeader() {
     var navElement = document.getElementsByTagName("nav").item(0);
     var pElements = document.getElementsByTagName("footer").item(0).getElementsByTagName("p");
     if (window.pageYOffset > 85) {
 
-      if(pElements.length<2)
-      {
+      if (pElements.length < 3) {
         //add new p element to avoid jumping scrollbar
         var para = document.createElement("p");
         para.setAttribute("style", "visibility:hidden;");
@@ -86,14 +85,13 @@ export class AppModule {
       navElement.classList.add("sticky");
     } else {
       //remove p
-      var i =0;
-      for(i;i<pElements.length;i++)
-      {
+      var i = 0;
+      for (i; i < pElements.length; i++) {
         document.getElementsByTagName("footer").item(0).removeChild(pElements[i]);
       }
       //remove sticky header
       navElement.classList.remove("sticky");
     }
   }
-  
+
 }

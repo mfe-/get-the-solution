@@ -208,10 +208,18 @@ footer {
         display: block;
         color: #333;
         text-align: center;
-        padding: 1em 0.4em;
+        padding: .6em 0.2em;
         text-decoration: none;
     }
     header img {
         display: none;
-    };
+    }
+    hr
+    {
+        margin: .5em 0 !important ; 
+    }
+    footer
+    {
+        line-height: 2em;
+    }
 }

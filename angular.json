@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              { "input": "src/styles.css", "inject": true }
             ],
             "scripts": []
           },
@@ -96,7 +96,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              { "input": "src/styles.css", "inject": true }
             ],
             "scripts": [],
             "assets": [

@@ -7,21 +7,33 @@
     font-family: 'Spectral';
     src: url(fonts/Spectral-Regular.ttf);
 }
+body.black
+{
+    color: #ffffff;
+    background-color: #111;
+}
+body.black nav.sticky {
+    background: #111111;
+}
+body.black code 
+{
+    background: #111111;
+}
+
 h1{
     font-size: 1.4em;
     margin-block-start:0;
     margin-block-end:0;
+    overflow-wrap: break-word;
+}
+h2{
+    overflow-wrap: break-word;
 }
 header {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 2em;
     text-align: center;
     max-height: 10%;
-}
-#nav_placeholder {
-    /* fix jumping scroll issue */
-    font-size: 1.5em;
-    padding: 14px 16px;
 }
 
 .center {
@@ -59,6 +71,7 @@ nav ul li a {
     width: 100%;
     background: #ffffff;
 }
+
 .sticky hr
 {
     margin:0;
@@ -131,7 +144,12 @@ article img {
     white-space: nowrap;
     display: inline;
 }
-
+article{
+    overflow-wrap: break-word;
+}
+article a{
+    overflow-wrap: break-word;
+}
 a:link {
     color: #00a874;
     background-color: transparent;
@@ -183,11 +201,25 @@ footer {
         width:initial;
         padding:0.9em;
     }
-    .wp-pagenavi {
-        font-size: 1.5em;
+    nav {
+        text-align: unset;
     }
-    .wp-pagenavi a, .wp-pagenavi span
+    nav ul li a {
+        display: block;
+        color: #333;
+        text-align: center;
+        padding: .6em 0.2em;
+        text-decoration: none;
+    }
+    header img {
+        display: none;
+    }
+    hr
     {
-        padding: 10px 5px;
+        margin: .5em 0 !important ; 
+    }
+    footer
+    {
+        line-height: 2em;
     }
 }

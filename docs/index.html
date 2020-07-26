@@ -57,6 +57,21 @@
     }(window.location))
   </script>
   <!-- End Single Page Apps for GitHub Pages -->
+  <script>
+      function docReady(fn) {
+      // see if DOM is already available
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+          // call on next available tick
+          setTimeout(fn, 1);
+      } else {
+          document.addEventListener("DOMContentLoaded", fn);
+      }
+    }  
+    docReady(function() {
+      // DOM is loaded and ready for manipulation here
+      console.log("page ready");
+    });
+  </script> 
 <link rel="stylesheet" href="styles.c2fd96d58b77c640de11.css"></head>
 
 <body>
@@ -65,6 +80,6 @@
       style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <app-root></app-root>
-<script src="runtime-es2015.c9afb3256f2870e161de.js" type="module"></script><script src="runtime-es5.c9afb3256f2870e161de.js" nomodule defer></script><script src="polyfills-es5.c56d52c97b92dcb8cfcb.js" nomodule defer></script><script src="polyfills-es2015.3da61fca43e0a0e75838.js" type="module"></script><script src="main-es2015.3f7b9b47a6abb723d50b.js" type="module"></script><script src="main-es5.3f7b9b47a6abb723d50b.js" nomodule defer></script></body>
+<script src="runtime-es2015.c9afb3256f2870e161de.js" type="module"></script><script src="runtime-es5.c9afb3256f2870e161de.js" nomodule defer></script><script src="polyfills-es5.c56d52c97b92dcb8cfcb.js" nomodule defer></script><script src="polyfills-es2015.3da61fca43e0a0e75838.js" type="module"></script><script src="main-es2015.176d5cdf3463b67c67d9.js" type="module"></script><script src="main-es5.176d5cdf3463b67c67d9.js" nomodule defer></script></body>
 
 </html>

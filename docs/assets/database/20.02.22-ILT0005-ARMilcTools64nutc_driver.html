@@ -1,52 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-</head>
-<body>
 <h1 id="possible-workaround-when-.net-native-fails">Possible workaround when .Net Native fails</h1>
-<p>When creating the app Packages for the windows store, the ARM version faild with:</p>
+<p>When creating app Packages for windows store, the ARM version faild with:</p>
 <pre class="csharp"><code>   3&gt; Processing application code
    3&gt; Computing application closure and generating interop code
    3&gt; Loading 130 modules...
@@ -75,8 +28,40 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Or: <code>&lt;Assembly Name=”Assembly.Name.Without.Extension” DoNotOptimize=”true” DoNotInline=”true”/&gt;</code></li>
 </ul>
 <p>Disabling things one assembly at a time lets you make reasonable progress without driving yourself mad. If that strategy ends up working out for you, then you’re good to go. The Default.rd.xml file comes along when you submit your application to the Store so the Store compile will look more or less identical to your local compile.</p>
-<p>I followed the above steps and was able to figure out that the <code>ImageSharp</code> assembly or one of its dependcies caused the issue. So I added the proper values to <code>Properties\Default.rd.xml</code> and volia, the ARM Release build is now working too!</p>
+<p>I followed the above steps and was able to figure out that the <code>ImageSharp</code> assembly or one of its dependcies caused the issue. So I added an entry for ImageSharp in <code>Properties\Default.rd.xml</code> to disable .NET Native and volia, the ARM Release build could be completed!</p>
 <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;Assembly</span><span class="ot"> Name=</span><span class="st">&quot;SixLabors.ImageSharp&quot;</span><span class="ot"> DoNotOptimize=</span><span class="st">&quot;true&quot;</span><span class="ot"> DoNotInline=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span></code></pre></div>
-<p>A downside of this workaround seems, that you have to create the app packges (when publishing) seperatly. Selecting x86, x64 and ARM with the modified <code>Default.rd.xml</code> didn't work out for me.</p>
-</body>
-</html>
+<p>The downside of this workaround is that .NET Native for <code>ImageSharp</code> is disabled for the other platforms (x86 and x64) as well (when publishing) which has a big perfomance impact. For example resizing a gif picture using <code>ImageSharp</code> with .NET Native enabled takes about 40s while the disabled version execution time is around one minute and 20 seconds!</p>
+<p>A manual workaround would be to create a seperate <code>appxupload</code> package for each platform and adjust the <code>Default.rd.xml</code> to enable (<code>DoNotOptimize=&quot;false&quot;</code>) and disable (<code>DoNotOptimize=&quot;true&quot;</code>) .NET Native for <code>ImageSharp</code> before building it. The result would be to have one <code>ARM</code> and one <code>x64|x86</code> appxupload package which is not ideal.</p>
+<p>A much more elegant way would be to automate the enabling and disabling process of .NET Native for <code>ImageSharp</code>. As the <code>Default.rd.xml</code> is a simple xml file we can create a simple powershell script which disables the .NET Native for <code>ImageSharp</code> on the ARM platform and enables it for all other platforms for us. I named the script <code>dotnativeAdapter.ps1</code> which expects the used platform (<code>x86,x64,ARM or ARM64</code>) as parameter. Based on this parameter we decide how to set <code>DoNotOptimize</code> in <code>Default.rd.xml</code>.</p>
+<pre class="powershell"><code>   param([string]$platform)
+
+   Write-Host $platform
+
+   $file = &quot;./Properties/Default.rd.xml&quot;
+   $xml = [xml](Get-Content($file))
+
+   if($platform.ToLower() -contains &#39;arm&#39;) 
+   {
+     Write-Host &quot;disable native for SixLabors.ImageSharp for $platform&quot;
+     $xml.Directives.Application.Assembly[1].DoNotOptimize=&quot;true&quot;;
+     $xml.Directives.Application.Assembly[1].DoNotInline=&quot;true&quot;;
+   }
+   else
+   {
+     Write-Host &quot;enable native for SixLabors.ImageSharp for $platform&quot;
+     $xml.Directives.Application.Assembly[1].DoNotOptimize=&quot;false&quot;;
+     $xml.Directives.Application.Assembly[1].DoNotInline=&quot;false&quot;;
+   }
+
+   $xml.Save($file)
+
+</code></pre>
+<p>Now we must intercept before the build process gets triggered to execute our powershell script. This can be accomplised by unloading the the <code>.csproj</code> and add the following lines at the end of the document:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  ...
+  <span class="kw">&lt;Target</span><span class="ot"> Name=</span><span class="st">&quot;BeforeBuild&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;Message</span><span class="ot"> Text=</span><span class="st">&quot;Adapting Default.rd.xml for $(Platform)&quot;</span><span class="ot"> Importance=</span><span class="st">&quot;normal&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;Exec</span><span class="ot"> Command=</span><span class="st">&quot;powershell.exe -NonInteractive -executionpolicy Unrestricted -command </span><span class="dv">&amp;quot;&amp;amp;</span><span class="st"> { .\dotnativeAdapter.ps1 $(Platform) } </span><span class="dv">&amp;quot;</span><span class="st">&quot;</span><span class="ot"> LogStandardErrorAsError=</span><span class="st">&quot;True&quot;</span><span class="ot"> ContinueOnError=</span><span class="st">&quot;False&quot;</span><span class="ot"> WorkingDirectory=</span><span class="st">&quot;$(MSBuildProjectDirectory)&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;/Target&gt;</span>
+  ...
+<span class="er">&lt;</span>/Project&gt;</code></pre></div>
+<p>With this approach things get much easier - we don't need to worry about creating multiple <code>appxupload</code> files or forgetting to adjust the <code>Default.rd.xml</code> and also it's a good solution when working with <code>azure-pipelines</code>.</p>

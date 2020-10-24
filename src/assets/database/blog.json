@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId": 201,
+    	"Source":"assets/database/20.10.24-openssl-reference-not-found.html",
+    	"Title":"openssl reference not found",
+        "Author": "Martin",
+    	"Release": "2020-10-24T00:00:00",
+    	"Regards":["C","linux"]
+    },
+    {
         "BlogEntryId": 200,
     	"Source":"assets/database/20.02.22-ILT0005-ARMilcTools64nutc_driver.html",
     	"Title":"ILT0005: C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\runtime.win10-arm.microsoft.net.native.compiler\\2.2.7-rel-27913-00\\tools\\ARM\\ilc\\Tools64\\nutc_driver.exe @\\obj\\ARM\\Release\\ilc\\intermediate\\MDIL\\...rsp' returned exit code -1073741819",

@@ -1,45 +1,46 @@
+<h1 id="so-undefined-reference-to">[...]so: undefined reference to</h1>
 <p>When I was compiling an application from source I ran into an error when using <code>./configure --prefix=/opt/</code></p>
-<pre><code>[...]
-checking for inflateEnd in -lz... yes
-checking zlib.h usability... yes
-checking zlib.h presence... yes
-checking for zlib.h... yes
-checking for inflateEnd in -lz... (cached) yes
-checking zlib in /usr/local... ok
-checking whether to enable https support... yes
-checking for EVP_get_digestbyname in -lcrypto... yes
-checking for SSL_CTX_new in -lssl... no
-configure: error: not available</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">[<span class="ex">...</span>]
+<span class="ex">checking</span> for inflateEnd in -lz... yes
+<span class="ex">checking</span> zlib.h usability... yes
+<span class="ex">checking</span> zlib.h presence... yes
+<span class="ex">checking</span> for zlib.h... yes
+<span class="ex">checking</span> for inflateEnd in -lz... (cached) <span class="fu">yes</span>
+<span class="ex">checking</span> zlib in /usr/local... ok
+<span class="ex">checking</span> whether to enable https support... yes
+<span class="ex">checking</span> for EVP_get_digestbyname in -lcrypto... yes
+<span class="ex">checking</span> for SSL_CTX_new in -lssl... no
+<span class="ex">configure</span>: error: not available</code></pre></div>
 <p>From the error message it was clear that <code>configure</code> was unable to detect my openssl libary. I knew I had installed the openssl libary, but to be sure I checked by calling the openssl binary.</p>
-<pre><code>/usr/local/ssl/bin/openssl 
-OpenSSL&gt; version
-OpenSSL 1.0.2r  26 Feb 2019
-OpenSSL&gt; q</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">/usr/local/ssl/bin/openssl</span>
+<span class="ex">OpenSSL</span><span class="op">&gt;</span> version
+<span class="ex">OpenSSL</span> 1.0.2r  26 Feb 2019
+<span class="ex">OpenSSL</span><span class="op">&gt;</span> q</code></pre></div>
 <p>I needed to set the LDFLAGS enviroment variable to give gcc and the linker a hint where to look for the shared libraries. In this scenario the /usr/local/ssl/ path is important. You can find more about this <a href="https://flameeyes.blog/2010/06/20/the-why-and-how-of-rpath/">here</a></p>
 <p>Actual openssl and other shared libaries will display this information when you compile and install the software by yourself. They will print something like that:</p>
-<pre><code>If you ever happen to want to link against installed libraries 
-in a given directory, LIBDIR, you must either use libtool, and 
-specify the full pathname of the library, or use the &#39;-LLIBDIR&#39; 
-flag during linking and do at least one of the following: 
-   - add LIBDIR to the &#39;LD_LIBRARY_PATH&#39; environment variable 
-     during execution 
-   - add LIBDIR to the &#39;LD_RUN_PATH&#39; environment variable 
-     during linking 
-   - use the &#39;-Wl,-rpath -Wl,LIBDIR&#39; linker flag </code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">If</span> you ever happen to want to link against installed libraries 
+<span class="kw">in</span> <span class="ex">a</span> given directory, LIBDIR, you must either use libtool, and 
+<span class="ex">specify</span> the full pathname of the library, or use the <span class="st">&#39;-LLIBDIR&#39;</span> 
+<span class="ex">flag</span> during linking and do at least one of the following: 
+   <span class="ex">-</span> add LIBDIR to the <span class="st">&#39;LD_LIBRARY_PATH&#39;</span> environment variable 
+     <span class="ex">during</span> execution 
+   <span class="ex">-</span> add LIBDIR to the <span class="st">&#39;LD_RUN_PATH&#39;</span> environment variable 
+     <span class="ex">during</span> linking 
+   <span class="ex">-</span> use the <span class="st">&#39;-Wl,-rpath -Wl,LIBDIR&#39;</span> linker flag </code></pre></div>
 <p>In addition, I set the LIBS flag too, which apperantly was wrong. Instead of</p>
 <p><code>LDFLAGS=&quot;-L/usr/local/ssl/ -L/usr/local/ -L/usr/local/bin/ -Wl,-rpath,/usr/local/ssl/,-rpath,/usr/local/lib/,--export-dynamic&quot; LIBS=&quot;-ldl&quot; CC=/opt/gcc-4.6.0/bin/gcc CXX=/opt/gcc-4.6.0/bin/g++  ./configure --prefix=/opt/</code> I later learnd, that I should have used <code>LDFLAGS=&quot;-L/usr/local/ssl/ -L/usr/local/ -L/usr/local/bin/ -Wl,-rpath,/usr/local/ssl/,-rpath,/usr/local/lib/,--export-dynamic&quot; LIBS=&quot;-ldl -lm -lrt -lssl -lcrypto&quot; CC=/opt/gcc-4.6.0/bin/gcc CXX=/opt/gcc-4.6.0/bin/g++  ./configure --prefix=/opt/</code> instead.</p>
 <p>Calling the <code>configure</code> script with the modified parameter worked well, as the script was now able to detect that openssl is installed. The next step was to compile the whole thing with <code>make</code>.</p>
 <p>So the first sourcefiles could be compiled without any problems, but after a few minutes it stopped with the compiler error:</p>
-<pre><code>libtool: link: /opt/gcc-4.6.0/bin/gcc -fvisibility=hidden -g -O2 -Wl,-rpath -Wl,/usr/local/ssl/ -Wl,-rpath -Wl,/usr/local/lib/ -Wl,--export-dynamic -o .libs/httrack httrack.o  -L/usr/local/ssl/ -L/usr/local/ -L/usr/local/bin/ -L/usr/local/lib -lpthread ./.libs/libhttrack.so -lz -ldl -Wl,-rpath -Wl,/opt/lib
-./.libs/libhttrack.so: undefined reference to `EVP_enc_null&#39;
-./.libs/libhttrack.so: undefined reference to `EVP_CIPHER_CTX_init&#39;
-./.libs/libhttrack.so: undefined reference to `X509_NAME_dup&#39;
-./.libs/libhttrack.so: undefined reference to `COMP_compress_block&#39;
-./.libs/libhttrack.so: undefined reference to `EVP_rc2_cbc&#39;
-./.libs/libhttrack.so: undefined reference to `X509_STORE_get_by_subject&#39;
-./.libs/libhttrack.so: undefined reference to `EVP_VerifyFinal&#39;
-./.libs/libhttrack.so: undefined reference to `COMP_CTX_new&#39;
-./.libs/libhttrack.so: undefined reference to `X509_STORE_CTX_set_ex_data&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">libtool</span>: link: /opt/gcc-4.6.0/bin/gcc -fvisibility=hidden -g -O2 -Wl,-rpath -Wl,/usr/local/ssl/ -Wl,-rpath -Wl,/usr/local/lib/ -Wl,--export-dynamic -o .libs/httrack httrack.o  -L/usr/local/ssl/ -L/usr/local/ -L/usr/local/bin/ -L/usr/local/lib -lpthread ./.libs/libhttrack.so -lz -ldl -Wl,-rpath -Wl,/opt/lib
+<span class="ex">./.libs</span>/libhttrack.so: <span class="ex">undefined</span> reference to <span class="kw">`</span><span class="ex">EVP_enc_null</span><span class="st">&#39;</span>
+<span class="st">./.libs/libhttrack.so: undefined reference to `EVP_CIPHER_CTX_init&#39;</span>
+<span class="ex">./.libs</span>/libhttrack.so: <span class="ex">undefined</span> reference to <span class="kw">`</span>X509_NAME_dup<span class="st">&#39;</span>
+<span class="st">./.libs/libhttrack.so: undefined reference to `COMP_compress_block&#39;</span>
+<span class="ex">./.libs</span>/libhttrack.so: <span class="ex">undefined</span> reference to <span class="kw">`</span><span class="ex">EVP_rc2_cbc</span><span class="st">&#39;</span>
+<span class="st">./.libs/libhttrack.so: undefined reference to `X509_STORE_get_by_subject&#39;</span>
+<span class="ex">./.libs</span>/libhttrack.so: <span class="ex">undefined</span> reference to <span class="kw">`</span>EVP_VerifyFinal<span class="st">&#39;</span>
+<span class="st">./.libs/libhttrack.so: undefined reference to `COMP_CTX_new&#39;</span>
+<span class="ex">./.libs</span>/libhttrack.so: <span class="ex">undefined</span> reference to <span class="kw">`</span><span class="ex">X509_STORE_CTX_set_ex_data</span><span class="st">&#39;</span></code></pre></div>
 <p>I googled the compiler error message and as it turns out, it is related to ssl. So I suspected that the required ssl hints for the compiler didn't work out (The compiler error was caused by the incomplete LIBS flag, which I mentioned above). So the first thing I tried here, was to call the compiler command by hand. I changed the directory to the <code>src</code> folder and executed the printed command from <code>make</code> and I got the same error message. After googling I figured out that in addition I need the ssl flags as well.</p>
 <p><code>/opt/gcc-4.6.0/bin/gcc -fvisibility=hidden -g -O2  -L/usr/local/ssl/ -L/usr/local/ -L/usr/local/bin/ -Wl,-rpath,/usr/local/ssl/,-rpath,/usr/local/lib/,--export-dynamic -L/usr/local/lib -o httrack httrack.o -lpthread libhttrack.la -lz -ldl -lm -lrt -lssl -lcrypto</code></p>
 <p>Tada! it compiled succesfully! I expected that <code>make</code> will skip my compiled file, since I already complied it by hand. But <code>make</code> overwrote my file and ran into the same issue again because it didn't use the proper flags. What you can do about this is to look for a file named <code>Makefile</code> and adjust its content so that the proper command will be generated.</p>

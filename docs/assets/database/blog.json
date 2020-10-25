@@ -2,7 +2,7 @@
     {
         "BlogEntryId": 201,
     	"Source":"assets/database/20.10.24-openssl-reference-not-found.html",
-    	"Title":"openssl reference not found",
+    	"Title":".so undefined reference to openssl",
         "Author": "Martin",
     	"Release": "2020-10-24T00:00:00",
     	"Regards":["C","linux"]

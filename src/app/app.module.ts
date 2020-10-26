@@ -24,6 +24,7 @@ import { ImageResizerComponent } from './components/projects/image-resizer/image
 import { ConvolutionDiscretComponent } from './components/projects/convolution.discret.component'
 import { FormsModule } from '@angular/forms';
 import { ThemeSwitcherComponent } from './components/theme-switcher.component';
+import { SanitizeHtmlPipe} from './SanitizeHtmlPipe';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -48,7 +49,8 @@ import { ThemeSwitcherComponent } from './components/theme-switcher.component';
     PrivacyComponent,
     ImpressumComponent,
     ConvolutionDiscretComponent,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    SanitizeHtmlPipe
   ],
   imports: [
     HttpClientModule,

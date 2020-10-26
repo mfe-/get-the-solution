@@ -23,7 +23,21 @@
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NTKD462');</script>
   <!-- End Google Tag Manager -->
-
+  <!-- Mathjax -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+  <!-- end Mathjax -->
 
   <!-- Start Single Page Apps for GitHub Pages -->
   <script type="text/javascript">
@@ -57,20 +71,20 @@
   </script>
   <!-- End Single Page Apps for GitHub Pages -->
   <script>
-      function docReady(fn) {
+    function docReady(fn) {
       // see if DOM is already available
       if (document.readyState === "complete" || document.readyState === "interactive") {
-          // call on next available tick
-          setTimeout(fn, 1);
+        // call on next available tick
+        setTimeout(fn, 1);
       } else {
-          document.addEventListener("DOMContentLoaded", fn);
+        document.addEventListener("DOMContentLoaded", fn);
       }
-    }  
-    docReady(function() {
+    }
+    docReady(function () {
       // DOM is loaded and ready for manipulation here
       console.log("page ready");
     });
-  </script> 
+  </script>
 </head>
 
 <body>

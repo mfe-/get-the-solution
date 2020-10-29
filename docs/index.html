@@ -23,7 +23,21 @@
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NTKD462');</script>
   <!-- End Google Tag Manager -->
-
+  <!-- Mathjax -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+  <!-- end Mathjax -->
 
   <!-- Start Single Page Apps for GitHub Pages -->
   <script type="text/javascript">
@@ -57,21 +71,21 @@
   </script>
   <!-- End Single Page Apps for GitHub Pages -->
   <script>
-      function docReady(fn) {
+    function docReady(fn) {
       // see if DOM is already available
       if (document.readyState === "complete" || document.readyState === "interactive") {
-          // call on next available tick
-          setTimeout(fn, 1);
+        // call on next available tick
+        setTimeout(fn, 1);
       } else {
-          document.addEventListener("DOMContentLoaded", fn);
+        document.addEventListener("DOMContentLoaded", fn);
       }
-    }  
-    docReady(function() {
+    }
+    docReady(function () {
       // DOM is loaded and ready for manipulation here
       console.log("page ready");
     });
-  </script> 
-<link rel="stylesheet" href="styles.c2fd96d58b77c640de11.css"></head>
+  </script>
+<link rel="stylesheet" href="styles.9bbf86b0803ebecf3f9e.css"></head>
 
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -79,6 +93,6 @@
       style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <app-root></app-root>
-<script src="runtime-es2015.c9afb3256f2870e161de.js" type="module"></script><script src="runtime-es5.c9afb3256f2870e161de.js" nomodule defer></script><script src="polyfills-es5.c56d52c97b92dcb8cfcb.js" nomodule defer></script><script src="polyfills-es2015.3da61fca43e0a0e75838.js" type="module"></script><script src="main-es2015.7bddcc12b7f6e85e10d9.js" type="module"></script><script src="main-es5.7bddcc12b7f6e85e10d9.js" nomodule defer></script></body>
+<script src="runtime-es2015.0dae8cbc97194c7caed4.js" type="module"></script><script src="runtime-es5.0dae8cbc97194c7caed4.js" nomodule defer></script><script src="polyfills-es5.380e8920e137a713fbf7.js" nomodule defer></script><script src="polyfills-es2015.4c54e0d0c57a404041c3.js" type="module"></script><script src="main-es2015.30d205dda6e8fa2ed4d8.js" type="module"></script><script src="main-es5.30d205dda6e8fa2ed4d8.js" nomodule defer></script></body>
 
 </html>

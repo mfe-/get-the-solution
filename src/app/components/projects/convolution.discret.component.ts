@@ -15,7 +15,7 @@ export class ConvolutionDiscretComponent implements OnInit {
 
   ngOnInit(): void {
     let x = this.route.snapshot.paramMap.get('x');
-    let h = this.route.snapshot.paramMap.get('x');
+    let h = this.route.snapshot.paramMap.get('h');
 
     this.myH = h;
     this.myX = x;

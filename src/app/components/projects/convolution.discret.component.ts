@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-convolution',
@@ -6,13 +7,19 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 })
 export class ConvolutionDiscretComponent implements OnInit {
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute) {
     this._x = [1, 2, 2, 1, 0, 0];
     this._h = [1, -1, 0, 0, -1, 1];
     this._only_overlap = false;
   }
 
   ngOnInit(): void {
+    let x = this.route.snapshot.paramMap.get('x');
+    let h = this.route.snapshot.paramMap.get('x');
+
+    this.myH = h;
+    this.myX = x;
+
     this.calculateConv1();
   }
   public calculateConv1(): void {

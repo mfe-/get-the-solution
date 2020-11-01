@@ -1,5 +1,33 @@
 <p>discret convolution works!</p>
-<p>x: <input [(ngModel)]="myX"> h: <input [(ngModel)]="myH" ng-pattern="^[0-9](,[0-9])*$"></p>
+<p>
+    x: <input [(ngModel)]="myX"> 
+    h: <input [(ngModel)]="myH" ng-pattern="^[0-9](,[0-9])*$"> 	&nbsp;
+    <a routerLink="/projects/discret-convolution/h/{{_h}}/x/{{_x}}">Share Link</a>
+</p>
+<table border="1">
+    <tr>
+      <td>x</td>
+      <td>x<0</td>
+      <td *ngFor="let x of _x; let i = index">{{i}}</td>
+      <td>x>0</td>
+      <td></td>
+      <td>x<0</td>
+      <td *ngFor="let x of _h; let i = index">{{i}}</td>
+      <td>x>0</td>
+    </tr>
+    <tr>
+      <td>x[n]</td>
+      <td>0</td>
+      <td *ngFor="let x of _x; let i = index">{{x}}</td>
+      <td>0</td>
+      <td>h[n]</td>
+      <td>0</td>
+      <td *ngFor="let h of _h; let i = index">{{h}}</td>
+      <td>0</td>
+    </tr>
+</table>
+
+
 <p>
     <input type="checkbox" name="only_overlap" [(ngModel)]="only_overlap" [ngModelOptions]="{standalone: true}">
     <label for="only_overlap">only_overlap</label>

@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'projects/image-resizer', component: ImageResizerComponent },
+  { path: 'projects/discret-convolution/h/:h/x/:x', component: ConvolutionDiscretComponent },
   { path: 'projects/discret-convolution', component: ConvolutionDiscretComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'blog', component: BlogComponent },

@@ -1,7 +1,7 @@
-
+<div>
   <div *ngFor="let blogEntry of FiltertedBlogEntry" [attr.data-blogEntry-blogEntryId]="blogEntry.BlogEntryId">
     <app-blogentry [blogEntryValue]="blogEntry"></app-blogentry>
   </div>
   <a *ngIf="this.BlogEntry.length > this.loadedBlogEntries"
     [routerLink]="[]" (click)="AddBlogEntry()">Load more blog items</a>
-
+</div>

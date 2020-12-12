@@ -25,6 +25,7 @@ import { ConvolutionDiscretComponent } from './components/projects/convolution.d
 import { FormsModule } from '@angular/forms';
 import { ThemeSwitcherComponent } from './components/theme-switcher.component';
 import { SanitizeHtmlPipe} from './SanitizeHtmlPipe';
+import { MathjaxDirective } from './Mathjax.Directive';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -50,7 +51,8 @@ import { SanitizeHtmlPipe} from './SanitizeHtmlPipe';
     ImpressumComponent,
     ConvolutionDiscretComponent,
     ThemeSwitcherComponent,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    MathjaxDirective
   ],
   imports: [
     HttpClientModule,

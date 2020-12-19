@@ -100,6 +100,7 @@ export class MathjaxDirective {
         for (var i = 0; i < scripts.length; ++i) {
             if (scripts[i].getAttribute('src') != null && scripts[i].getAttribute('src') == uri) {
                 isFound = true;
+                break;
             }
         }
         if (!isFound) {

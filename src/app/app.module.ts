@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeSwitcherComponent } from './components/theme-switcher.component';
 import { SanitizeHtmlPipe} from './SanitizeHtmlPipe';
 import { MathjaxDirective } from './Mathjax.Directive';
+import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-resizer/image-resizer-privacy-policy';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -41,6 +42,7 @@ import { MathjaxDirective } from './Mathjax.Directive';
     HomeComponent,
     ProjectsComponent,
     ImageResizerComponent,
+    ImageResizerPrivacyPolicyComponent,
     BlogComponent,
     BlogEntryComponent,
     BlogCategoryComponent,

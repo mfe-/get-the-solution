@@ -11,6 +11,7 @@ import { BlogCategoryComponent } from './components/blog/blog-category.component
 import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer';
 import { Title } from '@angular/platform-browser';
 import { ConvolutionDiscretComponent } from './components/projects/convolution.discret.component';
+import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-resizer/image-resizer-privacy-policy';
 
 
 // https://mfe-.github.io/get-the-solution/?p=/blog/Add%20Token%20Authorization%20to%20AngularJS%20and%20WebApi
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'projects/image-resizer', component: ImageResizerComponent },
+  { path: 'projects/image-resizer-privacy-policy',component: ImageResizerPrivacyPolicyComponent},
   { path: 'projects/discret-convolution/h/:h/x/:x', component: ConvolutionDiscretComponent },
   { path: 'projects/discret-convolution', component: ConvolutionDiscretComponent },
   { path: 'contact', component: ContactComponent },

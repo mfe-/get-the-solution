@@ -1,11 +1,19 @@
 [
     {
+        "BlogEntryId": 203,
+    	"Source":"assets/database/20.12.19-working-with-adb.html",
+    	"Title":"Working with adb aka Android Debug Bridge",
+        "Author": "Martin",
+    	"Release": "2020-12-19T00:00:00",
+    	"Regards":["Android","Article","linux"]
+    },
+    {
         "BlogEntryId": 202,
     	"Source":"assets/database/20.09.01-Signal-processing-overview.html",
     	"Title":"Signal processing",
         "Author": "Martin",
     	"Release": "2020-09-01T00:00:00",
-    	"Regards":["education","atricle"]
+    	"Regards":["education","Article"]
     },
     {
         "BlogEntryId": 201,

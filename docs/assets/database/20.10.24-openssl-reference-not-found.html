@@ -1,5 +1,5 @@
 <h1 id="so-undefined-reference-to">[...]so: undefined reference to</h1>
-<p>When I was compiling an application from source I ran into an error when using <code>./configure --prefix=/opt/</code></p>
+<p>This blog post is more or less the story of how I encountered some issues while building an application from source which is using the openssl libary on an old linux machine. So when I was setting up the application I ran into the error &quot;ssl libary not available&quot; when using <code>./configure --prefix=/opt/</code></p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">[<span class="ex">...</span>]
 <span class="ex">checking</span> for inflateEnd in -lz... yes
 <span class="ex">checking</span> zlib.h usability... yes
@@ -11,7 +11,7 @@
 <span class="ex">checking</span> for EVP_get_digestbyname in -lcrypto... yes
 <span class="ex">checking</span> for SSL_CTX_new in -lssl... no
 <span class="ex">configure</span>: error: not available</code></pre></div>
-<p>From the error message it was clear that <code>configure</code> was unable to detect my openssl libary. I knew I had installed the openssl libary, but to be sure I checked by calling the openssl binary.</p>
+<p>From the error message it was clear that <code>configure</code> was unable to detect my openssl libary. I knew I had installed the openssl libary, but to be sure that openssl is functionaly working I checked it by calling the binary.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">/usr/local/ssl/bin/openssl</span>
 <span class="ex">OpenSSL</span><span class="op">&gt;</span> version
 <span class="ex">OpenSSL</span> 1.0.2r  26 Feb 2019

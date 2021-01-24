@@ -17,7 +17,7 @@
 <span class="ex">bugreports</span> config  cust_spec dev   etc      log    persist property_contexts sbin   sys     vendor
 <span class="ex">cache</span>      cust    d         dload firmware mnt    proc    res               sdcard system  version
 <span class="ex">1</span><span class="kw">|</span><span class="ex">HWSLA-Q</span>:/ $</code></pre></div>
-<p>You see the typical Filesystem Hierarchy Standard of linux. But lets move on and display all installed app packages on the device. We can use the command <code>pm</code> (or <code>adb shell cmd package list packag-es</code> but then you have to exit bash) with the parameter <code>-f</code> (to display the installed path) and use <code>grep</code> to filter for a specific app name. For example:</p>
+<p>You see the typical Filesystem Hierarchy Standard of linux. But lets move on and display all installed app packages on the device. We can use the command <code>pm</code> (or <code>adb shell cmd package list packages</code> but then you have to exit bash) with the parameter <code>-f</code> (to display the installed path) and use <code>grep</code> to filter for a specific app name. For example:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">HWSLA-Q</span>:/ $ pm list packages -f <span class="kw">|</span> <span class="fu">grep</span> microsoft
 <span class="ex">package</span>:/data/app/com.microsoft.appmanager-1/base.apk=com.microsoft.appmanager
 <span class="ex">package</span>:/data/app/com.microsoft.office.officelens-2/base.apk=com.microsoft.office.officelens
@@ -29,19 +29,19 @@
 <span class="ex">HWSLA-Q</span>:/ $ pm list packages <span class="kw">|</span> <span class="fu">grep</span> qr
 <span class="ex">package</span>:com.kitkats.qrscanner</code></pre></div>
 <p>To display device related settings like the Android OS version you can use the following command:</p>
-<pre><code>adb shell &quot;getprop | grep version&quot;
-[bluebird.mdm.sdkversion]: [23.3.0]
-[gsm.version.rilimpl]: [Qualcomm RIL 1.0]
-[hw.cabl.version]: [2.0.20140905]
-[ro.build.version.all_codenames]: [REL]
-[ro.build.version.base_os]: []
-[ro.build.version.codename]: [REL]
-[ro.build.version.incremental]: [BB_R2.03]
-[ro.build.version.preview_sdk]: [0]
-[ro.build.version.release]: [6.0.1]
-[ro.build.version.sdk]: [23]
-[ro.com.google.gmsversion]: [6.0_r11]
-[ro.opengles.version]: [196608]</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">adb</span> shell <span class="st">&quot;getprop | grep version&quot;</span>
+[<span class="ex">bluebird.mdm.sdkversion</span>]: [23.3.0]
+[<span class="ex">gsm.version.rilimpl</span>]: [Qualcomm RIL 1.0]
+[<span class="ex">hw.cabl.version</span>]: [2.0.20140905]
+[<span class="ex">ro.build.version.all_codenames</span>]: [REL]
+[<span class="ex">ro.build.version.base_os</span>]: []
+[<span class="ex">ro.build.version.codename</span>]: [REL]
+[<span class="ex">ro.build.version.incremental</span>]: [BB_R2.03]
+[<span class="ex">ro.build.version.preview_sdk</span>]: [0]
+[<span class="ex">ro.build.version.release</span>]: [6.0.1]
+[<span class="ex">ro.build.version.sdk</span>]: [23]
+[<span class="ex">ro.com.google.gmsversion</span>]: [6.0_r11]
+[<span class="ex">ro.opengles.version</span>]: [196608]</code></pre></div>
 <h2 id="investigate-bugs-in-your-app">Investigate bugs in your app</h2>
 <p>Sometimes it’s hard to reproduce bugs from a production environment. In this case it’s helpfull to know the app state at least when the issue occurred. For example, how did the sql lite database look like in your app or which settings were used. In this case we can try to obtain the whole app data by creating a backup of the app.</p>
 <p>To create a backup of an android app you can use <code>adb backup</code>. Make sure you exited the linux device bash with <code>exit</code>. In the sample I created a backup of the app package <code>at.oebb.ts</code> and stored the backup into the file <code>oebb.backu</code> (If you’re wondering <code>backu</code> is just a typo I was too lazy to fix). When calling the command you need to unlock your device and press &quot;Backup my Data&quot; (the password field can be empty).</p>
@@ -70,13 +70,13 @@
       <span class="ex">E</span>: uses-permission (line=12)
         <span class="ex">A</span>: http://schemas.android.com/apk/res/android:name(0x01010003)=<span class="st">&quot;android.permission.</span>
 <span class="st">[...]</span></code></pre></div>
-<p>If your not investigating a business related bug but an app crash you may be interested in the command <code>adb bugreport</code>. More on that later.</p>
+<p>If your not investigating a business related bug but an app crash you may be interested in the command <code>adb bugreport</code>.</p>
 <h2 id="run-as">run-as</h2>
 <p>To run shell commands in the context of your app you can use the command <code>run-as</code>. An example command would be <code>adb shell run-as app.package yourcommand</code>, this only works if a debugable version of the app is installed (which is mainly the case if you are the developer of the app). You may ask, why would I like to fire shell commands from within my app?</p>
 <p>Imagine you received a sqlite database from a productive device and you want to reproduce an issue which was reported with it. Because normally you don’t have enough privileges to override the sqlite database within your app data folder, you can do this when using <code>run-as</code></p>
 <p>To push the file (e.g. the sqlite) from your computer to the (mobile) device use <code>adb push local filesystem /sdcard/filename</code>. After the file is pushed to the sdcard of the device make use of <code>adb shell</code> in combination with <code>cp</code> or <code>mv</code> to move it further to the app location. If there is already a file existing on the device with the same name in your target location, I would recommend to rename it as <code>cp -f</code> didn't work out for me.</p>
 <p>Sample:</p>
-<pre><code>rem first remove the file (better rename it)
+<pre class="batch"><code>rem first remove the file (better rename it)
 adb -d shell &quot;run-as at.oebb.ts rm /data/data/at.oebb/db/Application.db&quot;
 rem copy db to the sdcard
 adb push Application.db /sdcard/Application.db

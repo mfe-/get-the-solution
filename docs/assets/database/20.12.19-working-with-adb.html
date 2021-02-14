@@ -47,12 +47,12 @@
 <p>To create a backup of an android app you can use <code>adb backup</code>. Make sure you exited the linux device bash with <code>exit</code>. In the sample I created a backup of the app package <code>at.oebb.ts</code> and stored the backup into the file <code>oebb.backu</code> (If you’re wondering <code>backu</code> is just a typo I was too lazy to fix). When calling the command you need to unlock your device and press &quot;Backup my Data&quot; (the password field can be empty).</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">C</span>:\Users<span class="op">&gt;</span>adb backup -apk -shared packages at.oebb.ts -f oebb.backu
 <span class="ex">Now</span> unlock your device and confirm the backup operation...  </code></pre></div>
-<p>Lets extract the backup so we are able to see the content of it. For this I use <code>( printf &quot;\x1f\x8b\x08\x00\x00\x00\x00\x00&quot; ; tail -c +25 oebb.backu ) |  tar xfvz -</code></p>
+<p>Lets extract the backup so we are able to see the content of it. For this I use <code>( printf &quot;\x1f\x8b\x08\x00\x00\x00\x00\x00&quot; ; tail -c +25 oebb.backu ) |  tar xfvz -</code> with WSL (Windows-Subsystem for Linux).</p>
 <p>From the extracted files you can determine that the app &quot;öbb&quot; is using a sqlite database (Application.db for storing data) and for logging and app usage analysis they use the service of Microsoft named Appcenter.ms (AppCenter.xml).</p>
 <p>There is also another way to retrieve the data from the device to your computer. Lets use <code>adb pull</code> for it. First we copy our files to the <code>/sdcard/</code> (adb pull has not always access to the directory <code>/sdcard</code>) by using <code>adb shell &quot;cp /data/app/at.oebb.ts-2/base.apk /sdcard/base.apk&quot;</code>. Now we can pull it from our device as shown below.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">adb</span> pull /sdcard/base.apk base.apk.oebb
 <span class="ex">/sdcard</span>/base.apk: <span class="ex">1</span> file pulled. 21.8 MB/s (23672488 bytes in 1.034s)</code></pre></div>
-<p>Having the base.apk allows us to view the <code>AndroidManifest.xml</code> with <code>aapt2 d xmltree --file An-droidManifest.xml base.apk.oebb</code> (The program <code>aapt2</code> is also shipped with the Android SDK.). This shows the version, the permission and some other details the app is using.</p>
+<p>Having the base.apk allows us to view the <code>AndroidManifest.xml</code> with <code>aapt2 d xmltree --file AndroidManifest.xml base.apk.oebb</code> (The program <code>aapt2</code> is also shipped with the Android SDK.). This shows the version, the permission and some other details the app is using.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">C</span>:\Users<span class="op">&gt;</span>aapt2 d xmltree --file AndroidManifest.xml base.apk.oebb
 <span class="ex">N</span>: android=http://schemas.android.com/apk/res/android (line=2)
   <span class="ex">E</span>: manifest (line=2)
@@ -72,7 +72,7 @@
 <span class="st">[...]</span></code></pre></div>
 <p>If your not investigating a business related bug but an app crash you may be interested in the command <code>adb bugreport</code>.</p>
 <h2 id="run-as">run-as</h2>
-<p>To run shell commands in the context of your app you can use the command <code>run-as</code>. An example command would be <code>adb shell run-as app.package yourcommand</code>, this only works if a debugable version of the app is installed (which is mainly the case if you are the developer of the app). You may ask, why would I like to fire shell commands from within my app?</p>
+<p>To run shell commands in the context of your app you can use the command <code>run-as</code>. An example command would be <code>adb shell run-as apppackagename yourcommand</code>, this only works if a debugable version of the app is installed (which is mainly the case if you are the developer of the app). You may ask, why would I like to fire shell commands from within my app?</p>
 <p>Imagine you received a sqlite database from a productive device and you want to reproduce an issue which was reported with it. Because normally you don’t have enough privileges to override the sqlite database within your app data folder, you can do this when using <code>run-as</code></p>
 <p>To push the file (e.g. the sqlite) from your computer to the (mobile) device use <code>adb push local filesystem /sdcard/filename</code>. After the file is pushed to the sdcard of the device make use of <code>adb shell</code> in combination with <code>cp</code> or <code>mv</code> to move it further to the app location. If there is already a file existing on the device with the same name in your target location, I would recommend to rename it as <code>cp -f</code> didn't work out for me.</p>
 <p>Sample:</p>
@@ -83,6 +83,31 @@ adb push Application.db /sdcard/Application.db
 rem copy from sdcard to app folder
 adb -d shell &quot;run-as at.oebb.ts cp /sdcard/Application.db /data/data/at.oebb/db/Application.db -rf&quot;</code></pre>
 <p>Note: If you don’t have the debugable app of <code>at.oebb.ts</code>, <code>run-as</code> will not work.</p>
+<h3 id="file-descriptors">File Descriptors</h3>
+<p>File Descriptors issues are evil. Your app is allowed to use 1024 file descriptors (fd) and if your app uses more than the allowed, the app will get killed by the OS. For the user of your app it will look like the app crashed. So lets hunt down the root cause. You can view the current file descriptors by opening the virtual directory of:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">shell@EF500</span>:/ $ ps <span class="kw">|</span> <span class="fu">grep</span> <span class="dt">{appname}</span>
+<span class="ex">u0_a520</span>   <span class="dt">{pid}</span>  354   1167264 101824            0000000000 R at.oebb.ts
+<span class="ex">shell@EF500</span>:/ $ ls /proc/<span class="dt">{pid}</span>/fd/ -la
+<span class="ex">opendir</span> failed, Permission denied</code></pre></div>
+<p>Hmm. Lets run the same command again but this time with <code>run-as</code>!</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">C</span>:\Users<span class="op">&gt;</span>adb shell run-as <span class="dt">{appname}</span> ls /proc/<span class="dt">{pid}</span>/fd/ -la
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 0 -<span class="op">&gt;</span> /dev/null
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 1 -<span class="op">&gt;</span> /dev/null
+<span class="ex">lr-x------</span> u0_a520  u0_a520           2021-02-14 10:37 11 -<span class="op">&gt;</span> /dev/__properties__
+<span class="ex">l-wx------</span> u0_a520  u0_a520           2021-02-14 10:37 12 -<span class="op">&gt;</span> /dev/cpuctl/bg_non_interactive/tasks
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 13 -<span class="op">&gt;</span> anon_inode:[eventfd]
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 14 -<span class="op">&gt;</span> socket:[30898]
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 15 -<span class="op">&gt;</span> socket:[29279]
+<span class="ex">lr-x------</span> u0_a520  u0_a520           2021-02-14 10:37 16 -<span class="op">&gt;</span> pipe:[29280]
+<span class="ex">l-wx------</span> u0_a520  u0_a520           2021-02-14 10:37 17 -<span class="op">&gt;</span> pipe:[29280]
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 18 -<span class="op">&gt;</span> anon_inode:[eventpoll]
+<span class="ex">lr-x------</span> u0_a520  u0_a520           2021-02-14 10:37 19 -<span class="op">&gt;</span> /data/app/at.oebb/base.apk
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 2 -<span class="op">&gt;</span> /dev/null
+<span class="ex">lr-x------</span> u0_a520  u0_a520           2021-02-14 10:37 20 -<span class="op">&gt;</span> /dev/urandom
+<span class="ex">lr-x------</span> u0_a520  u0_a520           2021-02-14 10:37 21 -<span class="op">&gt;</span> /system/usr/share/zoneinfo/tzdata
+<span class="ex">lrwx------</span> u0_a520  u0_a520           2021-02-14 10:37 22 -<span class="op">&gt;</span> /data/data/at.oebb/db/Application.db
+[<span class="ex">...</span>]</code></pre></div>
+<p>That looks way better! To count all file descriptors use <code>adb shell run-as {appname} &quot;ls /proc/{pid}/fd/ -la | wc -c&quot;</code>. Start your app and interact with it. At the same time try to document the amount of the file descriptors. This way you should be able to see if the amount of file descriptors is increasing over time when your app gets used. If available, you can use automated UI Testing for this scenario. Also you can try to log the file descriptor amounts of a certain group like (file fd, socket fd,...). This should help you to geht an idea where the problem is located. Find out more about the topic here <a href="https://www.sdgsystems.com/post/android-memory-and-file-descriptor-leaks-diagnosis-and-debugging">&quot;Android Memory and File Descriptor Leaks, Diagnosis and Debugging&quot;</a></p>
 <h2 id="logcat">logcat</h2>
 <p>Another great command is <code>logcat</code> which can be used to retrieve logs. Depending on which context you are calling <code>logcat</code> you receive system wide logs or you only receive logs of your app.</p>
 <p>From an app perspective we can try to use logcat to detect a possible app crash (Disclaimer: You won’t see if the OS killed your app). This could be implemented like this:</p>

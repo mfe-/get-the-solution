@@ -8,6 +8,14 @@
     	"Regards":["Android","Article","linux"]
     },
     {
+        "BlogEntryId": 202,
+    	"Source":"assets/database/20.09.01-Signal-processing-overview.html",
+    	"Title":"Signal processing",
+        "Author": "Martin",
+    	"Release": "2020-09-01T00:00:00",
+    	"Regards":["education","Article"]
+    },
+    {
         "BlogEntryId": 201,
     	"Source":"assets/database/20.10.24-openssl-reference-not-found.html",
     	"Title":".so undefined reference to openssl",

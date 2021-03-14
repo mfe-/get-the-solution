@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <p>Vor kurzem habe ich eine MarkupExtension geschrieben, die aus einer Resource-Datei (resx.) Bilder lädt. Eine MarkupExtension zu schreiben ist nicht schwer. Man erbt von der Abstrakten Klasse MarkupExtension und muss die zwei Konstruktoren (einmal mit Parameter) implementieren und die Methode ProvideValue überschreiben.</p>
 <h2 id="einführung---eine-einfache-markupextension">1.0 Einführung - Eine einfache MarkupExtension</h2>
 <p>Im zweiten Konstruktor der wie folgt aussieht....</p>
@@ -192,5 +182,3 @@
 <p>Die Propertie Source der Image Klasse hat den Typ ImageSource. Deshalb muss man das geladene Bitmap in eine ImageSource umwandeln.</p>
 <p>Anschließend wird die erzeugte ImageSource in der Funktion ProvideValue zurück gegeben. Diese MarkupExtension habe ich im schnell verfahren geschrieben. Das heißt, dass wichtige Überprüfungen fehlen. Auch habe ich das Ganze nur für .PNG Dateien getestet bzw. Programmiert. Ich überprüfe auch nicht ob man die MarkupExtension bei einem Nicht Image Objekt anwendet.</p>
 <p><a href="https://onedrive.live.com/self.aspx/.Public/MarkupExtensionImageResourceConverter.zip?cid=a7082d0a1081e2f0&amp;id=documents">Download Projekt</a></p>
-</body>
-</html>

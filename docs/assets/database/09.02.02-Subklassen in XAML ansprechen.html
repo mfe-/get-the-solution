@@ -1,17 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <p>Heute habe ich ein DataTemplate in einer XAML Resource Datei für meine Klasse erstellt. Ich hab als DataTyp meine Subklasse angegeben.</p>
 <p><code>&lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;     xmlns:local=&quot;clr-namespace:Project;assembly=Project&quot;&gt;     &lt;DataTemplate x:Key=&quot;myTaskTemplate&quot; DataType=&quot;{x:Type local:Subclass}&quot;&gt; [..]     &lt;/DataTemplate&gt; &lt;/ResourceDictionary&gt;</code></p>
 <p>Dabei bekam ich beim compilieren immer die Fehlermeldung &quot;Der Typ Subclass wurde nicht gefunden&quot;. Ich hab dann verschiedene Varianten ausprobiert, wie zum Beispiel, Class.Subclass usw..</p>
 <p>So gesehen, war ich schon ziemlich nah an der Lösung. Dieses geht wie folgt:</p>
 <p><code>DataType=&quot;{x:Type local:class+subclass}&quot;</code></p>
-</body>
-</html>

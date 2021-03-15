@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId": 204,
+    	"Source":"assets/database/21.03.15-fast-fourier-transform.html",
+    	"Title":"Fast Fourier Transform",
+        "Author": "Simon",
+    	"Release": "2020-15-03T00:00:00",
+    	"Regards":["education","Article"]
+    },
+    {
         "BlogEntryId": 203,
     	"Source":"assets/database/20.12.19-working-with-adb.html",
     	"Title":"Working with adb aka Android Debug Bridge",

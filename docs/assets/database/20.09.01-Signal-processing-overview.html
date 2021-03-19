@@ -44,7 +44,7 @@
 </div>
 <p>The signal got mirrored.</p>
 <h4 id="scaling-using-delta-function">Scaling using delta function</h4>
-<p>Transform signal <span class="math inline">\(x[n] -&gt; \alpha*x[n-n_0] ; \alpha\in \mathbb{R}\)</span></p>
+<p>Transform signal <span class="math inline">\(x[n] -&gt; \alpha\cdot x[n-n_0] ; \alpha\in \mathbb{R}\)</span></p>
 <div class="figure">
 <img src="assets/img/blog/sip/dt_scale.png" alt="(Fig 5.)" width="480" />
 <p class="caption">(Fig 5.)</p>
@@ -53,7 +53,7 @@
 <p>Even signals are defined as <span class="math inline">\(x[n]=x[-n]\)</span> and are symmetic along the Y-Axes.</p>
 <h4 id="odd-signals">Odd signals</h4>
 <p>Odd signals are defined as <span class="math inline">\(x[-n]=-x[n]\)</span> and are symmetic along the diagonal.</p>
-<p>Its always possible to write any signal as a combination of its even and odd parts. Its even parts can be computed by <span class="math inline">\(Even\{x[n]\}=\frac{1}{2}*(x[n]+x[-n])\)</span> and its odds parts by <span class="math inline">\(Odd\{x[n]\}=\frac{1}{2}*(x[n]-x[-n])\)</span>.</p>
+<p>Its always possible to write any signal as a combination of its even and odd parts. Its even parts can be computed by <span class="math inline">\(Even\{x[n]\}=\frac{1}{2}\cdot(x[n]+x[-n])\)</span> and its odds parts by <span class="math inline">\(Odd\{x[n]\}=\frac{1}{2}\cdot(x[n]-x[-n])\)</span>.</p>
 <div class="figure">
 <img src="assets/img/blog/sip/dt_even_odd_signal.png" alt="(Fig 6.)" width="480" />
 <p class="caption">(Fig 6.)</p>
@@ -111,16 +111,58 @@
 <p class="caption">(Fig 10.)</p>
 </div>
 <h2 id="discret-fourier-transform">Discret Fourier Transform</h2>
-<p>The Fourier transformation is named after Jean Baptiste Joseph Fourier (1768-1830), a French mathematician and physicist. His paper regarding the fourier transformation paper contained that any continuous periodic signal could be represented as the sum of properly chosen sinusoidal waves [Source: The Scientist and Engineer's Guide to Digital Signal Processing]. As a signal can be continuous or discrete and signals can be periodic or aperiodic will result in up to four categories. Lets focus on the discret fourier transformation which is relevant for discret and periodic signals.</p>
-<p>A signal can be written as vector for example:</p>
-<p>x[n]=(0,1,2,1.8,0.8,-1.8,-2,-1.8,-0.2) N=9.</p>
-<p>This signal or the coordinates of it can be rewritten as a sum of decomposed signals using the delta impulses as basis with its coefficients (linear combination with basis elements):</p>
-<p><span class="math inline">\(x[n]=0\cdot\delta[n]+1\cdot\delta[n-1]+2\cdot\delta[n-2]+1.8\cdot\delta[n-2]+...\)</span></p>
+<p>The Fourier transformation is named after Jean Baptiste Joseph Fourier (1768-1830), a French mathematician and physicist. His paper regarding the fourier transformation paper contained that any continuous periodic signal could be represented as the sum of properly chosen sinusoidal waves.</p>
+<p>As a signal can be continuous or discrete and signals can be periodic or aperiodic will result in up to four categories. Lets focus on the discret fourier transformation which is relevant for discret and periodic signals. [Source: The Scientist and Engineer's Guide to Digital Signal Processing]</p>
+<p>With the discret fourier transform signals can be transformed from real numbers (time domain) to the complex numbers (frequency domain). The transformation process from time domain to frequency domain is called decomposition, analysis or the forward DFT. Transforming from the frequency domain to the time domain is called synthesis, or the inverse DFT. Using the dft can help to perform certain task easier and do for example frequency domain analysis, compress signals or apply filters to signal (remove unwanted noise or filter for certain signal of interest).</p>
+<p>A discret signal in the time domain can be written as vector for example:</p>
+<p>x[n]=(0,1,2,1,0,-1,-2,-1) N=8.</p>
+<div class="figure">
+<img src="assets/img/blog/sip/discrete_signal_example_dft.png" alt="(Fig 11. signal of x[n])" width="480" />
+<p class="caption">(Fig 11. signal of x[n])</p>
+</div>
+<p>This signal of it can be rewritten as a sum of delta impulses as basis with its coefficients (linear combination with basis elements):</p>
+<p><span class="math inline">\(x[n]=0\cdot\delta[n]+1\cdot\delta[n-1]+2\cdot\delta[n-2]+2\cdot\delta[n-2]+...\)</span></p>
 <p>Bases allow one to represent vectors by a sequence of scalars called coordinates or components <a href="https://en.wikipedia.org/wiki/Vector_space#Basis_and_dimension">Source</a>.</p>
+<p>In the frequency domain the k-th basis vector is a complex vector (where <span class="math inline">\(0\leq k\leq N-1\)</span>) defined as</p>
+<p><span class="math inline">\(b_k[n]:=exp(j\frac{2\pi\cdot k}{N}\cdot n)\)</span></p>
+<p>The basis vectors <span class="math inline">\(b_k\)</span> represent oscillations. We can write the signal using the basis vectors <span class="math inline">\(b_k\)</span> the same way as we did with the delta impulses. The coordinates X[k], with respect to this basis, can be calculated using the following equation (By convention the frequency domain is using Uppercase letters.):</p>
+<p><span class="math inline">\(X[k]=\sum_{n=0}^{N-1} x[n]\cdot e^{-j\cdot\frac{2\pi\cdot k}{N}\cdot n} \qquad(analysis, dft, decomposition)\)</span></p>
+<p>To transform not only the k-th element to the spectrum domain we need to compute discrete fourer transform over the whole vector with:</p>
+<p><span class="math inline">\(X=(X[0], X[1],X[2], ..., X[N])\)</span></p>
+<p>This means for the transformed X there exists N unique frequencies.</p>
+<p>Moving back from the frequency domain to the time domain can be accomplished with:</p>
+<p><span class="math inline">\(x[n]=\frac{1}{N}\cdot \sum_{k=0}^{N-1} X[k]\cdot e^{j\cdot\frac{2\pi\cdot k}{N}\cdot n} \qquad(inverse dft, synthesis)\)</span></p>
+<p>This gives us the ability to reconstruct with the inverse dft the complete original signal.</p>
+<p>For the signal of figure 11 we would do the following to calculate the dft.</p>
+<p><span class="math inline">\(x[n]=(0,1,2,1,0,-1,-2,-1) N=8\)</span></p>
+<p><span class="math inline">\(X[k]=\sum_{n=0}^{N-1} x[n]\cdot e^{-j\cdot\frac{2\pi\cdot k}{N}\cdot n} \qquad(analysis, dft, decomposition)\)</span></p>
+<p><span class="math inline">\(X[0]=\sum_{n=0}^{7} x[n]\cdot e^{-j\cdot\frac{2\pi\cdot 0}{8}\cdot n}=0\cdot e^0+ 1\cdot e^0+ 2\cdot e^0+ 1\cdot e^0+ 0\cdot e^0- 1\cdot e^0- 2\cdot e^0- 1\cdot e^0=0\)</span></p>
+<p><span class="math inline">\(X[1]=\sum_{n=0}^{7} x[n]\cdot e^{-j\cdot\frac{2\pi\cdot 1}{8}\cdot n}=0\cdot e^{-j\cdot\frac{2\pi\cdot 1}{8}\cdot 0}+1\cdot e^{-j\cdot\frac{2\pi\cdot 1}{8}\cdot 1}+2\cdot e^{-j\cdot\frac{2\pi\cdot 1}{8}\cdot 2}+1\cdot e^{-j\cdot\frac{2\pi\cdot 1}{8}\cdot 3}+...=0-6.82843i\)</span></p>
+<!--- 
+[wolframalpha](https://www.wolframalpha.com/input/?i=0*e%5E%28-i*%28%282pi%29%2F8%29*0%29%2B1*e%5E%28-i*%28%282pi%29%2F8%29*1%29%2B2*e%5E%28-i*%28%282pi%29%2F8%29*2%29%2B1*e%5E%28-i*%28%282pi%29%2F8%29*3%29%2B0*e%5E%28-i*%28%282pi%29%2F8%29*4%29-1*e%5E%28-i*%28%282pi%29%2F8%29*5%29-2*e%5E%28-i*%28%282pi%29%2F8%29*6%29-1*e%5E%28-i*%28%282pi%29%2F8%29*7.%29)
+--->
+<p><span class="math inline">\(X[2]=0\)</span></p>
+<p><span class="math inline">\(X[...]=...\)</span></p>
+<p><span class="math inline">\(X[7]=0+6.8284i\)</span></p>
+<p>X=(0+0i, 0-6.8284i, -0+0i, -0+1.1716i,0+0i, 0-1.1716i, 0+0i, 0+6.8284i)</p>
+<p>The amplitude can be calculated using the absolute value of the complex numbers of X.</p>
+<p>X(amplitude)=(0, 6.8284, 4.4435e-16, 1.1715, 9.8607e-32, 1.1715, 3.8377e-15, 6.8284)</p>
+<p>The phase can be calculated from the complex numbers of X.</p>
+<p>X(phase)=( 0., -1.570796, 1.605601, 1.570796, 1.570796, -1.570796, 0.35452 , 1.570796)</p>
+<div class="figure">
+<img src="assets/img/blog/sip/discrete_signal_example_dft_amplitude_phase.png" alt="(Fig 12. amplitude and phase)" />
+<p class="caption">(Fig 12. amplitude and phase)</p>
+</div>
+<p>Yet, we dealed with discrete signals (= frequency and time are discrete). For the case where the time is discrete but the frequency is continous we use the term discrete-time (= time is discrete, frequency is continuous). The discrite fourier transformation for the discrete-time is defined as the following:</p>
+<p>Lettting <span class="math inline">\(N-&gt;\infty\)</span>, we obtain the discret-time fourier transformation (frequency is continious)</p>
+<p><span class="math inline">\(X(\omega)=\sum_{\infty}^{n=-\infty} x[n]\cdot e^{-j\cdot\omega\cdot n}, \omega \in [0,2\pi] \qquad(analysis, dft, decomposition)\)</span></p>
+<p><span class="math inline">\(x[n]=\frac{1}{2\pi}\cdot \int_{-\pi}^{\pi} X(\omega)\cdot e^{j\cdot\omega\cdot n} d\omega \qquad(inverse dft, synthesis)\)</span></p>
 <p>Sources:</p>
 <ul>
 <li>[Signal and Image Processing lecture]</li>
 <li><a href="http://www.songho.ca/dsp/convolution/convolution.html#definition2">[http://www.songho.ca/dsp/convolution/convolution.html#definition2]</a></li>
 <li><a href="http://slpl.cse.nsysu.edu.tw/cpchen/courses/dsp/basics-2.pdf">[http://slpl.cse.nsysu.edu.tw/cpchen/courses/dsp/basics-2.pdf]</a></li>
 <li><a href="http://docs.neu.edu.tr/staff/fahreddin.sadikoglu/3._2.pdf">[http://docs.neu.edu.tr/staff/fahreddin.sadikoglu/3._2.pdf]</a></li>
+<li><a href="https://staff.fnwi.uva.nl/r.vandenboomgaard/SP20162017/LinearSystems/index.html">[https://staff.fnwi.uva.nl/r.vandenboomgaard/SP20162017/LinearSystems/index.html]</a></li>
+<li><a href="http://www.dspguide.com/ch5/1.htm">[http://www.dspguide.com/ch5/1.htm]</a></li>
 </ul>

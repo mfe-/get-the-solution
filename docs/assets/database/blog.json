@@ -5,7 +5,7 @@
     	"Title":"Fast Fourier Transform",
         "Author": "Simon",
     	"Release": "2020-15-03T00:00:00",
-    	"Regards":["education","Article"]
+    	"Regards":["education","Article","sip"]
     },
     {
         "BlogEntryId": 203,
@@ -21,7 +21,7 @@
     	"Title":"Signal processing",
         "Author": "Martin",
     	"Release": "2020-09-01T00:00:00",
-    	"Regards":["education","Article"]
+    	"Regards":["education","Article","python","sip"]
     },
     {
         "BlogEntryId": 201,

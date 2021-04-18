@@ -1,34 +1,5 @@
 
-## Sampling frequency
 
-When working with signals, for computers its more convenient and efficent to work with discrete values.
-This requires an ability to convert signals from the the continuous time domain to the discrete time domain and visa verce.
-
-As the continues time domain is infinitly, the "sampling technique" provides an ability to make some kind of snapshots of the continuous time signal. The number of occurrences of a repeating event per unit of time[[3]](https://en.wikipedia.org/wiki/Frequency) is the so called frequency.
-
-Definitions of sampling frequency (fs):
-
-SI Unit of frequency: Hz [$s^{-1}$]
-
-$f_s = \frac{AmountOfEvents}{unitOfTime}$
-
-$T_s$ = distanc between samples
-
-$f = \frac{1}{T}$
-
-Note: Sampling frequency is the frequency of taking samples and differs from the signal frequencies.
-
-Example 1:
-
-![Fig. 1. sampling frequency sample](assets/img/blog/sip/sampling_frequency_sample.png)
-
-Notice: Event number 5. is not considered as it belongs to the next "snapshot".
-
-$f_s = \frac{4}{1s}=4Hz$
-
-$T_s = \frac{1}{4s}$
-
-$f = \frac{1}{\frac{1}{4}s}$=4Hz
 
 Example 2:
 

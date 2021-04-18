@@ -1,6 +1,6 @@
 [
     {
-        "BlogEntryId": 204,
+        "BlogEntryId": 205,
     	"Source":"assets/database/21.03.15-fast-fourier-transform.html",
     	"Title":"Fast Fourier Transform",
         "Author": "Simon",
@@ -8,12 +8,20 @@
     	"Regards":["education","Article","sip"]
     },
     {
-        "BlogEntryId": 203,
+        "BlogEntryId": 204,
     	"Source":"assets/database/20.12.19-working-with-adb.html",
     	"Title":"Working with adb aka Android Debug Bridge",
         "Author": "Martin",
     	"Release": "2020-12-19T00:00:00",
     	"Regards":["Android","Article","linux"]
+    },
+    {
+        "BlogEntryId":203,
+        "Source":"assets/database/20.09.21-Signal-sampling-filtering.html",
+        "Title":"Signal sampling and filtering",
+        "Author": "Martin",
+    	"Release": "2020-09-21T00:00:00",
+    	"Regards":["education","Article","python","sip"]
     },
     {
         "BlogEntryId": 202,

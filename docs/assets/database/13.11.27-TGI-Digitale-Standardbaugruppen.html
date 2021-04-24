@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-</head>
-<body>
 <p><strong>Hinweis: Abbildungen die aus externen Quellen stammen, stehen nicht unter der CC Lizenzbedingung zuverfügung, sondern unterliegen den jeweiligen Urheberrechten des Verlages!</strong></p>
 <p>Text aus der Reihe <a href="category/TGI">Technische Grundlagen der Informatik</a>. Vorgängertext <a href="blog/Logische%20Schaltungen">&quot;Logische Schaltungen&quot;</a>. Hinweise auf Fehler, Verbesserungsvorschläge gerne per Email oder per PR auf die .md File.</p>
 <h1 id="digitale-standardbaugruppen">Digitale Standardbaugruppen</h1>
@@ -1084,11 +1074,119 @@
 </tr>
 </tbody>
 </table>
-<p>hier einfügen</p>
+<p>Im nachfolgenden Beispiel soll die Rechenoperation A+B oder –A+B, welche im Zweierkomplement und 4 Bit lang sind, mit logischen Bausteinen realisiert werden.</p>
+<p>Bei einer Addition können die Zahlen ganz normal mit einem Addierer Baustein durchgeführt werden. Bei der Subtraktion –A+B muss die Zahl A negativ gemacht werden. Dies wird erreicht indem man diese Zahl ins Zweierkomplement bringt. Dazu werden sämtliche Bits der Zahl B invertiert und das LSB, also die letzte Stelle, mit +1 addiert. Anschließend kann man die Zahlen addieren, um die Subtraktion auszuführen.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.24-Bsp.png" alt="Abb. 24 &quot;HA&quot;" />
+<p class="caption">Abb. 24 &quot;HA&quot;</p>
+</div>
+<p>Die Schaltung verfügt über 9 Eingänge, wobei 2 Eingänge für die Zahl A und B bestimmt sind, über den letzten Schalter kann man bestimmen, ob man eine Addition oder eine Subtraktion durchführen will. Von den Eingängen der Zahl A lässt sich über einen Demultiplexer auswählen, ob man das invertierte Bit oder unveränderte Bit vom Eingang auswählen will. Der Demultiplexer wird über den Eingang des Add/Sub Schalters gesteuert. Die gleichwertigen Stellen der Zahl A und B werden dann mit dem Fulladder zusammengezählt und ausgegeben.</p>
+<p>Der erste Fulladder ist beim ci-1 Eingang mit dem Add/Sub Eingang verbunden. Will man addieren, liegt am ci-1 Eingang eine 0 an, d.h. die Zahlen A und B bleiben unverändert. Beim Subtrahieren liegt eine 1 an.</p>
+<p>Damit wird zur niederwertigsten Stelle eine 1 addiert um die Zahl A vom Einerkomplement, was durch die Demultiplexer geschieht, ins Zweierkomplement gebracht. In der obigen Schaltung liegt am Eingang A die Zahl 0110<sub>2</sub>?6 und am Eingang B die Zahl 0100<sub>2</sub>? 4 an und der Rechenoperationsschalter ist auf Subtraktion gesetzt. Das heißt es wird -6+4 =-2 berechnet. Der Eingang der Zahl A wird zunächst invertiert 0110<sub>2</sub>?1001<sub>2</sub>. Zum Schluss werden über die Fulladder die Zahlen addiert.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">1001</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="center">1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>+</td>
+<td align="center">0100</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">1110</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">0010</th>
+<th>?2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="center">1101</td>
+<td>Invertieren</td>
+</tr>
+<tr class="even">
+<td>+</td>
+<td align="center">0001</td>
+<td>+1</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">1110</td>
+<td>?-2</td>
+</tr>
+</tbody>
+</table>
+<p>Wir kontrollieren das Ergebnis indem wir die Dezimalzahl -2 im binären Zweierkomplement darstellen und das Ergebnis der Schaltung vergleichen (01110).</p>
+<p>Addierer können miteinander kombiniert werden um die Bitbreite der zu addierenden Zahl zu vergrößern. Es gibt verschiedene Addierervarianten wie den Carry-Ripple Addierer, Look Ahead Addierer die auf die Ausführungszeit hin optimiert wurden. (Mehr Informationen siehe dazu in der Literatur Dirk W. Hoffmann, Grundlagen der Technischen Informatik, S. 218.)</p>
+<h1 id="komperator">Komperator</h1>
+<p>Ein Komperator wird verwendet um zwei Eingangssignale zu vergleichen. Komplexere Komperatoren verfügen noch über die Möglichkeit Eingangsignale auf Gleichheit, größer oder kleiner zu prüfen. Dies könnte z.B. durch einen MUX realisiert werden. Über das Steuersignal gibt man an, worauf die beiden Eingangssignale verglichen werden sollen. Wir beschränken uns fürs Erste auf das erste einfachere Szenario.</p>
+<p>Der folgende Komperator vergleicht zwei Zahlen die ein Bit breit sind. Sind die Zahlen gleich, wird 1 ausgeben.</p>
+<table>
+<thead>
+<tr class="header">
+<th>e1</th>
+<th align="center">e2</th>
+<th>=</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="center">0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td align="center">1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td align="center">0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="center">1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Anhand der Funktionsausgabe erkennt man, dass die Schaltung mit einem XNOR realisiert werden kann. Wir fügen noch einen Enable Eingang hinzu und erhalten somit folgende Schaltung:</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.25-comperator.png" alt="Abb. 25 &quot;Komperator&quot;" />
+<p class="caption">Abb. 25 &quot;Komperator&quot;</p>
+</div>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.26-comperator-gatter.png" alt="Abb. 26 &quot;Komperator&quot;" />
+<p class="caption">Abb. 26 &quot;Komperator&quot;</p>
+</div>
+<p>Wenn jeweils das Codewort zwei Bit breit ist, kann man mithilfe des Ersatzschaltbildes die Wortbreite des Komperators vergrößern (in der folgenden Abbildung mit einer Wortbreite von zwei Bit dargestellt). Die Wortbreite lässt sich analog zur unteren Schaltung vergrößern.</p>
+<div class="figure">
+<img src="assets/img/blog/tgi/Abb.27-comperator-wortbreite2bit.png" alt="Abb. 27 &quot;Komperator&quot;" />
+<p class="caption">Abb. 27 &quot;Komperator&quot;</p>
+</div>
 <h1 id="quellen">Quellen</h1>
 <ul>
 <li>dirk w. HOFFMANN, Grundlagen der Technischen Informatik 3 Auflage, Hanser</li>
 <li>Schildt, Einführung in die technische Informatik</li>
 </ul>
-</body>
-</html>

@@ -1,5 +1,30 @@
 [
     {
+        "BlogEntryId":207,
+        "Source":"assets/database/21.04.28-Signal-hilbert.html",
+        "Title":"Signal hilbert transformation",
+        "Author": "Martin",
+    	"Release": "2021-04-28T00:00:00",
+    	"Regards":["education","Article","python","sip"]
+        
+    },
+    {
+        "BlogEntryId":206,
+        "Source":"assets/database/20.09.21-Signal-filtering.html",
+        "Title":"Signal filtering",
+        "Author": "Martin",
+    	"Release": "2021-04-24T00:00:00",
+    	"Regards":["education","Article","python","sip"]
+    },
+    {
+        "BlogEntryId":205,
+        "Source":"assets/database/20.09.21-Signal-sampling.html",
+        "Title":"Signal sampling",
+        "Author": "Martin",
+    	"Release": "2021-04-01T00:00:00",
+    	"Regards":["education","Article","python","sip"]
+    },
+    {
         "BlogEntryId": 204,
     	"Source":"assets/database/21.03.15-fast-fourier-transform.html",
     	"Title":"Fast Fourier Transform",

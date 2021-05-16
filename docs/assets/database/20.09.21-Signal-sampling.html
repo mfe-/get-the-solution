@@ -1,11 +1,11 @@
 <h1 id="sampling">Sampling</h1>
-<p>This text is from the category <a href="category/sip">SIP (Signal and image proccessing)</a>. See also <a href="blog/Signal%20processing">Signal Processing introduction</a></p>
+<p>This text is from the category <a href="category/sip">SIP (Signal and image processing)</a>. See also <a href="blog/Signal%20processing">Signal Processing introduction</a></p>
 <h2 id="sampling-frequency">Sampling frequency</h2>
-<p>When working with signals, for computers its more convenient and efficent to work with discrete values. This requires an ability to convert signals from the the continuous time domain to the discrete time domain and visa verce. As the continues time domain is infinitly, the &quot;sampling technique&quot; provides an ability to make some kind of snapshots of the continuous time signal. The number of occurrences of a repeating event per unit of time<a href="https://en.wikipedia.org/wiki/Frequency">[3]</a> is the so called frequency.</p>
+<p>When working with signals, for computers its more convenient and efficient to work with discrete values. This requires an ability to convert signals from the the continuous time domain to the discrete time domain and visa versa. As the continues time domain is infinitely, the &quot;sampling technique&quot; provides an ability to make some kind of snapshots of the continuous time signal. The number of occurrences of a repeating event per unit of time<a href="https://en.wikipedia.org/wiki/Frequency">[3]</a> is the so called frequency.</p>
 <p>Definitions of sampling frequency (fs):</p>
 <p>SI Unit of frequency: Hz [<span class="math inline">\(s^{-1}\)</span>]</p>
 <p><span class="math inline">\(f_s = \frac{AmountOfEvents}{unitOfTime}\)</span></p>
-<p><span class="math inline">\(T_s\)</span> = distanc between samples</p>
+<p><span class="math inline">\(T_s\)</span> = distance between samples</p>
 <p><span class="math inline">\(f = \frac{1}{T}\)</span></p>
 <p>Note: Sampling frequency is the frequency of taking samples and differs from the signal frequencies.</p>
 <p>Example 1:</p>
@@ -29,10 +29,10 @@
 <img src="assets/img/blog/sip/window_frequency.png" alt="(Fig 3. frequency window function)" width="480" />
 <p class="caption">(Fig 3. frequency window function)</p>
 </div>
-<p>The specturm of the rectangular window function will result in a sinc function. Designing window functions result in a trade off. You can choose between stronger desortions for the locally frequencies and weaker desortions for those who are further away. Or you do it the other way around.</p>
-<p>Note: You cannot avoid some desortions of your spectrum for the final signal length part. But you can choose by the window function how your spectrum gets distorted.</p>
+<p>The spectrum of the rectangular window function will result in a sinc-function. Designing window functions result in a trade off. You can choose between stronger distortions for the locally frequencies and weaker distortions for those who are further away. Or you do it the other way around.</p>
+<p>Note: You cannot avoid some distortions of your spectrum for the final signal length part. But you can choose by the window function how your spectrum gets distorted.</p>
 <p>One of the most popular windows is the <a href="https://en.wikipedia.org/wiki/Hann_function">Hann window function</a>.</p>
-<p>Observing a signal for a final length distorts the specturm and may it make difficult to properly resolve all the sepctrums components of the signal. Shorter the signal is the more servier the distortions.</p>
+<p>Observing a signal for a final length distorts the spectrum and may it make difficult to properly resolve all the spectrums components of the signal. Shorter the signal is the more severe the distortions.</p>
 <h2 id="sampling-signal">Sampling signal</h2>
 <p>Sampling is the process from &quot;converting&quot; a signal from the continues time domain to a discrete time signal. Under certain conditions its possible to reconstruct the continues signal from the discrete signal.</p>
 <p><span class="math inline">\(f_s...sampling frequency\)</span></p>
@@ -45,22 +45,23 @@
 <p>Calculate the discrete time signal <span class="math inline">\(X_s(t)\)</span> by:</p>
 <p><span class="math inline">\(X_s(t)=X(t)*S(t)=\sum_{\infty}^{n=-\infty} x[n]\cdot \delta(t-nTs)\)</span></p>
 <p>x[n]...where we want to sample</p>
-<p><span class="math inline">\(\Omega\)</span>...frequency in the continues Time domain (pysical units in Hz)</p>
-<p><span class="math inline">\(\omega\)</span>...discrit time series frequency</p>
+<p><span class="math inline">\(\Omega\)</span>...frequency in the continues Time domain (physical units in Hz)</p>
+<p><span class="math inline">\(\omega\)</span>...discrete time series frequency</p>
 <p>Calculate the spectrum of <span class="math inline">\(X_s(\Omega)\)</span></p>
-<p><span class="math inline">\(X_s(\Omega)=\frac{1}{T_s}\sum_{\infty}^{k=-\infty} X(\Omega-k\cdot\Omega_s); Omega_s=2\cdot\pi\cdot f_s\)</span></p>
+<p><span class="math inline">\(X_s(\Omega)=\frac{1}{T_s}\sum_{k=-\infty}^{\infty} \overbrace{X(\Omega-k\cdot\Omega_s)}^{\text{signal gets shifted by }\Omega_s~k-times} \qquad \Omega_s=2\cdot\pi\cdot f_s\)</span></p>
+<p><span class="math inline">\(X_s(\Omega)\)</span> is an infinite signal which gets shifted by <span class="math inline">\(\Omega_s\)</span></p>
 <p><span class="math inline">\(S(\Omega)=\frac{2\cdot\pi}{T_s}\sum_{k=-\infty}^{\infty}\delta(\Omega-k\cdot\Omega_s)\)</span></p>
-<p>From the modulation theorem we know that the spectrum of our sample signal is given by our original signal convoled with our sampling function:</p>
+<p>From the modulation theorem we know that the spectrum of our sample signal is given by our original signal convolved with our sampling function:</p>
 <p><span class="math inline">\(X_s(\Omega)=X(\Omega)*S(\Omega)\)</span></p>
-<p>The specturm of Xs(t) is shifted infinite k-times.</p>
+<p>The spectrum of Xs(t) is shifted infinite k-times.</p>
 <h3 id="nyquistshannon-sampling-theorem">Nyquist–Shannon sampling theorem</h3>
-<p>Let X(t) be a bandlimited signal with <span class="math inline">\(X(\Omega)=0 for | \Omega | \geq\Omega_N\)</span>. Then x(t) is uniquely determined by its samples x[n]=(nTs) if the sampling frequeuncy <span class="math inline">\(\Omega_s\geq 2\Omega_N\)</span></p>
-<p>For example: Audiofiles. Human is able to hear or recognize noises with a frequencie up to 22kHz. For this reason the signal needs to be sampled with a sampling frequency of 44kHz.</p>
+<p>Let X(t) be a bandlimited signal with <span class="math inline">\(X(\Omega)=0 for | \Omega | \geq\Omega_N\)</span>. Then x(t) is uniquely determined by its samples x[n]=(nTs) if the sampling frequency <span class="math inline">\(\Omega_s\geq 2\Omega_N\)</span></p>
+<p>For example: Audio files. Human is able to hear or recognize noises with a frequency up to 22kHz. For this reason the signal needs to be sampled with a sampling frequency of 44kHz.</p>
 <h2 id="relation-of-ω-and-ω">Relation of Ω and ω</h2>
 <p><span class="math inline">\(\Omega\cdot T\cdot s=\omega\)</span></p>
 <p><span class="math inline">\(f=\frac{\omega\cdot f_s}{2\cdot\pi}\)</span></p>
 <p>Sample:</p>
-<p>Lets assume we have a discrite time signal <span class="math inline">\(X(\omega)\)</span> with a spectrum from <span class="math inline">\(-\pi\)</span> to <span class="math inline">\(\pi\)</span> Now we want to know, to which pysical frequencies <span class="math inline">\(X(\omega)\)</span> is correspondending?</p>
+<p>Lets assume we have a discrete time signal <span class="math inline">\(X(\omega)\)</span> with a spectrum from <span class="math inline">\(-\pi\)</span> to <span class="math inline">\(\pi\)</span> Now we want to know, to which physical frequencies <span class="math inline">\(X(\omega)\)</span> is corresponding?</p>
 <p><span class="math inline">\(f_{\omega=\pi}=\frac{\pi\cdot f_s}{2\cdot\pi}=\frac{f_s}{2}\)</span></p>
 <p><span class="math inline">\(f_{\omega=-\pi}=-\frac{f_s}{2}\)</span></p>
 <p>This means if we for example sample a signal at 1kHz and compute the DFT and plot the spectrum from <span class="math inline">\(-\pi\)</span> to <span class="math inline">\(\pi\)</span> over the frequencies from -500Hz to + 500Hz.</p>
@@ -68,19 +69,28 @@
 <p>-&gt; Sampling frequency has no impact to the frequency resolution.</p>
 <p>Frequency resolution is determined by its window length</p>
 <p>N... length of signal</p>
-<p><span class="math inline">\(frequency-resolution-(pysical)=\frac{f_s}{N}=\frac{f_s}{T\cdot f_s}=\frac{1}{T}\)</span></p>
-<p>For example: Record an audiosignal for one 1s. Then the DFT gives gives us a frequency of 1Hz. Record 10s frequency resolution is 0.1Hz. This means we need a certain frequency resolution to resolve osciallations on which we are intressted in. If the recording window is too short than the frequency resolution is maybe to coarse grain to see whats actual going on.</p>
+<p><span class="math inline">\(frequency-resolution-(physical)=\frac{f_s}{N}=\frac{f_s}{T\cdot f_s}=\frac{1}{T}\)</span></p>
+<p>For example: Record an audio signal for one 1s. Then the DFT gives gives us a frequency of 1Hz. Record 10s frequency resolution is 0.1Hz. This means we need a certain frequency resolution to resolve oscillations on which we are interested in. If the recording window is too short than the frequency resolution is maybe to coarse grain to see whats actual going on.</p>
+<p>We can choose between:</p>
+<ul>
+<li>Get accurate signal by time but frequency resolution is maybe inaccurate</li>
+<li>Get precise frequency but we can't determine certainly where frequency occurs in signal</li>
+</ul>
 <h2 id="resampling">Resampling</h2>
 <p>Change the sampling rate after the signal was recorded. For example we want to do that to save storage on the computer.</p>
 <h3 id="downsampling">Downsampling</h3>
-<p>Naiv down sampling: by a factor of two we set every second signal to 0 (drop every second sample). To downsample by an integer factor u, we first have to aplly a lowpass-filter at cut off frequencies <span class="math inline">\(+-\frac{\pi}{u}\)</span>, and then compute the new signal <span class="math inline">\(x_d[n]=x_{LowPass}[u\cdot n]\)</span></p>
+<p>Naive down sampling: by a factor of two we set every second sample to 0 (drop every second sample). Extended down sampling: To downsample by an integer factor u, we first have to apply a lowpass-filter at cut off frequencies <span class="math inline">\(+-\frac{\pi}{u}\)</span>, and then compute the new signal <span class="math inline">\(x_d[n]=x_{LowPass}[u\cdot n]\)</span></p>
+<p>Note: That you have to adjust your sampled frequency after the downsampling. For example drop every second sample -&gt; <span class="math inline">\(fs_down=fs/2\)</span></p>
 <h3 id="upsampling">Upsampling</h3>
-<p>For example upsampling signal x[n] by a factor L=2 to the new signal <span class="math inline">\(x_u[n]\)</span>. We need to reconstruct every second signal. We can do that for example with a linear interpolation, which is not a good practice. Better do it with:</p>
+<p>For example upsampling signal x[n] by a factor L=2 to the new signal <span class="math inline">\(x_u[n]\)</span>. We need to reconstruct every second signal. We can do that for example with a linear interpolation, which is not a good practice.</p>
+<p>Better do the resampling with:</p>
 <p><span class="math inline">\(x_u[n]=\sum^{\infty}_{k=-\infty}x[k]\cdot\delta[n-k\cdot L]\)</span></p>
 <p><span class="math inline">\(X_u(\omega)=\sum^{\infty}_{k=-\infty}x[n]\cdot e^{-j\omega\cdot L\cdot k}=X(\omega L)\)</span></p>
 <p>Upsampling by creating a new upsampled signal <span class="math inline">\(x_u[n]=\sum^{\infty}_{k=-\infty}x[k]\cdot\delta[n-k\cdot L]\)</span> and than apply low pass filter with cut off frequency <span class="math inline">\(\frac{+\pi}{-L}\)</span>.</p>
 <p>General Resampling <span class="math inline">\(\frac{L}{u}\)</span>: First upsample by L, then downsample by u.</p>
-<p>In principal we can resample at any frequncy we like. However there is one small thing to take in consideration. It could be that to resample by one specific fraction we first have to upsample by a very large number L before downlsampling again by a very large numer m and this upsampling takes an extra ordinary amount of memory. If not careful enough you we can run into compution problems.</p>
+<p>That you have to adjust your sampled frequency after the upsampling. For example extend sample by a factor of two -&gt; <span class="math inline">\(fs_up=fs*2\)</span></p>
+<p>In principal we can resample at any frequency we like. However there is one small thing to take in consideration. It could be that to resample by one specific fraction we first have to upsample by a very large number L before downlsampling again by a very large number m and this upsampling takes an extra ordinary amount of memory. If not careful enough you we can run into computation problems.</p>
+<p>Continue to <a href="blog/Signal%20filtering">signal filtering</a></p>
 <p>Sources:</p>
 <ul>
 <li>transcript of course signal image processing</li>

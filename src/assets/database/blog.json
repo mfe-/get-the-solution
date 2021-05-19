@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId":208,
+        "Source":"assets/database/21.05.17-Wavelets.html",
+        "Title":"Discrete Wavelet transformation",
+        "Author": "Martin",
+    	"Release": "2021-05-17T00:00:00",
+    	"Regards":["education","Article","python","sip"]
+    },
+    {
         "BlogEntryId":207,
         "Source":"assets/database/21.04.28-Signal-hilbert.html",
         "Title":"Signal hilbert transformation",

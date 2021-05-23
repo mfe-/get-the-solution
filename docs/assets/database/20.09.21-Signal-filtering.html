@@ -1,5 +1,14 @@
 <h1 id="filters">Filters</h1>
 <p>This text is from the category <a href="category/sip">SIP (Signal and image proccessing)</a>. Previous text <a href="blog/Signal%20sampling">signal sampling</a></p>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><a href="#designing-filters">Designing Filters</a></li>
+<li><a href="#lp">Low Pass filter</a></li>
+<li><a href="#fir-window">FIR filter design by windowing</a></li>
+<li><a href="#fir-lso">FIR filter design by least square optimization</a></li>
+<li><a href="#iir">Infinite impulse response (IIR) filters</a></li>
+<li><a href="lphpbypf">Build lowpass, highpass, bypass filter</a></li>
+</ul>
 <p>There exists lowpass-, highpass- and bandpassfilter.</p>
 <p>The low pass filter is a very important filter typ, as any other filter typ can be build up of a sum of low pass filters.</p>
 <ul>
@@ -8,12 +17,12 @@
 <li>The band pass filter allows frequencies through a specific frequency range.</li>
 </ul>
 <p>For filtering we distinguish between offline (signal is already recorded) and online (signal is captured in time) signals.</p>
-<h2 id="designing-filters">Designing Filters</h2>
+<h2 id="designing-filters"><a name="designing-filters"></a>Designing Filters</h2>
 <p>Application:</p>
 <p>When recording for example brain signals there can be some &quot;frequency noise&quot;. This &quot;noise&quot; we want to filter out. An image (which can also be transformed with the dft) can have frequencies. When taking pictures the sensors of the camera which are computing the pixel also can have some kind of &quot;white noise&quot;. For example an image with a blue sky which contains the color blue which is changing to an orange horizon (to capture the sunset). This kind of image would be represented as a slow shift in the amplitude of the brightness of the picture. this means the image has a low frequency and the noise of the sensor which got a high frequency could be filtered out by a low pass filter.</p>
 <p>Filtering is also relevant for the classification problems (machine learning).</p>
 <p>Radio signals contains all the information from all radio stations. To receive only the signal of one particular radio station we would need a band pass filter to filter out all other radio stations signals except the one we are interested.</p>
-<h3 id="low-pass-filter">Low Pass filter</h3>
+<h3 id="low-pass-filter"><a name="lp"></a>Low Pass filter</h3>
 <p>Ideal filters are imaginary. We can't build them. Its worth studying them to get a picture why they cannot be built and how we can try to approximate ideal filters.</p>
 <p>In the following example the transform function of the low pass filter is called <span class="math inline">\(|H(\omega)|\)</span> w_c is the cut of point of the frequency. Ideal low pass filter has a gain of 1 for low frequencies and a gain of 0 for all other frequencies with are larger than our cut of point w_c.</p>
 <div class="figure">
@@ -51,7 +60,7 @@
 <li>If you need to use an infinite impulse filter (IIR-Filter) use forward-backward filtering (Can only be used with offline data (signal already recorded)). Can be designed better (compared to FIR-Filter) and have therefore better properties. How does the forward-backward filter work? First filter signal, than flip it in time, so that it runs backward in time and put it again through filter. In the first time the signal got delayed by the phase response and putting the flipped signal again to the filter everything gets advanced. In sum this means that the phase response is canceling itself out, which results in a phase zero response.</li>
 </ol>
 <h3 id="how-to-design-fir-filters-final-impulse-response">How to design FIR-filters (final impulse response)</h3>
-<h4 id="fir-filter-design-by-windowing">FIR filter design by windowing</h4>
+<h4 id="fir-filter-design-by-windowing"><a name="fir-window"></a>FIR filter design by windowing</h4>
 <p>heuristic approach. compute the impulse response of ideal filter (for example lowpass filter). use certain windows to make this ideal filter of final length. advantage of this filter design is, thats easy and straight forward. there is no principal way approximate the trade off of the filter. you need to play around to see whats the best trade off for you.</p>
 <p>steps:</p>
 <ol style="list-style-type: decimal">
@@ -74,9 +83,21 @@
 <li>hamming: <span class="math inline">\(\omega[n]=\begin{cases}  0,54-0,46\cdot cos(\frac{2\cdot\pi}{M}); |n|\leq M\\  0;otherwise  \end{cases}\)</span></li>
 </ol></li>
 </ol></li>
-<li><p>For an online setting we need to delay impulse response <span class="math inline">\(h_{lp-finite}[n]\)</span> to obtain a causal filter. The numbers of sample which we need to Delay depends on the length of the filter. For example the length of the filter is M we would need to delay by M/2 and for uneven M it would be M/2+1.</p></li>
 </ol>
-<h4 id="fir-filter-design-by-least-square-optimization">FIR filter design by least square optimization</h4>
+<p>This filter approach can only be used if the complete signal is available (offline data) and comes with the following:</p>
+<ul>
+<li>is acausal</li>
+<li>&quot;looks into the future&quot;</li>
+<li>computationally intensive</li>
+<li>is dependent of the fft properties
+<ul>
+<li>periodic signal</li>
+<li>distortion</li>
+<li>bad on non-stationary signals</li>
+</ul></li>
+</ul>
+<p>For an online setting we need to delay impulse response <span class="math inline">\(h_{lp-finite}[n]\)</span> to obtain a causal filter. The numbers of sample which we need to Delay depends on the length of the filter. For example the length of the filter is M we would need to delay by M/2 and for uneven M it would be M/2+1.</p>
+<h4 id="fir-filter-design-by-least-square-optimization"><a name="fir-lso"></a>FIR filter design by least square optimization</h4>
 <p>come up with filter with a given length of filter optimal approximates the response I would like to have. For a filter with given length you try to approximate a desired frequency response. Implemented in matlab by the firls function.</p>
 <ol style="list-style-type: decimal">
 <li>Choose the filter length. the length of the filter response is N+1 if N is even. A larger N will result in a larger delay</li>
@@ -96,7 +117,7 @@
 <li><p>Mirror h[n] to h[-n] to obtain the desired impulse response</p></li>
 </ol>
 <p>Note: FIR filter design by least square optimization is an acausal filter. If we want to turn it into a causal filter we need to delay it by N/2.</p>
-<h4 id="infinite-impulse-response-iir-filters">Infinite impulse response (IIR) filters</h4>
+<h4 id="infinite-impulse-response-iir-filters"><a name="iir"></a>Infinite impulse response (IIR) filters</h4>
 <p>Generic form of IIR response filters: <span class="math inline">\(a[0]y[0]=b[0]x[n]+b[1]x[n-1]+...+b[p]x[n-p]-a[1]y[n-1]...-a[q]y[n-q]\)</span></p>
 <p>The output of the system y at time 0 is convolved with input x and the filter impulse response b. In addition the past output (-a[1]y[n-1]...-a[q]y[n-q]) is feeded back into the system.</p>
 <ul>
@@ -124,7 +145,7 @@
 <p class="caption">Fig. 7. Elliptic&quot;</p>
 </div></li>
 </ul>
-<h3 id="build-lowpass-highpass-bypass-filter">Build lowpass, highpass, bypass filter</h3>
+<h3 id="build-lowpass-highpass-bypass-filter"><a name="lphpbypf"></a>Build lowpass, highpass, bypass filter</h3>
 <p><span class="math inline">\(H_{hp}(\omega)=1-H_{lp}(\omega)\)</span></p>
 <p><span class="math inline">\(H_{bandpass}(\omega)=H_{lp}(\omega)\cdot H_{hp}(\omega)\)</span></p>
 <p><span class="math inline">\(H_{bandstopp}(\omega)=1-H_{bandpass}\)</span></p>

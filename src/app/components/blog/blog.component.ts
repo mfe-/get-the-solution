@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class BlogComponent implements OnInit {
 
   public loadedBlogEntries = 0;
-  protected maxloadBlogEntries = 10;
+  protected maxloadBlogEntries = 5;
   public BlogEntry: BlogEntry[];
   public FiltertedBlogEntry: BlogEntry[];
   constructor(@Inject('IBlogService') private blogService: IBlogService, private route: ActivatedRoute) {

@@ -9,6 +9,11 @@
 <li><a href="blog/Signal%2520filtering#iir">Infinite impulse response (IIR) filters</a></li>
 <li><a href="blog/Signal%2520filtering#lphpbypf">Build lowpass, highpass, bypass filter</a></li>
 </ul>
+<h2 id="designing-filters"><a name="designing-filters"></a>Designing Filters</h2>
+<p>Application:</p>
+<p>When recording for example brain signals there can be some &quot;frequency noise&quot;. This &quot;noise&quot; we want to filter out. An image (which can also be transformed with the dft) can have frequencies. When taking pictures the sensors of the camera which are computing the pixel also can have some kind of &quot;white noise&quot;. For example an image with a blue sky which contains the color blue which is changing to an orange horizon (to capture the sunset). This kind of image would be represented as a slow shift in the amplitude of the brightness of the picture. This means the image has a low frequency and the noise of the sensor which got a high frequency could be filtered out by a low pass filter.</p>
+<p>Filtering is also relevant for the classification problems (machine learning).</p>
+<p>Radio signals contains all the information from all radio stations. To receive only the signal of one particular radio station we would need a band pass filter to filter out all other radio stations signals except the one we are interested.</p>
 <p>There exists lowpass-, highpass- and bandpassfilter.</p>
 <p>The low pass filter is a very important filter typ, as any other filter typ can be build up of a sum of low pass filters.</p>
 <ul>
@@ -17,11 +22,6 @@
 <li>The band pass filter allows frequencies through a specific frequency range.</li>
 </ul>
 <p>For filtering we distinguish between offline (signal is already recorded) and online (signal is captured in time) signals.</p>
-<h2 id="designing-filters"><a name="designing-filters"></a>Designing Filters</h2>
-<p>Application:</p>
-<p>When recording for example brain signals there can be some &quot;frequency noise&quot;. This &quot;noise&quot; we want to filter out. An image (which can also be transformed with the dft) can have frequencies. When taking pictures the sensors of the camera which are computing the pixel also can have some kind of &quot;white noise&quot;. For example an image with a blue sky which contains the color blue which is changing to an orange horizon (to capture the sunset). This kind of image would be represented as a slow shift in the amplitude of the brightness of the picture. this means the image has a low frequency and the noise of the sensor which got a high frequency could be filtered out by a low pass filter.</p>
-<p>Filtering is also relevant for the classification problems (machine learning).</p>
-<p>Radio signals contains all the information from all radio stations. To receive only the signal of one particular radio station we would need a band pass filter to filter out all other radio stations signals except the one we are interested.</p>
 <h3 id="low-pass-filter"><a name="lp"></a>Low Pass filter</h3>
 <p>Ideal filters are imaginary. We can't build them. Its worth studying them to get a picture why they cannot be built and how we can try to approximate ideal filters.</p>
 <p>In the following example the transform function of the low pass filter is called <span class="math inline">\(|H(\omega)|\)</span> w_c is the cut of point of the frequency. Ideal low pass filter has a gain of 1 for low frequencies and a gain of 0 for all other frequencies with are larger than our cut of point w_c.</p>
@@ -59,7 +59,7 @@
 <li>Use a finite impulse response filter (FIR-Filter) because they have a linear phase response (for real time application)</li>
 <li>If you need to use an infinite impulse filter (IIR-Filter) use forward-backward filtering (Can only be used with offline data (signal already recorded)). Can be designed better (compared to FIR-Filter) and have therefore better properties. How does the forward-backward filter work? First filter signal, than flip it in time, so that it runs backward in time and put it again through filter. In the first time the signal got delayed by the phase response and putting the flipped signal again to the filter everything gets advanced. In sum this means that the phase response is canceling itself out, which results in a phase zero response.</li>
 </ol>
-<h3 id="how-to-design-fir-filters-final-impulse-response">How to design FIR-filters (final impulse response)</h3>
+<h3 id="final-impulse-response-fir---how-to-design-fir-filters">Final impulse response (FIR) - How to design FIR-filters</h3>
 <h4 id="fir-filter-design-by-windowing"><a name="fir-window"></a>FIR filter design by windowing</h4>
 <p>heuristic approach. compute the impulse response of ideal filter (for example lowpass filter). use certain windows to make this ideal filter of final length. advantage of this filter design is, thats easy and straight forward. there is no principal way approximate the trade off of the filter. you need to play around to see whats the best trade off for you.</p>
 <p>steps:</p>
@@ -124,6 +124,14 @@
 <li>b coefficients which are associated with p; final response</li>
 <li>a coefficient which are associated with q</li>
 </ul>
+<p>The maximum delay, in samples, used in creating each output sample is called the order of the filter <a href="https://ccrma.stanford.edu/~jos/filters/Filter_Order.html">Filter order by JOS</a>.</p>
+<p><span class="math inline">\(y_n=\sum_{i=0}^{p}a_i\cdot x_{n-i}-\sum_{l=1}^{q}b_l\cdot y_{n-l}\)</span></p>
+<ul>
+<li>the recursion (past signal values) may cause an infinite long impulse response</li>
+<li>order of filter: maximum of p and q</li>
+<li>Advantage: more efficient, less computationally intensive vs lowpass with FIR</li>
+</ul>
+<p>See for additional information on the following external resource dspguide.com <a href="http://www.dspguide.com/ch19/1.htm">Chapter 19: Recursive Filters</a></p>
 <p>Notes:</p>
 <ul>
 <li>IIR filters maybe unstable (check if filter is stable)</li>
@@ -146,9 +154,13 @@
 </div></li>
 </ul>
 <h3 id="build-lowpass-highpass-bypass-filter"><a name="lphpbypf"></a>Build lowpass, highpass, bypass filter</h3>
-<p><span class="math inline">\(H_{hp}(\omega)=1-H_{lp}(\omega)\)</span></p>
-<p><span class="math inline">\(H_{bandpass}(\omega)=H_{lp}(\omega)\cdot H_{hp}(\omega)\)</span></p>
-<p><span class="math inline">\(H_{bandstopp}(\omega)=1-H_{bandpass}\)</span></p>
+<p><span class="math inline">\(H_{lp}(\omega)\qquad(low pass filter)\)</span></p>
+<p><span class="math inline">\(H_{hp}(\omega)=1-H_{lp}(\omega)\qquad(high pass filter)\)</span></p>
+<p><span class="math inline">\(H_{bandpass}(\omega)=H_{lp}(\omega)\cdot H_{hp}(\omega)\qquad(band pass filter)\)</span></p>
+<p><span class="math inline">\(H_{bandstopp}(\omega)=1-H_{bandpass}\qquad(bandstopp pass filter)\)</span></p>
+<p>Sample:</p>
+<p>Assume we have the following low-pass filters: <span class="math inline">\(H_{lp20}\)</span> with 20 Hz and a <span class="math inline">\(H_{lp40}\)</span> with 40 Hz in the frequency domain. With the above formulars we can construct a band-pass filter:</p>
+<p><span class="math inline">\(H_{bandpass}(\omega)=H_{lp40}(\omega)*[1-H_{lp20}(\omega)]\)</span></p>
 <p>Continue to <a href="blog/Signal%20hilbert%20transformation">hilbert transformation</a></p>
 <p>Sources:</p>
 <ul>
@@ -157,4 +169,5 @@
 <li><a href="https://en.wikipedia.org/wiki/Window_function" class="uri">https://en.wikipedia.org/wiki/Window_function</a></li>
 <li><a href="http://slpl.cse.nsysu.edu.tw/cpchen/courses/dsp/basics-2.pdf" class="uri">http://slpl.cse.nsysu.edu.tw/cpchen/courses/dsp/basics-2.pdf</a></li>
 <li><a href="http://pipad.org/wiki/index.php/DSP" class="uri">http://pipad.org/wiki/index.php/DSP</a></li>
+<li><a href="https://ccrma.stanford.edu/~jos/filters/Filter_Order.html" class="uri">https://ccrma.stanford.edu/~jos/filters/Filter_Order.html</a></li>
 </ul>

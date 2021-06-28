@@ -1,8 +1,16 @@
 [
     {
-        "BlogEntryId":208,
+        "BlogEntryId":209,
         "Source":"assets/database/21.05.17-Wavelets.html",
         "Title":"Discrete Wavelet transformation",
+        "Author": "Martin",
+    	"Release": "2021-05-17T00:00:00",
+    	"Regards":["education","Article","python","sip"]
+    },
+    {
+        "BlogEntryId":208,
+        "Source":"assets/database/21.06.27-Discrete-cosine-transform.html",
+        "Title":"Discrete cosine transform",
         "Author": "Martin",
     	"Release": "2021-05-17T00:00:00",
     	"Regards":["education","Article","python","sip"]

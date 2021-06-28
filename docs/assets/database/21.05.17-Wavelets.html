@@ -1,31 +1,38 @@
 <h1 id="discrete-wavelet-transformation">Discrete Wavelet transformation</h1>
 <h2 id="wavelets">Wavelets</h2>
-<p>This text is from the category <a href="category/sip">SIP (Signal and image processing)</a>. Previous text <a href="blog/Signal%20hilbert%20transformation">hilbert transform</a></p>
-<p>Beside the discrete fourier transformation there exists another type of transformation which is called the discrete wavelet transformation which can be used to analyze the spectrum of a signal. Its particular useful to analyze dynamic signals, signals which change there spectral properties over time, like the following example.</p>
+<p>This text is from the category <a href="category/sip">SIP (Signal and image processing)</a>. Previous text <a href="blog/Discrete%20cosine%20transform">Discrete cosine transform</a></p>
+<p>Beside the discrete fourier transformation, which disassembles the signal in periodic sin waves, there exists other types of transformations like the</p>
+<ul>
+<li><a href="blog/Discrete%20cosine%20transform">Discrete cosine transform</a></li>
+<li><a href="blog/Discrete%20Wavelet%20transformation">Discrete wavelet transformation</a></li>
+</ul>
+<p>which can be used to analyze the spectrum of a signal.</p>
+<p>Signals which change there spectral properties over time, like the following example, it makes sense to find an better or enhanced method to transform the signal to the frequency domain.</p>
 <div class="figure">
 <img src="assets/img/blog/sip/stft-motivation.png" alt="Fig. 1." width="480" />
 <p class="caption">Fig. 1.</p>
 </div>
-<p>The above signals oscillation is from <span class="math inline">\(t_0\)</span> to <span class="math inline">\(t_1\)</span> fast, but the oscillation gets much slower from <span class="math inline">\(t_1\)</span> to <span class="math inline">\(t_2\)</span>. Doing the &quot;normal&quot; discrete time fourier transformation to retrieve the amplitude spectrum <span class="math inline">\(|X(\omega)|\)</span> would look like the following plot.</p>
+<p>The above signals oscillation is from <span class="math inline">\(t_0\)</span> to <span class="math inline">\(t_1\)</span> fast, but the oscillation gets much slower from <span class="math inline">\(t_1\)</span> to <span class="math inline">\(t_2\)</span>. Doing the &quot;normal&quot; discrete time fourier transformation to retrieve the amplitude spectrum <span class="math inline">\(|X(\omega)|\)</span> it would look like the following plot.</p>
 <div class="figure">
 <img src="assets/img/blog/sip/stft-motivation-amplitude-spectrum.png" alt="Fig. 2." width="480" />
 <p class="caption">Fig. 2.</p>
 </div>
 <p>Without the plot of x(t) and only observing the plot <span class="math inline">\(|X(\omega)|\)</span> you can get the wrong imagination that the signal looks like a fast and a slow oscillation on top of each other.</p>
-<h2 id="short-discrete-time-fourier-transformation">short discrete (time) fourier transformation</h2>
+<h2 id="short-discrete-time-fourier-transformation">Short discrete (time) fourier transformation</h2>
 <p>For this kind of situations it makes sense to analyse the signal in a more dynamic kind of fashion.</p>
 <p>Idea: Perform <em>short</em> but multiple discrete time fourier transformation (STFT) using windows (moving and potentially overlapping) windows -&gt; Short time fourier transformation (S(T)FT). This can be expressed like the following:</p>
 <p><span class="math inline">\(X(\omega_i,\tau)=\sum_{\infty}^{n=-\infty}w[n-\tau]\cdot x[n]\cdot e^{-j\omega n}\)</span></p>
 <p>w[n]...some window of length M.</p>
-<p>Plotting the <span class="math inline">\(|X(\omega_i)|\)</span> the Time-frequency plane results in a 2d plot. The time resolution is determined by the window length M. For example assume M=100 and <span class="math inline">\(f_s=100Hz\)</span>. fast oscillation changes Amplitude quickly.</p>
+<p>Plotting the <span class="math inline">\(|X(\omega_i)|\)</span> as Time-frequency plane results in a 2d plot. The time resolution is determined by the window length M. For example assume M=100 and <span class="math inline">\(f_s=100Hz\)</span>.</p>
 <p><img src="assets/img/blog/sip/stft-time-frequency-plane.png" alt="Fig. 3." width="440" /> <img src="assets/img/blog/sip/stft-time-frequency-plane2.png" alt="Fig. 4." width="440" /></p>
-<p>In the left figure you can see that the resolution is constant. You can choose higher frequency resolution but then you haver a lower time resolution and visa verse. The frequency resolution is always constant along the frequency-axes. With the above <span class="math inline">\(f_s\)</span> and <span class="math inline">\(M\)</span> the frequency resolution would be 1 Hz.</p>
-<p>We know that slow oscillation tend to change the amplitude slowly and fast oscillations tend to change the amplitude quickly. In some situations like in image signals or time signals it makes sense to drop the constant grid. Like in the right figure (time frequency plane with other grid). It illustrates that low frequencies got a long time resolution and as you move up to higher frequencies the time resolution gets doubled and the frequency resolution gets halved.</p>
+<p>In the left figure (Fig. 3.) you can see that the resolution is constant. You can choose higher frequency resolution but then you haver a lower time resolution and visa verse. The frequency resolution is always constant along the frequency-axes. With the above <span class="math inline">\(f_s\)</span> and <span class="math inline">\(M\)</span> the frequency resolution would be 1 Hz.</p>
+<p>We know that slow oscillation tend to change the amplitude slowly and fast oscillations tend to change the amplitude quickly. In some situations like in image signals or time signals it makes sense to drop the constant grid. Like in the right figure (Fig. 4.) (time frequency plane with other grid). It illustrates that low frequencies got a long time resolution and as you move up to higher frequencies the time resolution gets doubled and the frequency resolution gets halved.</p>
 <h2 id="the-discrete-wavelet-transformation-dwt">The discrete Wavelet transformation (DWT)</h2>
-<p>Given a mother wavelet h[n] of length M, we define</p>
+<p>The DWT is able to create such an output as shown in figure 4 (right image). The DWT consists of a set of transformations. How the grid will look like depends on the used mother wavelet. The mother mother wavelet h[n] of length M, is define as:</p>
 <p><span class="math inline">\(h_{m,k}[n]=2^{\frac{-m}{k}}\cdot h[2^{-m}\cdot n-k\cdot2^{-m}\cdot M];m,k\in\mathbb{N}\)</span></p>
 <p><span class="math inline">\(2^{-m}\)</span>... scaling of mother wavelet</p>
 <p>k... shift of wavelet of length M</p>
+<p>The index for <span class="math inline">\(h_{m,k}\)</span> has two scaling factors m and k. The scaling factor k is a shift in time and the m scales the mother wavelet in frequency.</p>
 <p>The DWT is given by</p>
 <p><span class="math inline">\(X[m,k]=2^{\frac{-m}{2}}\cdot\sum_{n=-\infty}^{\infty} x[n]\cdot h[2^{-m}n-k2^{-m}M]\)</span></p>
 <p><span class="math inline">\(h[2^{-m}n-k2^{-m}M]\)</span>...basis function</p>
@@ -37,7 +44,10 @@
 <li>inner product of <span class="math inline">\(&lt;h_{m,k}[n],h_{m&#39;,k&#39;}[n]&gt;\)</span> should be one if we have same scaling and same position</li>
 </ul>
 <p>With orthogonal projection we can (as we did with the D(T)FT) from our time domain to the wavelet domain.</p>
-<p>There are different mother wavelets which provide the above property.</p>
+<p>There are different mother wavelets which provide the above property. Depending on which mother wavelets we wanted to use (for example haar wavelet) we get different instances of the discrete wavelet transform.</p>
+<p>An other way to describe the wavelet transformation would be the following. We have a signal and we use the mother wavelet as some kind of a template. The mother wavelet or the so called template is based on for example the haar wavelet, mexican hat, or another famous wavelet function. The template will be then next scaled and shifted over the original signal in a way, that the scaled and shifted template matches best and close as possible to the original signal.</p>
+<p>To summarize: With the wavelet transformation we try to find a transformation with m and k, which describes the original signal using the wavelets. The transformation of the DWT can be viewed as FIR filtering (original signal is multiped with the wavelets). Wavelet corresponds to a high pass filter and the scaling corresponds as low pass filter.</p>
+<p>Hint: For finding the right template you may know some characteristics of the original signal. For example the original signal contain low frequencies you can choose a template which consists also of low frequencies.</p>
 <h2 id="the-haar-wavelet">The Haar wavelet</h2>
 <p><span class="math inline">\(h[n]=\begin{cases} 1;0\le n\le\frac{M}{2} \\ -1;\frac{M}{2}&lt;n&lt;M \\ 0; otherwise \end{cases}\)</span></p>
 <div class="figure">
@@ -54,4 +64,5 @@
 <p>Sources:</p>
 <ul>
 <li>transcript of course signal image processing</li>
+<li>transcript of course biosignal</li>
 </ul>

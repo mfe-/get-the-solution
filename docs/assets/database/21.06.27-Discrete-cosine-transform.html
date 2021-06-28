@@ -1,0 +1,31 @@
+<p>This text is from the category <a href="category/sip">SIP (Signal and image processing)</a>. Previous text <a href="blog/Signal%20hilbert%20transformation">hilbert transform</a></p>
+<p>Beside the discrete fourier transformation, which disassembles the signal in periodic sin waves, there exists other types of transformations like the</p>
+<ul>
+<li><a href="blog/Discrete%20cosine%20transform">Discrete cosine transform</a></li>
+<li><a href="blog/Discrete%20Wavelet%20transformation">Discrete wavelet transformation</a></li>
+</ul>
+<p>which can be used to analyze the spectrum of a signal.</p>
+<p>The discrete cosine transform is similar to the fourier transformation as it computes the spectrum of a signal.</p>
+<p>One difference between the fourier- and the discrete cosine transformation (DCT) is the base function for the frequency. The fourier transformation uses <span class="math inline">\(e^{ix}\)</span> and the cosine transformation uses cosines as base function. The cosine base function has the advantage that it has a diffrent typ of periodicity.</p>
+<p><strong>Analysis</strong> (from time to frequency):</p>
+<p><span class="math inline">\(X[k]=2\cdot\sum^{N-1}_{n=0}x[n]\cdot(\frac{\pi}{2N}\cdot k\cdot(2n+1))\qquad(0\le k&lt;N-1)\)</span></p>
+<p>The number two in front of the sum is just a normalization factor</p>
+<p><strong>Synthesis</strong> (from frequency to time)</p>
+<p><span class="math inline">\(x[n]=sum^{N-1}_{n=0}X&#39;[k]\cdot(\frac{\pi}{2N}\cdot k\cdot(2n+1))\qquad(0\le n&lt;N-1)\)</span></p>
+<p>1/N in front of the sum is used as normalization facto</p>
+<p><span class="math inline">\(X&#39;[k]=\begin{cases} X[0]/2; k=0 \\ X[k]; otherwise\\ \end{cases}\)</span> this ensures that the DCT is an invertible transform</p>
+<p>Remarks: - In the DCT synthesis the bases function is the same as in the DCT analysis function. In the fourier transformation the base function would differ (complex conjugate is used) - The DCT is an invertible transformation, which means its theoreticly not lossless - There are various variants of the DCT: I-IV (the one above is the DCT II) - When using the DCT we assume that outside the specified range the signal is repeated periodically.</p>
+<h2 id="dft-vs-dct">DFT vs DCT</h2>
+<p>When applying the base function of DFT and the DCT to a signal we can observ some interessting differences:</p>
+<p>DFT - any signal applied with dft will be periodic because the base function are periodic</p>
+<p>DCT - applying the DCT is not periodic but symmetric</p>
+<p>As images represent signals which are not periodic the DCT is very suitable for transforming images. As the DCT can compact most information to low frequency componentens will result in less memory space to be required for the image. On the other hand high frequency components are not that good preserved and will result in blured artifacts.</p>
+<p>DCT is similar to the Fast Fourier Transform (FFT), but can approximate lines well with fewer coefficients [see The Discrete Cosine Transform (DCT), 2021,06.27, https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node231.html]</p>
+<p>The DCT extends / repeats signals symmetrically, while the DFT extends signals periodically</p>
+<p>Continue to <a href="blog/Discrete%20Wavelet%20transformation">Discrete Wavelet transformation</a></p>
+<p>Sources:</p>
+<ul>
+<li>transcript of course signal image processing</li>
+<li><a href="https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node231.html">The Discrete Cosine Transform (DCT)</a></li>
+<li><a href="https://youtu.be/Q2aEzeMDHMA">JPEG DCT, Discrete Cosine Transform (JPEG Pt2)- Computerphile</a></li>
+</ul>

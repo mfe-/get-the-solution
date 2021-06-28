@@ -1,12 +1,29 @@
 <h1 id="signal-processing-introduction">Signal Processing introduction</h1>
 <p>This text is from the category <a href="category/sip">SIP (Signal and image proccessing)</a>.</p>
 <p>A signal is defined as any physical or virtual quantity that varies with time or space or any other independent variable.</p>
-<p>Expressing a signal in a mathematically way, it can be written as a function of an independent variable which varies for example in time. Signals occur in different environments and are therefore categorized into the continuous time domain and discrete time domain. Furthermore you can distinguish signals into periodically and not periodically signals.</p>
+<p>Expressing a signal in a mathematically way, it can be written as a function of an independent variable which varies <em>for example</em> in time.</p>
 <p>Signal in continuous time domain are notated</p>
 <p><span class="math inline">\(x(t), 0 ≤ t ≤ T\)</span></p>
 <p>Signal in discrete time domain are notated</p>
 <p><span class="math inline">\(x[n], n = 0, 1, · · · , N\)</span></p>
+<p>Signals occur in different environments and are therefore categorized into the continuous time domain and discrete time domain.</p>
 <p>Example Signals: Picture file (discrete), audio file (discrete), voltage, speech (continuous), temperature sensor, ...</p>
+<p>Furthermore some signals are predictable and some or not.</p>
+<ul>
+<li>Deterministic signal
+<ul>
+<li>periodically (amplitude characteristics are repeating in time see sinus function)</li>
+<li>none periodically
+<ul>
+<li>transient</li>
+</ul></li>
+</ul></li>
+<li>Nondeterministic signal
+<ul>
+<li>stationary (probability distribution function or Probability density function are time independent)</li>
+<li>non-stationary</li>
+</ul></li>
+</ul>
 <h2 id="signals">Signals</h2>
 <div class="figure">
 <img src="assets/img/blog/sip/discrete_signal_example_t.png" alt="(Fig. 1 discrete x[n] (black) and continues signal x(t)(blue))" />
@@ -131,9 +148,9 @@
 <p class="caption">(Fig 11.)</p>
 </div>
 <h2 id="discrete-time-fourier-transform">Discrete (time) Fourier Transform</h2>
-<p>The Fourier transformation is named after Jean Baptiste Joseph Fourier (1768-1830), a French mathematician and physicist. His paper regarding the fourier transformation paper contained that any continuous periodic signal could be represented as the sum of properly chosen sinusoidal waves.</p>
+<p>The Fourier transformation is named after Jean Baptiste Joseph Fourier (1768-1830), a French mathematician and physicist. His paper regarding the fourier transformation paper contained that any continuous periodic signal could be represented as the sum of properly chosen sinusoidal waves. This means that when applying the DFT to a signal, it assumes that the signal is periodic.</p>
 <p>As a signal can be continuous or discrete and signals can be periodic or aperiodic will result in up to four categories. Lets focus on the discrete fourier transformation which is relevant for discret and periodic signals. [Source: The Scientist and Engineer's Guide to Digital Signal Processing]</p>
-<p>With the discrete fourier transform signals can be transformed from real numbers (time domain) to the complex numbers (frequency domain). The transformation process from time domain to frequency domain is called decomposition, analysis or the forward DFT. Transforming from the frequency domain to the time domain is called synthesis, or the inverse DFT. Using the dft can help to perform certain task easier and do for example frequency domain analysis, compress signals or apply filters to signal (remove unwanted noise or filter for certain signal of interest).</p>
+<p>With the discrete fourier transform signals can be transformed from real numbers (time domain) to the complex numbers (frequency domain). The transformation process from time domain to frequency domain is called <em>decomposition</em>, <em>analysis</em> or the <em>forward DFT</em>. Transforming from the frequency domain to the time domain is called <em>synthesis</em>, or the <em>inverse </em>DFT. Using the dft can help to perform certain task easier and do for example frequency domain analysis, compress signals or apply filters to signal (remove unwanted noise or filter for certain signal of interest).</p>
 <p>A discrete signal in the time domain can be written as vector for example:</p>
 <p>x[n]=(0,1,2,1,0,-1,-2,-1) N=8.</p>
 <div class="figure">
@@ -188,6 +205,37 @@
 <li>transient events (signal which occurs only in a certain time frame is also known as transient signal)</li>
 </ul></li>
 </ul>
+<table style="width:72%;">
+<colgroup>
+<col width="19%" />
+<col width="29%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Periodic</th>
+<th align="center">Non-periodioc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Discrete Time</td>
+<td align="center">DT Fourier Series</td>
+<td align="center">DT Fourier Transform</td>
+</tr>
+<tr class="even">
+<td>DT analysis</td>
+<td align="center"><span class="math inline">\(X[k]=\sum_{n=0}^{N-1} x[n]\cdot e^{-j\cdot\frac{2\pi\cdot k}{N}\cdot n}\)</span></td>
+<td align="center"><span class="math inline">\(X(\omega)=\sum_{\infty}^{n=-\infty} x[n]\cdot e^{-j\cdot\omega\cdot n}, \omega \in [0,2\pi]\)</span></td>
+</tr>
+<tr class="odd">
+<td>DT synthesis</td>
+<td align="center"><span class="math inline">\(x[n]=\frac{1}{N}\cdot \sum_{k=0}^{N-1} X[k]\cdot e^{j\cdot\frac{2\pi\cdot k}{N}\cdot n}\)</span></td>
+<td align="center"><span class="math inline">\(x[n]=\frac{1}{2\pi}\cdot \int_{-\pi}^{\pi} X(\omega)\cdot e^{j\cdot\omega\cdot n} d\omega\)</span></td>
+</tr>
+</tbody>
+</table>
 <h3 id="properties-of-discrete-fourier-transform">Properties of Discrete Fourier Transform</h3>
 <h4 id="parsevals-theorem">Parseval's theorem</h4>
 <p>The energy in both Domains (time and frequency) is the same</p>
@@ -214,4 +262,5 @@ multiplication in the time domain it will be a convolution in the frequency doma
 <li><a href="http://docs.neu.edu.tr/staff/fahreddin.sadikoglu/3._2.pdf">[http://docs.neu.edu.tr/staff/fahreddin.sadikoglu/3._2.pdf]</a></li>
 <li><a href="https://staff.fnwi.uva.nl/r.vandenboomgaard/SP20162017/LinearSystems/index.html">[https://staff.fnwi.uva.nl/r.vandenboomgaard/SP20162017/LinearSystems/index.html]</a></li>
 <li><a href="http://www.dspguide.com/ch5/1.htm">[http://www.dspguide.com/ch5/1.htm]</a></li>
+<li>transcript of course biosignal</li>
 </ul>

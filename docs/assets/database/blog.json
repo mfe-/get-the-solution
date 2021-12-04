@@ -1,106 +1,172 @@
 [
     {
-        "BlogEntryId":209,
-        "Source":"assets/database/21.05.17-Wavelets.html",
-        "Title":"Discrete Wavelet transformation",
+        "BlogEntryId": 210,
+        "Source": "assets/database/21.12.04-Create-Self-Signed-Certificate-Code-Signing.html",
+        "Title": "Create a Self-Signed Certificate for Code Signing",
         "Author": "Martin",
-    	"Release": "2021-05-17T00:00:00",
-    	"Regards":["education","Article","python","sip"]
+        "Release": "2021-12-04T00:00:00",
+        "Regards": [
+            "Infrastructure"
+        ]
     },
     {
-        "BlogEntryId":208,
-        "Source":"assets/database/21.06.27-Discrete-cosine-transform.html",
-        "Title":"Discrete cosine transform",
+        "BlogEntryId": 209,
+        "Source": "assets/database/21.05.17-Wavelets.html",
+        "Title": "Discrete Wavelet transformation",
         "Author": "Martin",
-    	"Release": "2021-05-17T00:00:00",
-    	"Regards":["education","Article","python","sip"]
+        "Release": "2021-05-17T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "python",
+            "sip"
+        ]
     },
     {
-        "BlogEntryId":207,
-        "Source":"assets/database/21.04.28-Signal-hilbert.html",
-        "Title":"Signal hilbert transformation",
+        "BlogEntryId": 208,
+        "Source": "assets/database/21.06.27-Discrete-cosine-transform.html",
+        "Title": "Discrete cosine transform",
         "Author": "Martin",
-    	"Release": "2021-04-28T00:00:00",
-    	"Regards":["education","Article","python","sip"]
+        "Release": "2021-05-17T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "python",
+            "sip"
+        ]
     },
     {
-        "BlogEntryId":206,
-        "Source":"assets/database/20.09.21-Signal-filtering.html",
-        "Title":"Signal filtering",
+        "BlogEntryId": 207,
+        "Source": "assets/database/21.04.28-Signal-hilbert.html",
+        "Title": "Signal hilbert transformation",
         "Author": "Martin",
-    	"Release": "2021-04-24T00:00:00",
-    	"Regards":["education","Article","python","sip"]
+        "Release": "2021-04-28T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "python",
+            "sip"
+        ]
     },
     {
-        "BlogEntryId":205,
-        "Source":"assets/database/20.09.21-Signal-sampling.html",
-        "Title":"Signal sampling",
+        "BlogEntryId": 206,
+        "Source": "assets/database/20.09.21-Signal-filtering.html",
+        "Title": "Signal filtering",
         "Author": "Martin",
-    	"Release": "2021-04-01T00:00:00",
-    	"Regards":["education","Article","python","sip"]
+        "Release": "2021-04-24T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "python",
+            "sip"
+        ]
+    },
+    {
+        "BlogEntryId": 205,
+        "Source": "assets/database/20.09.21-Signal-sampling.html",
+        "Title": "Signal sampling",
+        "Author": "Martin",
+        "Release": "2021-04-01T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "python",
+            "sip"
+        ]
     },
     {
         "BlogEntryId": 204,
-    	"Source":"assets/database/21.03.15-fast-fourier-transform.html",
-    	"Title":"Fast Fourier Transform",
+        "Source": "assets/database/21.03.15-fast-fourier-transform.html",
+        "Title": "Fast Fourier Transform",
         "Author": "Simon",
-    	"Release": "2020-15-03T00:00:00",
-    	"Regards":["education","Article","sip"]
+        "Release": "2020-15-03T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "sip"
+        ]
     },
     {
         "BlogEntryId": 203,
-    	"Source":"assets/database/20.12.19-working-with-adb.html",
-    	"Title":"Working with adb aka Android Debug Bridge",
+        "Source": "assets/database/20.12.19-working-with-adb.html",
+        "Title": "Working with adb aka Android Debug Bridge",
         "Author": "Martin",
-    	"Release": "2020-12-19T00:00:00",
-    	"Regards":["Android","Article","linux"]
+        "Release": "2020-12-19T00:00:00",
+        "Regards": [
+            "Android",
+            "Article",
+            "linux"
+        ]
     },
     {
         "BlogEntryId": 202,
-    	"Source":"assets/database/20.09.01-Signal-processing-overview.html",
-    	"Title":"Signal processing",
+        "Source": "assets/database/20.09.01-Signal-processing-overview.html",
+        "Title": "Signal processing",
         "Author": "Martin",
-    	"Release": "2020-09-01T00:00:00",
-    	"Regards":["education","Article","python","sip"]
+        "Release": "2020-09-01T00:00:00",
+        "Regards": [
+            "education",
+            "Article",
+            "python",
+            "sip"
+        ]
     },
     {
         "BlogEntryId": 201,
-    	"Source":"assets/database/20.10.24-openssl-reference-not-found.html",
-    	"Title":".so undefined reference to openssl",
+        "Source": "assets/database/20.10.24-openssl-reference-not-found.html",
+        "Title": ".so undefined reference to openssl",
         "Author": "Martin",
-    	"Release": "2020-10-24T00:00:00",
-    	"Regards":["C","linux"]
+        "Release": "2020-10-24T00:00:00",
+        "Regards": [
+            "C",
+            "linux"
+        ]
     },
     {
         "BlogEntryId": 200,
-    	"Source":"assets/database/20.02.22-ILT0005-ARMilcTools64nutc_driver.html",
-    	"Title":"ILT0005: C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\runtime.win10-arm.microsoft.net.native.compiler\\2.2.7-rel-27913-00\\tools\\ARM\\ilc\\Tools64\\nutc_driver.exe @\\obj\\ARM\\Release\\ilc\\intermediate\\MDIL\\...rsp' returned exit code -1073741819",
+        "Source": "assets/database/20.02.22-ILT0005-ARMilcTools64nutc_driver.html",
+        "Title": "ILT0005: C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\runtime.win10-arm.microsoft.net.native.compiler\\2.2.7-rel-27913-00\\tools\\ARM\\ilc\\Tools64\\nutc_driver.exe @\\obj\\ARM\\Release\\ilc\\intermediate\\MDIL\\...rsp' returned exit code -1073741819",
         "Author": "Martin",
-    	"Release": "2020-02-22T00:00:00",
-    	"Regards":[".NET Framework", "C#","UWP"]
+        "Release": "2020-02-22T00:00:00",
+        "Regards": [
+            ".NET Framework",
+            "C#",
+            "UWP"
+        ]
     },
     {
         "BlogEntryId": 178,
-    	"Source":"assets/database/19.08.02-ExamsGame.html",
-    	"Title":"Das Aufgabenkönig-Spiel (ExamsGame)",
-    	"Author": "Simon",
-    	"Release": "2019-08-02T00:00:00",
-    	"Regards": ["R", "education", "Angular", "TypeScript"]
+        "Source": "assets/database/19.08.02-ExamsGame.html",
+        "Title": "Das Aufgabenkönig-Spiel (ExamsGame)",
+        "Author": "Simon",
+        "Release": "2019-08-02T00:00:00",
+        "Regards": [
+            "R",
+            "education",
+            "Angular",
+            "TypeScript"
+        ]
     },
     {
         "BlogEntryId": 177,
-    	"Source":"assets/database/19.04.05-ExercisesWithExamsPackage.html",
-    	"Title":"Creating exercises with the R exams package",
-    	"Author": "Simon",
-    	"Release": "2019-04-05T00:00:00",
-    	"Regards": ["R", "education"]
+        "Source": "assets/database/19.04.05-ExercisesWithExamsPackage.html",
+        "Title": "Creating exercises with the R exams package",
+        "Author": "Simon",
+        "Release": "2019-04-05T00:00:00",
+        "Regards": [
+            "R",
+            "education"
+        ]
     },
     {
         "BlogEntryId": 176,
         "Title": "Add Token Authorization to AngularJS and WebApi",
         "Author": "Martin",
         "Release": "2015-08-23T00:00:00",
-        "Regards": [".NET Framework", "C#"],
+        "Regards": [
+            ".NET Framework",
+            "C#"
+        ],
         "Source": "assets/database/15.08.23-Add Token Authorization to AngularJS and WebApi.html"
     },
     {
@@ -108,144 +174,187 @@
         "Title": "DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0",
         "Author": "Martin",
         "Release": "2015-05-10T00:00:00",
-        "Source" : "assets/database/15.05.10-DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0.html",
-        "Regards": [".NET Framework"]
+        "Source": "assets/database/15.05.10-DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0.html",
+        "Regards": [
+            ".NET Framework"
+        ]
     },
     {
         "BlogEntryId": 172,
         "Title": "Datenbankoptimierung",
         "Author": "Martin",
         "Release": "2015-04-05T00:00:00",
-        "Source":"assets/database/15.04.05-Datenbankoptimierung.html",
-        "Regards": ["DBMS"]
+        "Source": "assets/database/15.04.05-Datenbankoptimierung.html",
+        "Regards": [
+            "DBMS"
+        ]
     },
     {
         "BlogEntryId": 171,
         "Title": "Email Subject mit UTF8 im Header",
         "Author": "Martin",
         "Release": "2015-03-14T00:00:00",
-        "Source":"assets/database/15.03.14-Email Subject mit UTF8 im Header.html",
-        "Regards": ["DBMS"]
+        "Source": "assets/database/15.03.14-Email Subject mit UTF8 im Header.html",
+        "Regards": [
+            "DBMS"
+        ]
     },
     {
         "BlogEntryId": 169,
         "Title": "Shenyang",
         "Author": "Martin",
         "Release": "2015-01-25T00:00:00",
-        "Source":"assets/database/15.01.25-Shenyang.html",
-        "Regards": ["Other"]
+        "Source": "assets/database/15.01.25-Shenyang.html",
+        "Regards": [
+            "Other"
+        ]
     },
     {
         "BlogEntryId": 166,
         "Title": "Glassfish 4 and Realm",
         "Author": "Martin",
         "Release": "2014-02-07T00:00:00",
-        "Source":"assets/database/14.02.07-Glassfish-4-and-Realm.html",
-        "Regards": ["Java"]
+        "Source": "assets/database/14.02.07-Glassfish-4-and-Realm.html",
+        "Regards": [
+            "Java"
+        ]
     },
     {
         "BlogEntryId": 163,
         "Title": "reinstall grub",
         "Author": "Martin",
         "Release": "2013-08-24T00:00:00",
-        "Source":"assets/database/13.08.24-reinstall-grub.html",
-        "Regards": ["Infrastructure"]
+        "Source": "assets/database/13.08.24-reinstall-grub.html",
+        "Regards": [
+            "Infrastructure"
+        ]
     },
     {
         "BlogEntryId": 133,
-    	"Source":"assets/database/13.11.27-TGI-Logische-Schaltungen.html",
-    	"Title":"Logische Schaltungen",
-    	"Author": "Martin",
-    	"Release": "2013-11-27T00:00:00",
-    	"Regards": ["TGI","education"]
+        "Source": "assets/database/13.11.27-TGI-Logische-Schaltungen.html",
+        "Title": "Logische Schaltungen",
+        "Author": "Martin",
+        "Release": "2013-11-27T00:00:00",
+        "Regards": [
+            "TGI",
+            "education"
+        ]
     },
     {
         "BlogEntryId": 132,
-    	"Source":"assets/database/13.11.27-TGI-Digitale-Standardbaugruppen.html",
-    	"Title":"Digitale Standardbaugruppen",
-    	"Author": "Martin",
-    	"Release": "2013-11-27T00:00:00",
-    	"Regards": ["TGI","education"]
+        "Source": "assets/database/13.11.27-TGI-Digitale-Standardbaugruppen.html",
+        "Title": "Digitale Standardbaugruppen",
+        "Author": "Martin",
+        "Release": "2013-11-27T00:00:00",
+        "Regards": [
+            "TGI",
+            "education"
+        ]
     },
     {
         "BlogEntryId": 131,
-    	"Source":"assets/database/13.11.27-TGI-Sequenzielle-Logik.html",
-    	"Title":"Sequenzielle Logik",
-    	"Author": "Martin",
-    	"Release": "2013-11-27T00:00:00",
-    	"Regards": ["TGI","education"]
+        "Source": "assets/database/13.11.27-TGI-Sequenzielle-Logik.html",
+        "Title": "Sequenzielle Logik",
+        "Author": "Martin",
+        "Release": "2013-11-27T00:00:00",
+        "Regards": [
+            "TGI",
+            "education"
+        ]
     },
     {
         "BlogEntryId": 130,
         "Title": "MySQL Cursor alternative – Dynamische SQL Cursor",
         "Author": "Martin",
         "Release": "2011-03-10T00:00:00",
-        "Source":"assets/database/11.03.10-MySQL-Cursor-alternative–Dynamische-SQL-Cursor.html",
-        "Regards": ["DBMS"]
+        "Source": "assets/database/11.03.10-MySQL-Cursor-alternative–Dynamische-SQL-Cursor.html",
+        "Regards": [
+            "DBMS"
+        ]
     },
     {
         "BlogEntryId": 121,
         "Title": "Datenbank erstellen mit dem ER-Diagramm und MySql",
         "Author": "Martin",
         "Release": "2011-02-09T00:00:00",
-        "Source":"assets/database/11.02.09-Datenbank-erstellen-mit-dem-ER-Diagramm-und-MySql.html",
-        "Regards": ["DBMS"]
+        "Source": "assets/database/11.02.09-Datenbank-erstellen-mit-dem-ER-Diagramm-und-MySql.html",
+        "Regards": [
+            "DBMS"
+        ]
     },
     {
         "BlogEntryId": 101,
         "Title": "Modelle in der Informatik",
         "Author": "Martin",
         "Release": "2011-02-09T00:00:00",
-        "Source":"assets/database/11.02.09-Modelle-in-der-Informatik.html",
-        "Regards": ["Article"]
+        "Source": "assets/database/11.02.09-Modelle-in-der-Informatik.html",
+        "Regards": [
+            "Article"
+        ]
     },
     {
         "BlogEntryId": 100,
         "Title": "Subversion – Repositories zusammenlegen – exportieren",
         "Author": "Martin",
         "Release": "2010-12-15T00:00:00",
-        "Source":"assets/database/10.12.15-Subversion–Repositories-zusammenlegen–exportieren.html",
-        "Regards": ["Infrastructure"]
+        "Source": "assets/database/10.12.15-Subversion–Repositories-zusammenlegen–exportieren.html",
+        "Regards": [
+            "Infrastructure"
+        ]
     },
     {
         "BlogEntryId": 89,
         "Title": "C# Plugins mit AppDomains realisieren",
         "Author": "Martin",
         "Release": "2010-08-23T00:00:00",
-        "Source":"assets/database/10.08.23-Csharp-Plugins-mit-AppDomains-realisieren.html",
-        "Regards": [".NET Framework","C#"]
+        "Source": "assets/database/10.08.23-Csharp-Plugins-mit-AppDomains-realisieren.html",
+        "Regards": [
+            ".NET Framework",
+            "C#"
+        ]
     },
     {
         "BlogEntryId": 88,
         "Title": "C# Anwendung Plugin fähig machen",
         "Author": "Martin",
         "Release": "2010-07-23T00:00:00",
-        "Source":"assets/database/10.07.23-Anwendung-Plugin-faehig-machen.html",
-        "Regards": [".NET Framework","C#"]
+        "Source": "assets/database/10.07.23-Anwendung-Plugin-faehig-machen.html",
+        "Regards": [
+            ".NET Framework",
+            "C#"
+        ]
     },
     {
         "BlogEntryId": 81,
         "Title": "ONLINE COMMUNITIES",
         "Author": "Martin",
         "Release": "2010-04-07T00:00:00",
-        "Source":"assets/database/10.04.07-ONLINE COMMUNITIES.html",
-        "Regards": ["Article"]
+        "Source": "assets/database/10.04.07-ONLINE COMMUNITIES.html",
+        "Regards": [
+            "Article"
+        ]
     },
     {
         "BlogEntryId": 78,
         "Title": "Tray Icon mit WPF",
         "Author": "Martin",
         "Release": "2010-02-14T00:00:00",
-        "Source":"assets/database/10.02.14-Tray Icon mit WPF.html",
-        "Regards": ["Article"]
+        "Source": "assets/database/10.02.14-Tray Icon mit WPF.html",
+        "Regards": [
+            "Article"
+        ]
     },
     {
         "BlogEntryId": 73,
         "Title": "MarkupExtension – Bilder aus Resource direkt ins XAML laden",
         "Author": "Martin",
         "Release": "2009-09-02T00:00:00",
-        "Source":"assets/database/09.09.02-MarkupExtension - Bilder aus Resource direkt ins XAML laden.html",
-        "Regards": [".NET Framework","C#","XAML"]
+        "Source": "assets/database/09.09.02-MarkupExtension - Bilder aus Resource direkt ins XAML laden.html",
+        "Regards": [
+            ".NET Framework",
+            "C#",
+            "XAML"
+        ]
     },
     {
         "BlogEntryId": 59,
@@ -253,38 +362,57 @@
         "Author": "Martin",
         "Release": "2009-04-02T00:00:00",
         "Source": "assets/database/09.04.02-Ueberschriebener Default Style in BasedOn angeben.html",
-        "Regards": [".NET Framework","C#","XAML"]
+        "Regards": [
+            ".NET Framework",
+            "C#",
+            "XAML"
+        ]
     },
     {
         "BlogEntryId": 55,
         "Title": "ListBox – SelectedItem Zusatzinformationen anzeigen",
         "Author": "Martin",
         "Release": "2009-03-28T00:00:00",
-        "Source":"assets/database/09.03.28-ListBox – SelectedItem Zusatzinformationen anzeigen.html",
-        "Regards": [".NET Framework","C#","XAML"]
+        "Source": "assets/database/09.03.28-ListBox – SelectedItem Zusatzinformationen anzeigen.html",
+        "Regards": [
+            ".NET Framework",
+            "C#",
+            "XAML"
+        ]
     },
     {
         "BlogEntryId": 52,
         "Title": "Einführung in die Programmierung",
         "Author": "Martin",
         "Release": "2009-03-21T00:00:00",
-        "Source":"assets/database/09.03.21-Einfuehrung in die Programmierung.html",
-        "Regards": ["Article","education"]
+        "Source": "assets/database/09.03.21-Einfuehrung in die Programmierung.html",
+        "Regards": [
+            "Article",
+            "education"
+        ]
     },
     {
         "BlogEntryId": 49,
         "Title": "ItemsSource zu UserControl hinzufügen",
         "Author": "Martin",
         "Release": "2009-02-20T00:00:00",
-        "Source":"assets/database/09.02.20-ItemsSource zu UserControl hinzufuegen.html",
-        "Regards": [".NET Framework","C#","XAML"]
+        "Source": "assets/database/09.02.20-ItemsSource zu UserControl hinzufuegen.html",
+        "Regards": [
+            ".NET Framework",
+            "C#",
+            "XAML"
+        ]
     },
     {
         "BlogEntryId": 45,
         "Title": "Subklassen in XAML ansprechen",
         "Author": "Martin",
         "Release": "2009-02-02T00:00:00",
-        "Source":"assets/database/09.02.02-Subklassen in XAML ansprechen.html",
-        "Regards": [".NET Framework","C#","XAML"]
+        "Source": "assets/database/09.02.02-Subklassen in XAML ansprechen.html",
+        "Regards": [
+            ".NET Framework",
+            "C#",
+            "XAML"
+        ]
     }
 ]

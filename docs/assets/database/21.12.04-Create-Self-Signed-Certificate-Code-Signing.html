@@ -1,0 +1,44 @@
+<h3 id="self-signed-certificate-for-uwp-app-code-signing">Self-Signed Certificate for uwp app code signing</h3>
+<p>In my case I needed the self-signed certificate for code signing a uwp app in my azure build pipeline. My uwp app is registered in the Microsoft store, and in this case Microsoft generates a package identity for the app and a unique publisher guid.</p>
+<p>As the uwp package gets signed with a certificate, the certificate contains the publishers guid in the subject property. This way the app can be associated with the Microsoft store.</p>
+<p>To create a self-signed certificate the PowerShell command <code>New-SelfSignedCertificate</code> can be used.</p>
+<div class="figure">
+<img src="assets/img/blog/certificate/packaging_publisher.png" alt="(Fig 1. Shows the opened Package.appxmanifest file of an UWP solution)" width="600" />
+<p class="caption">(Fig 1. Shows the opened Package.appxmanifest file of an UWP solution)</p>
+</div>
+<p>The full commands to create the certificate:</p>
+<pre class="powershell"><code>$currentdate = Get-Date
+$afteryears=$currentdate.AddYears(5)
+New-SelfSignedCertificate -Type Custom -Subject &quot;CN=8F2F0FD9-....&quot; -KeyUsage DigitalSignature
+-FriendlyName &quot;resize_codesign_cert&quot; -CertStoreLocation &quot;Cert:\CurrentUser\My&quot; -TextExtension @(&quot;2.5.29.37={text}1.3.6.1.5.5.7.3.3&quot;, &quot;2.5.29.19={text}&quot;) -notafter $afteryears</code></pre>
+<ul>
+<li><code>$afteryears</code>, sets the year when the certificate expires</li>
+<li><code>Type</code>, sets the CertificateType (Custom)</li>
+<li><code>Subject</code>, should contain the publisher used by the microsoft store <code>CN={publisherguid}</code></li>
+<li><code>KeyUsage</code>, specifies the key usages set in the key usage extension of the certificate</li>
+<li><code>FriendlyName</code>, a name to easily identify the usage of the certificate</li>
+<li><code>CertStoreLocation</code>, the location, where the certificate should be stored, in this case the windows users certificate store</li>
+<li><code>TextExtension</code>, in short tell the certificate that we use it as code signing certificate</li>
+<li><code>$notafter</code>, sets the expiration date. If not set, the issued certificate will expire after one year</li>
+</ul>
+<p>After the certificate is created it shows something like:</p>
+<pre class="powershell"><code>   PSParentPath: Microsoft.PowerShell.Security\Certificate::CurrentUser\My
+
+Thumbprint                                Subject
+----------                                -------
+C893A4D2EE53D3...                         CN=8F2F0FD9-2706-45A2-AB07-...</code></pre>
+<p>Tip: You can view the created certificate from the certificate store with <code>windowskey+R</code> enter <code>mmc</code>, <code>File</code> -&gt; <code>Add/Remove Snap-in...</code> choose <code>Certificates</code>. A dialog prompt where you need to select <code>My user account</code>. Navigate in the left tree view to <code>Certificates - Current User\Personal\Certificates</code>. Double click one of the stored certificates to view its properties like Thumbprint, Subject, Expire date and so on.</p>
+<div class="figure">
+<img src="assets/img/blog/certificate/certificates.png" alt="(Fig 2. Opened mmc with Snap-In Certificates)" />
+<p class="caption">(Fig 2. Opened mmc with Snap-In Certificates)</p>
+</div>
+<p>Now we want to export the created certificate by PowerShell. Notice: A certificate with the extension <code>.pfx</code> contains the private and the public key!</p>
+<p>To export the file we need to do the following:</p>
+<pre class="powershell"><code>$password = ConvertTo-SecureString -String &lt;Your Password&gt; -Force -AsPlainText 
+Export-PfxCertificate -cert &quot;Cert:\CurrentUser\My\&lt;Certificate Thumbprint in this case C893A4D2EE53D3...&gt;&quot; -FilePath &lt;FilePath&gt;.pfx -Password $password</code></pre>
+<p>That’s it, the next step would be to integrate the certificate into the build pipeline.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing" class="uri">https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing</a></li>
+<li><a href="http://woshub.com/how-to-create-self-signed-certificate-with-powershell/" class="uri">http://woshub.com/how-to-create-self-signed-certificate-with-powershell/</a></li>
+</ul>

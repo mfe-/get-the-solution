@@ -1,5 +1,13 @@
 [
     {
+        "BlogEntryId":211,
+        "Source":"assets/database/21.12.19-Contour-Boundary-tracing.html",
+        "Author":"Martin",
+        "Regards": ["education","Article","image","C#"],
+        "Release": "2021-12-19T00:00:00",
+        "Title":"Use boundary trace to find contour of object in images"
+    },
+    {
         "BlogEntryId": 210,
         "Source": "assets/database/21.12.04-Create-Self-Signed-Certificate-Code-Signing.html",
         "Title": "Create a Self-Signed Certificate for Code Signing",

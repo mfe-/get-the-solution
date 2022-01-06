@@ -1,11 +1,26 @@
 [
     {
-        "BlogEntryId":211,
-        "Source":"assets/database/21.12.19-Contour-Boundary-tracing.html",
-        "Author":"Martin",
-        "Regards": ["education","Article","image","C#"],
+        "BlogEntryId": 212,
+        "Source": "assets/database/22.01.06-hands on dotnet-trace.html",
+        "Author": "Martin",
+        "Regards": [
+            "C#"
+        ],
+        "Release": "2022-01-06T00:00:00",
+        "Title": "Checkout dotnet-trace"
+    },
+    {
+        "BlogEntryId": 211,
+        "Source": "assets/database/21.12.19-Contour-Boundary-tracing.html",
+        "Author": "Martin",
+        "Regards": [
+            "education",
+            "Article",
+            "image",
+            "C#"
+        ],
         "Release": "2021-12-19T00:00:00",
-        "Title":"Use boundary trace to find contour of object in images"
+        "Title": "Use boundary trace to find contour of object in images"
     },
     {
         "BlogEntryId": 210,

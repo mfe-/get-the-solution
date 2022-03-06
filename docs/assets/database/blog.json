@@ -1,5 +1,17 @@
 [
     {
+        "BlogEntryId": 213,
+        "Source": "assets/database/22.03.06-Azure-App-registrations-daemon-app.html",
+        "Author": "Martin",
+        "Regards": [
+            "C#",
+            "Azure",
+            "Infrastructure"
+        ],
+        "Release": "2022-01-06T00:00:00",
+        "Title": "Create an Azure App registrations daemon app"
+    },
+    {
         "BlogEntryId": 212,
         "Source": "assets/database/22.01.06-hands on dotnet-trace.html",
         "Author": "Martin",

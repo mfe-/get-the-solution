@@ -1,0 +1,76 @@
+<h3 id="connect-azure-devops-with-azure">Connect Azure Devops with Azure</h3>
+<p>To connect Azure Devops with Azure one can use a service principal. The benefit using a service principal is that you can control the exposed Resources which can be accessed from the azure devops pipelines. In order to do that we need to create an “App Registration” in Azure. The created app gets than access to our Azure Subscriptions. For setting up the service connection in Azure Devops its recommended to use the certificate authentication approach. For this the Azure Key Vault can be used.</p>
+<p>Lets start by creating the Azure App Registration.</p>
+<ol type="1">
+<li>Open Azure Portal</li>
+<li>Navigate to Azure Active Directory</li>
+<li>Click App registration</li>
+<li>Click New Registration</li>
+<li>Name: For example AzureDevOpsKeyVaultServiceConnection</li>
+<li>Supported account types: Accounts in this organizational directory only (Single Tenant)</li>
+<li>Redirect URI: (Leave blank)</li>
+<li>Click Register</li>
+<li>Switch to the overview of the created app / service principal and obtain the values</li>
+</ol>
+<figure>
+<img src="assets/img/blog/azure-app-registration-overview.png" alt="(Fig 1. service principal)" width="480" /><figcaption>(Fig 1. service principal)</figcaption>
+</figure>
+<p>The next step is to assign the created service principal to give access to the azure subscription</p>
+<ol type="1">
+<li>Navigate to Subscriptions and select your subscription</li>
+<li>Click Access control (IAM)</li>
+<li>Click Add -&gt; Add role assignment</li>
+<li>Role: Contributor</li>
+<li>Assign access to: Azure AD user, group, or service principal</li>
+<li>Select Members: Enter the name of the create app/service principal</li>
+<li>Click Save</li>
+</ol>
+<figure>
+<img src="assets/img/blog/azure-subscription.png" alt="(Fig 2. azure subscription)" width="480" /><figcaption>(Fig 2. azure subscription)</figcaption>
+</figure>
+<figure>
+<img src="assets/img/blog/azure-subscription-role-assignment.png" alt="(Fig 3. azure subscription role assignment)" width="480" /><figcaption>(Fig 3. azure subscription role assignment)</figcaption>
+</figure>
+<p>Create the certificate for the service principal using Azure Key Vault.</p>
+<ol type="1">
+<li>Navigate to your Azure Key vault (If you don’t have you need to create one)</li>
+<li>Certificates</li>
+<li>Click Generate/Import</li>
+<li>Name: For example <code>AzureDevOpsKeyVaultConnectionCertificate</code></li>
+<li>Validity Period (in months): Enter an appropriate amount of months</li>
+<li>Subject: For example <code>CN=https://dev.azure.com/{yourorganisation}/</code></li>
+<li>Switch Content Type to <code>PEM</code></li>
+<li>Click Create</li>
+<li>Click Download in PFX/PEM format two times</li>
+<li>Switch to your service principal / registered app and open Certificates &amp; secrets and select certificates</li>
+<li>Open the downloaded .pem file and open it with notepad. Remove the content of the private key and upload the public key</li>
+</ol>
+<p>If Azure Key Vault should be used in Azure Devops make sure that under <code>Access policies</code> the permission model <code>Azure role-based access control</code> is enabled.</p>
+<p>Create the Service Connection</p>
+<ol type="1">
+<li>Open Azure DevOps and open your organization</li>
+<li>Select at the bottom <code>Project settings</code></li>
+<li>Select <code>Service Connection</code></li>
+<li>Select <code>New Service Connection</code> and <code>Azure Resource Manager</code>. At the bottom of the dialog press <code>next</code></li>
+<li>Select <code>Service Principal (manual)</code></li>
+<li>Set Enviroment <code>Azure Cloud</code>, Scope Level <code>Subscription</code>.</li>
+<li>Enter the Subscription id and name from your subscription (see Fig 2. azure subscription)</li>
+<li>Select Credentials to <code>certificates</code> and paste the content of the downloaded .pem file with the public and private key</li>
+<li>Enter the Principal id and the tenant id from the registered app (Fig 1. service principal)</li>
+<li>Click on the button Verifiy to check if everything is fine.</li>
+<li>Enter a proper service Connection name and create the service connection.</li>
+</ol>
+<figure>
+<img src="assets/img/blog/azure-devops-service-connection.png" alt="(Fig 4. azure subscription role assignment)" width="480" /><figcaption>(Fig 4. azure subscription role assignment)</figcaption>
+</figure>
+<p>Your now ready to use the service connection to access azure. Try for example the following in one of your <code>*.yml</code> pipelines:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">-</span> <span class="fu">task:</span><span class="at"> AzureCLI@2</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="fu">inputs:</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="fu">azureSubscription:</span><span class="at"> </span><span class="st">&#39;the name of your service connection&#39;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="fu">scriptType:</span><span class="at"> </span><span class="st">&#39;ps&#39;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">    <span class="fu">scriptLocation:</span><span class="at"> </span><span class="st">&#39;inlineScript&#39;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    <span class="fu">inlineScript:</span><span class="at"> </span><span class="st">&#39;az group list&#39;</span></a></code></pre></div>
+<p>Links:</p>
+<ul>
+<li><a href="https://cann0nf0dder.wordpress.com/2019/12/12/connecting-to-azure-devops-with-a-service-principal/">Connecting to Azure Devops with a Service Principal</a></li>
+</ul>

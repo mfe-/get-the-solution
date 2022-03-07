@@ -1,6 +1,17 @@
 [
     {
         "BlogEntryId": 213,
+        "Source": "assets/database/22.03.07-Connecting to Azure Devops with a Service Principal.html",
+        "Author": "Martin",
+        "Regards": [
+            "Azure",
+            "Infrastructure"
+        ],
+        "Release": "2022-03-06T00:00:00",
+        "Title": "Connecting to Azure Devops with a Service Principal"
+    },
+    {
+        "BlogEntryId": 213,
         "Source": "assets/database/22.03.06-Azure-App-registrations-daemon-app.html",
         "Author": "Martin",
         "Regards": [

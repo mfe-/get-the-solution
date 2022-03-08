@@ -63,13 +63,14 @@
 <figure>
 <img src="assets/img/blog/azure-devops-service-connection.png" alt="(Fig 4. azure subscription role assignment)" width="480" /><figcaption>(Fig 4. azure subscription role assignment)</figcaption>
 </figure>
-<p>Your now ready to use the service connection to access azure. Try for example the following in one of your <code>*.yml</code> pipelines:</p>
+<p>Your now ready to use the service connection to access azure. Try for example the following in your <code>*.yml</code> pipeline:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">-</span> <span class="fu">task:</span><span class="at"> AzureCLI@2</span></a>
 <a class="sourceLine" id="cb1-2" title="2">  <span class="fu">inputs:</span></a>
 <a class="sourceLine" id="cb1-3" title="3">    <span class="fu">azureSubscription:</span><span class="at"> </span><span class="st">&#39;the name of your service connection&#39;</span></a>
 <a class="sourceLine" id="cb1-4" title="4">    <span class="fu">scriptType:</span><span class="at"> </span><span class="st">&#39;ps&#39;</span></a>
 <a class="sourceLine" id="cb1-5" title="5">    <span class="fu">scriptLocation:</span><span class="at"> </span><span class="st">&#39;inlineScript&#39;</span></a>
 <a class="sourceLine" id="cb1-6" title="6">    <span class="fu">inlineScript:</span><span class="at"> </span><span class="st">&#39;az group list&#39;</span></a></code></pre></div>
+<p>You can use the role based access control to set up which resources the service principal is allowed to access.</p>
 <p>Links:</p>
 <ul>
 <li><a href="https://cann0nf0dder.wordpress.com/2019/12/12/connecting-to-azure-devops-with-a-service-principal/">Connecting to Azure Devops with a Service Principal</a></li>

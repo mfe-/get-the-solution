@@ -20,7 +20,7 @@
 <li>Navigate to Subscriptions and select your subscription</li>
 <li>Click Access control (IAM)</li>
 <li>Click Add -&gt; Add role assignment</li>
-<li>Role: Contributor</li>
+<li>Role: Contributor but not mandatory</li>
 <li>Assign access to: Azure AD user, group, or service principal</li>
 <li>Select Members: Enter the name of the create app/service principal</li>
 <li>Click Save</li>
@@ -45,7 +45,7 @@
 <li>Switch to your service principal / registered app and open Certificates &amp; secrets and select certificates</li>
 <li>Open the downloaded .pem file and open it with notepad. Remove the content of the private key and upload the public key</li>
 </ol>
-<p>If Azure Key Vault should be used in Azure Devops make sure that under <code>Access policies</code> the permission model <code>Azure role-based access control</code> is enabled.</p>
+<p>If Azure Key Vault should be used in Azure Devops make sure that under <code>Access policies</code> the permission model <code>Vault access policy</code> is enabled. Select <code>Add Policy</code> and add the app with the selected roles <code>Get</code>, <code>List</code>, <code>Decrypt</code> and <code>Sign</code>.</p>
 <p>Create the Service Connection</p>
 <ol type="1">
 <li>Open Azure DevOps and open your organization</li>

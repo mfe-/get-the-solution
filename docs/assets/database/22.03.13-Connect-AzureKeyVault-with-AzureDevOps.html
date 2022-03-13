@@ -1,0 +1,55 @@
+<h3 id="connect-azure-key-vault-with-azuredevops">Connect Azure Key vault with AzureDevOps</h3>
+<p>I’m working on moving my credentials to the Azure Key vault. I already completed a crucial step which was done by creating a service connection in AzureDevops to Azure, <a href="blog/Connecting%20to%20Azure%20Devops%20with%20a%20Service%20Principal">see here</a>.</p>
+<p>For my legacy build pipelines I stored my certificates and secrets under <code>Library</code> / <code>Variable groups</code> and <code>Secure files</code>.</p>
+<p>Switching to the Azure Key vault is fairly easy. You only need to create a new <code>Variable group</code> under <code>Library</code>. I named the variable group <code>resize-image</code>.Then select <code>Link secrets from an Azure key vault as variables</code> and choose the previously created service principal (<code>AzureDevOpsKeyVaultServiceConnection</code> <a href="blog/Connecting%20to%20Azure%20Devops%20with%20a%20Service%20Principal">see here</a>). Enter or select the name of the azure Key vault. Select <code>+Add</code> under <code>Variables</code>. A dialog is being displayed with all the key vault secrets and certificates. You can choose which secrets and certificates should be available under the created <code>Variable group</code>. Complete the setup by pressing the save button.</p>
+<figure>
+<img src="assets/img/blog/azure-variable-group.png" alt="(Fig 1. variable group)" width="480" /><figcaption>(Fig 1. variable group)</figcaption>
+</figure>
+<p>The next step is to “integrate” the created variable group in the <code>*.yml</code> pipeline by adding the group <code>group: resize-image</code> to <code>variables</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">[</span>...<span class="kw">]</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="fu">variables:</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">-</span> <span class="fu">group:</span><span class="at"> resize-image</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">[</span>...<span class="kw">]</span></a></code></pre></div>
+<p>Now you can access the secret <code>resizeappcenterid</code> with <code>$(resizeappcenterid)</code>. When you try to display the secrets using <code>echo</code> or a similar command you will only see <code>***</code> in order to not be exposed (it’s a security feature).</p>
+<p>Since I needed to sign my code with a certificate I had to adjust the task which downloaded the certificate from the legacy task <code>secure files</code>. I didn’t know how to use the certificate directly from the variable group, so I decided to write a powershell script which will download the certificate from the azure Key vault and convert it to a *.pfx file. In the pipeline you need to use the task <code>AzurePowerShell</code> (Using <code>AzureCLI</code> will not work as the command <code>Get-AzKeyVaultSecret</code> will result in unknown cmdlet).</p>
+<p>The task itself looks like the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">-</span> <span class="fu">task:</span><span class="at"> AzurePowerShell@5</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="fu">displayName:</span><span class="at"> </span><span class="st">&#39;Download certificate &amp; install&#39;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="fu">inputs:</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="fu">azurePowerShellVersion:</span><span class="at"> </span><span class="st">&#39;LatestVersion&#39;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="fu">azureSubscription:</span><span class="at"> </span><span class="st">&#39;KeyVaultServiceConnection&#39;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="fu">ScriptType:</span><span class="at"> </span><span class="st">&#39;InlineScript&#39;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="fu">    Inline:</span> <span class="st">|</span>     </a>
+<a class="sourceLine" id="cb2-8" title="8">      #the name of the key vault</a>
+<a class="sourceLine" id="cb2-9" title="9">      $keyvaultname=&#39;getkeyvault&#39; </a>
+<a class="sourceLine" id="cb2-10" title="10">      #the certificate name</a>
+<a class="sourceLine" id="cb2-11" title="11">      $certname=&quot;$(resizesigningCert)&quot; </a>
+<a class="sourceLine" id="cb2-12" title="12">      #the path to the certificate (required in the next steps)</a>
+<a class="sourceLine" id="cb2-13" title="13">      $certFilePath=&quot;$(Build.SourcesDirectory)\certName.pfx&quot;</a>
+<a class="sourceLine" id="cb2-14" title="14">      #create a pipeline variable so it can be used in the next tasks</a>
+<a class="sourceLine" id="cb2-15" title="15">      Write-Host $certFilePath</a>
+<a class="sourceLine" id="cb2-16" title="16">      Write-Host &quot;##vso[task.setvariable variable=certFilePath]$certFilePath&quot;</a>
+<a class="sourceLine" id="cb2-17" title="17"></a>
+<a class="sourceLine" id="cb2-18" title="18"></a>
+<a class="sourceLine" id="cb2-19" title="19">      Add-Type -AssemblyName System.Security</a>
+<a class="sourceLine" id="cb2-20" title="20">      #get certificate from azure</a>
+<a class="sourceLine" id="cb2-21" title="21">      #$secret=az keyvault secret show -n $certname --vault-name $keyvaultname</a>
+<a class="sourceLine" id="cb2-22" title="22">      $secret = Get-AzKeyVaultSecret -VaultName $keyvaultname -Name $certname</a>
+<a class="sourceLine" id="cb2-23" title="23">      #convert secret to byte array</a>
+<a class="sourceLine" id="cb2-24" title="24">      $pass = $secret.SecretValue | ConvertFrom-SecureString</a>
+<a class="sourceLine" id="cb2-25" title="25">      $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret.SecretValue);</a>
+<a class="sourceLine" id="cb2-26" title="26">      $PlainTextString = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr);</a>
+<a class="sourceLine" id="cb2-27" title="27">      $secretByte = [Convert]::FromBase64String($PlainTextString)</a>
+<a class="sourceLine" id="cb2-28" title="28">      $x509Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2</a>
+<a class="sourceLine" id="cb2-29" title="29">      #import certificate</a>
+<a class="sourceLine" id="cb2-30" title="30">      $x509Cert.Import($secretByte, &quot;&quot;, &quot;Exportable,PersistKeySet&quot;)</a>
+<a class="sourceLine" id="cb2-31" title="31">      echo &quot;imported&quot;</a>
+<a class="sourceLine" id="cb2-32" title="32">      #store the pfx file</a>
+<a class="sourceLine" id="cb2-33" title="33">      $exportedpfx=$x509Cert.Export(&#39;PFX&#39;,&quot;$(resizesigningCertpassword)&quot;)</a>
+<a class="sourceLine" id="cb2-34" title="34">      Set-Content -Path $certFilePath -Value $exportedpfx -Encoding Byte</a></code></pre></div>
+<p>The <code>*.pfx</code> file is now ready to use for code signing. In uwp this can look like the following</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">[</span>...<span class="kw">]</span></a>
+<a class="sourceLine" id="cb3-2" title="2">        /p:PackageCertificateThumbprint=<span class="st">&quot;$(resizesigningCertthumbprint)&quot;</span></a>
+<a class="sourceLine" id="cb3-3" title="3">        /p:PackageCertificateKeyFile=<span class="st">&quot;$(certFilePath)&quot;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">        /p:PackageCertificatePassword=<span class="st">&quot;$(resizesigningCertpassword)&quot;&#39;</span></a></code></pre></div>
+<p>When running into problems in the build pipeline always examine the log and error message and try to reproduce it on your local device using the powershell command line.</p>

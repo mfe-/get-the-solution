@@ -1,6 +1,17 @@
 [
     {
-        "BlogEntryId": 213,
+        "BlogEntryId": 215,
+        "Source": "assets/database/22.03.13-Connect-AzureKeyVault-with-AzureDevOps.html",
+        "Author": "Martin",
+        "Regards": [
+            "Azure",
+            "Infrastructure"
+        ],
+        "Release": "2022-03-06T00:00:00",
+        "Title": "Using Azure Key vault with AzureDevOps"
+    },
+    {
+        "BlogEntryId": 214,
         "Source": "assets/database/22.03.07-Connecting to Azure Devops with a Service Principal.html",
         "Author": "Martin",
         "Regards": [

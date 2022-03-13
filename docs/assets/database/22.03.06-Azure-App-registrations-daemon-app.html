@@ -12,7 +12,7 @@
 <li>Enter a name (for example <code>azureappreg</code>) and select <code>Accounts in this organizational directory only (Default Directory only - Single tenant)</code></li>
 <li>You should now see a new page: Home &gt; Default Directory | <strong>azureappreg</strong></li>
 <li>In the left menu select: <code>Expose an Api</code> and under the title “Scopes defined by this API” press <code>Add a scope</code></li>
-<li>Enter an Application Scope. Instead of the guid you can enter for example <code>api://azureappregScope</code></li>
+<li>Enter an Application Scope. Instead of the guid you can enter <code>api://azureappregScope</code></li>
 <li>Next enter Scope name (for example <code>azureappreg.Read</code>), a consent display name for example <code>Read</code> and a consent description. Finish with <code>Add Scope</code>.</li>
 <li><p>In the left menu select <code>Certificates &amp; secrets</code>. Select <code>Client secrets</code>. Select <code>New Secret</code> and set a description and expiration date. Store the value of the Secret as you will later not be able to access it again.</p></li>
 <li>The Microsoft Graph Api is a good way to test our setup. So lets go to the left menu and select <code>API Permissions</code>. You will see that Microsoft Graph with <code>User.Read</code> with <code>Delegated</code> was automatically added when we created the App registration. Because <code>Delegated</code> (your application needs to access the API as the signed-in user) permissions aren’t supported for daemon apps, we need to add a new permission.</li>

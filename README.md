@@ -4,7 +4,7 @@
 
 - nodejs
 - `npm install`
-- copy assets folder from `docs` to `src` 
+- copy assets folder from `docs` to `src`
 
 ## Build for github with
 
@@ -13,18 +13,18 @@
 3. push to github
 
 ## Convert markdown files to html files
-Using pandoc in Linux: 
 
-	cd src/assets/database; for i in *.md; do pandoc "$i" -o "${i%.*}".html; done
-	
-	ng build --output-path=docs --prod --base-href "https://get-the-solution.net/"
+Using pandoc in Linux:
+
+ cd src/assets/database; for i in *.md; do pandoc "$i" -o "${i%.*}".html; done
+
+ ng build --output-path=docs --prod --base-href "https://get-the-solution.net/"
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
-
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 

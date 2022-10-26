@@ -1,0 +1,37 @@
+<h3 id="intorduction">Intorduction</h3>
+<p>I installed linux on my surface pro 4, by trying out some installation guidelines specifically for installing linux on a surface pro. They recommended to create a bootable linux usb, select “None” or “Microsoft &amp; 3d-party CA” in the UEFI Settings and change the boot order accordingly. However, my surface never booted from usb and always started windows. I still don’t know the reason for that behavior since I tried many different setups like different usb sticks and different applications to create a bootable linux usb. Even in grub the usb stick never showed up.</p>
+<h3 id="installing-grub2win">Installing grub2win</h3>
+<p>Since the UEFI Settings didn’t want to load my usb linux setup, I thought I’d Install grub2win and load my linux setup from there. For this I installed grub2win <a href="https://sourceforge.net/projects/grub2win/" class="uri">https://sourceforge.net/projects/grub2win/</a> on my windows machine and disabled “Microsoft only” in the UEFI settings under security.<br />
+When booting into grub2win you can press <code>c</code> and a bash-like terminal will be displayed. With <code>ls</code> you can view all existing partitions which were recognized by grub. However, grub also didn’t recognize my usb stick.</p>
+<h3 id="create-linux-setup-partition">Create linux setup partition</h3>
+<p>I thought instead of using the usb media as an installation source, I’d use my internal hard disc drive. For this I booted into windows and started <code>diskmgmt.msc</code>. I created a new formatted FAT32 partition on my main harddisc drive. Then I copied the content of the usb media to the new partition (in my case I extracted the linux <code>.iso</code> file) and rebooted to grub2win.</p>
+<h3 id="start-the-linux-setup-from-grub">Start the linux setup from grub</h3>
+<p>With the command <code>ls</code> I tried to figure out which <code>(hd0,gptx)</code> is behind my new created partition. It helps a lot if you know which folders and files are part of the linux setup media. So I executed <code>Is (hd0 ,gpt7)</code>, <code>Is (hd0 ,gpt6)</code> and so on until I found folders and files which I would expect to be part of the linux setup media.</p>
+<p>After I found the proper label of my partition, I executed the command <code>set root=(hd0,gpt4)</code> followed by <code>chainloader /efi/boot/grubx64.efi</code> and <code>boot</code>. Now it loaded my linux setup and finally I could install linux on my surface. The full grub command history can be found here</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">GNU</span> GRUB version 2.06</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">Minimal</span> BASH- like line editing is supported. For the first word, TAB lists possible command completions. Anywhere else TAB lists possible device or file completions. ESC at any time exits.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> ls</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">(</span><span class="ex">hd0</span><span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span> ,gpt7<span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span> ,gpt6<span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span> ,gpt5<span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span> ,gpt4<span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span>,gpt3<span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span> ,gpt2<span class="kw">)</span> <span class="kw">(</span><span class="ex">hd0</span>,gpt1<span class="kw">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> ls (hd0 ,gpt7)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ex">error</span>: unknown filesystem.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> ls (hd0,gpt6)<span class="ex">/</span> lost+found/ boot/ etc/ media/</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> ls (hd0,gpt5)<span class="ex">/</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="va">$AttrDef</span> <span class="va">$BadClus</span> <span class="va">$Bitmap</span> <span class="va">$B00t</span> <span class="va">$Extend</span><span class="ex">/</span> <span class="va">$LogFile</span> <span class="va">$MFT</span> <span class="va">$MFTMirr</span> <span class="va">$Secure</span> <span class="va">$UpCase</span> <span class="va">$Volume</span> Recovery/ System volume Information/</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> ls (hd0,gpt4)<span class="ex">/</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="ex">System</span> Volume Information/ efi/ README.html README.mirrors.html README.mirrors.txt README.source readme.txt autorun.inf boot/ css/ dists/ doc/ firrmuare/ g21dr g21dr.rnbr install/ install.amd/ isolinux/ md5sum.txt pics/ pool/ setup.exe tools/ win32-loader.ini [BOOT]/ <span class="va">$recycle</span>.bin/</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> set root=(hd0,gpt4)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span> chainloader /efi/boot/grubx64.efi</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="ex">/EndEntire</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="fu">file</span> path: /ACPI(a0341d0,0)<span class="ex">PCI</span>(0,1c)/<span class="ex">PCI</span>(0,0)/<span class="ex">UknownMessaging</span>(17)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="ex">HD</span> (4 , 133e8000 , 108fOOO , b68981S490382e41 , 2 , 2) <span class="ex">File</span> ( \efi\boot )/<span class="ex">File</span>(grubx64.efi)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="ex">/EndEntire</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="ex">grub</span><span class="op">&gt;</span>boot</span></code></pre></div>
+<p>After the linux setup is complete one can delete the temporary created linux setup partition.</p>
+<p>Links:</p>
+<ul>
+<li><a href="https://linuxhint.com/boot-usb-using-grub/" class="uri">https://linuxhint.com/boot-usb-using-grub/</a></li>
+<li><a href="https://superuser.com/questions/349633/boot-from-usb-using-grub" class="uri">https://superuser.com/questions/349633/boot-from-usb-using-grub</a></li>
+<li><a href="https://szymonkrajewski.pl/how-to-boot-system-from-usb-using-grub/" class="uri">https://szymonkrajewski.pl/how-to-boot-system-from-usb-using-grub/</a></li>
+<li><a href="https://superuser.com/questions/1499193/how-to-write-a-bootable-iso-windows-installation-disk-to-a-disk-partition-and-n" class="uri">https://superuser.com/questions/1499193/how-to-write-a-bootable-iso-windows-installation-disk-to-a-disk-partition-and-n</a></li>
+</ul>

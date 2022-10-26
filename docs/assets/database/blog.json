@@ -1,5 +1,15 @@
 [
     {
+        "BlogEntryId": 216,
+        "Source": "assets/database/22.10.25-Install-Linux-from-hdd.html",
+        "Author": "Martin",
+        "Regards": [
+            "Infrastructure"
+        ],
+        "Release": "2022-10-25T00:00:00",
+        "Title": "Install linux from hdd (without usb)"
+    },
+    {
         "BlogEntryId": 215,
         "Source": "assets/database/22.03.13-Connect-AzureKeyVault-with-AzureDevOps.html",
         "Author": "Martin",

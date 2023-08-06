@@ -69,7 +69,9 @@
                 { "glob": "favicon.ico", "input": "src/", "output": "./" },
                 { "glob": "404.html", "input": "src/", "output": "./" },
                 { "glob": "CNAME", "input": "./", "output": "./" },
-                { "glob": "ads.html", "input": "src/", "output": "./" }
+                { "glob": "ads.html", "input": "src/", "output": "./" },
+                { "glob": "src/robots.txt", "input": "src/", "output": "./" },
+                { "glob": "src/sitemap.xml", "input": "src/", "output": "./" }
               ]
             }
           },

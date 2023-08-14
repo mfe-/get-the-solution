@@ -73,8 +73,8 @@
                 { "glob": "404.html", "input": "src/", "output": "./" },
                 { "glob": "CNAME", "input": "./", "output": "./" },
                 { "glob": "ads.html", "input": "src/", "output": "./" },
-                { "glob": "src/robots.txt", "input": "src/", "output": "./" },
-                { "glob": "src/sitemap.xml", "input": "src/", "output": "./" }
+                { "glob": "**/robots.txt", "input": "src/", "output": "./" },
+                { "glob": "**/sitemap.xml", "input": "src/", "output": "./" }
               ]
             }
           },
@@ -135,6 +135,5 @@
         }
       }
     }
-  },
-  "defaultProject": "get-the-solution-app"
+  }
 }

@@ -9,7 +9,7 @@
 ## Build for github with
 
 1. Convert *.md files with pandoc
-2. `ng build --output-path=docs --prod --base-href "https://get-the-solution.net/"`
+2. `ng build --output-path=docs  --base-href "https://get-the-solution.net/" --configuration production --aot`
 3. push to github
 
 ## Convert markdown files to html files

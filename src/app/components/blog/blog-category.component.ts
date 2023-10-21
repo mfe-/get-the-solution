@@ -15,9 +15,11 @@ export class BlogCategoryComponent implements OnInit {
   public FiltertedBlogEntry: BlogEntry[];
   constructor(@Inject('IBlogService') private blogService: IBlogService, private route: ActivatedRoute) {
     this.FiltertedBlogEntry = [];
-    this.Category = this.route.snapshot.paramMap.get("category");
-    if(this.Category!=null)
-    {
+    this.Category = "";
+    this.FiltertedBlogEntry = [];
+    this.Category = this.route.snapshot.paramMap.get("category") ?? "";
+
+    if (this.Category != null) {
       this.Category = decodeURIComponent(this.Category);
     }
   }
@@ -27,7 +29,7 @@ export class BlogCategoryComponent implements OnInit {
   protected ApplyBlogEntry(blogEntries: BlogEntry[]): void {
     for (let blogEntry of blogEntries) {
       if (blogEntry.Regards.indexOf(this.Category) > -1 ||
-        (this.Category == null || this.Category == "") ) {
+        (this.Category == null || this.Category == "")) {
         this.FiltertedBlogEntry.push(blogEntry);
       }
     }

@@ -1,22 +1,21 @@
-import { NgModule } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Inject, Injectable, NgModule } from '@angular/core';
 import { Routes, RouterModule, Router, NavigationEnd } from '@angular/router';
-import { HomeComponent } from './components/home.component';
-import { ProjectsComponent } from './components/projects/projects.component'
-import { BlogComponent } from './components/blog/blog.component';
 import { ContactComponent } from './components/contact.component';
+import { HomeComponent } from './components/home.component';
+import { ImpressumComponent } from './components/impressum.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { PrivacyComponent } from './components/privacy.component';
-import { ImpressumComponent } from './components/impressum.component';
-import { BlogCategoryComponent } from './components/blog/blog-category.component';
-import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer';
-import { Title } from '@angular/platform-browser';
 import { ConvolutionDiscretComponent } from './components/projects/convolution.discret.component';
+import { ImageResizerComponent } from './components/projects/image-resizer/image-resizer';
 import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-resizer/image-resizer-privacy-policy';
-
+import { ProjectsComponent } from './components/projects/projects.component';
+import { BlogCategoryComponent } from './components/blog/blog-category.component';
+import { BlogComponent } from './components/blog/blog.component';
 
 // https://mfe-.github.io/get-the-solution/?p=/blog/Add%20Token%20Authorization%20to%20AngularJS%20and%20WebApi
 const routes: Routes = [
-  // { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'impressum', component: ImpressumComponent },
   { path: 'home', component: HomeComponent },
@@ -37,12 +36,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabledBlocking'
+})],
   exports: [RouterModule]
 })
 
+
+@Injectable()
 export class AppRoutingModule {
-  constructor(private router: Router, private titleService: Title) {
+  constructor(@Inject(Router) private router: Router, @Inject(Title) private titleService: Title) {
     //set default page title using the url
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
@@ -52,3 +55,4 @@ export class AppRoutingModule {
     });
   }
 }
+

@@ -21,14 +21,14 @@ export class ThemeSwitcherComponent implements OnInit {
   @Input()
   defaultCssFile: string;
   @Input()
-  switchCssFile: string;
+  switchCssFile: string="";
   /**
    * current css file which is used
    */
   currentCssFile: string;
 
   @Input()
-  switchCssClass: string;
+  switchCssClass: string="";
   switchCssClassKey: string = "switchCssClass";
 
   constructor(@Inject(DOCUMENT) private document: Document) {
@@ -41,8 +41,8 @@ export class ThemeSwitcherComponent implements OnInit {
     }
     if (localStorage.getItem(this.switchCssClassKey) != null) {
       if (localStorage.getItem(this.switchCssClassKey) != "") {
-        this.currentCssFile="";
-        this.defaultCssFile="";
+        this.currentCssFile = "";
+        this.defaultCssFile = "";
         //will switch off the light
         this.switch();
       }
@@ -68,10 +68,14 @@ export class ThemeSwitcherComponent implements OnInit {
       }
       var classValue = this.currentCssFile == this.defaultCssFile ? this.switchCssClass : "";
       if (classValue == this.switchCssClass) {
-        bodyElement.setAttribute("class", classValue);
+        if (bodyElement != null) {
+          bodyElement.setAttribute("class", classValue);
+        }
       }
       else {
-        bodyElement.removeAttribute("class");
+        if (bodyElement != null) {
+          bodyElement.removeAttribute("class");
+        }
       }
       this.currentCssFile = classValue;
       localStorage.setItem(this.switchCssClassKey, this.currentCssFile);
@@ -83,9 +87,10 @@ export class ThemeSwitcherComponent implements OnInit {
     var links = document.getElementsByTagName("link");
     for (i; i < links.length; i++) {
       if (links[i].getAttribute("rel") == "stylesheet") {
-        return links[i].getAttribute("href");
+        return links[i].getAttribute("href") ?? "";
       }
     }
+    return "";
   }
   public setCssLink(cssLink: string) {
     var i = 0;
@@ -96,7 +101,7 @@ export class ThemeSwitcherComponent implements OnInit {
         newlink.setAttribute("rel", "stylesheet");
         newlink.setAttribute("type", "text/css");
         newlink.setAttribute("href", cssLink);
-        document.getElementsByTagName("head").item(0).replaceChild(newlink, links[i]);
+        document.getElementsByTagName("head").item(0)?.replaceChild(newlink, links[i]);
         return;
       }
     }

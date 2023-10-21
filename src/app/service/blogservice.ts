@@ -13,7 +13,7 @@ export class BlogService implements IBlogService {
     public BlogEntry: BlogEntry[];
     constructor(protected httpClient: HttpClient) {
         this.BlogEntry = [];
-     }
+    }
 
     public GetBlogEntries(getContent: boolean = true): Observable<BlogEntry[]> {
         let observable = this.httpClient.get<BlogEntry[]>(this.baseUri)
@@ -41,31 +41,31 @@ export class BlogService implements IBlogService {
     }
 
     public GetBlogEntry(year: number, month: number, day: number, title: string, blogEntries: BlogEntry[], getContent: boolean = true): BlogEntry {
-        let blogEntry: BlogEntry = null;
+        let blogEntry: BlogEntry | null = null;
         if (year != 0 || month != 0 || day != 0) {
             blogEntry = blogEntries.find(b =>
                 b.Release != null &&
                 new Date(b.Release).getFullYear() == year &&
                 new Date(b.Release).getMonth() == (month - 1) &&
-                new Date(b.Release).getDate() == day)
+                new Date(b.Release).getDate() == day) ?? null;
         }
         else {
             blogEntry = blogEntries.find(b => {
                 return (b.Title.toLowerCase() == decodeURI(title.toLowerCase())
                     //replace all " " with "-"
                     || b.Title.replace(/\ /g, "-").toLowerCase() == title.toLowerCase());
-            });
+            }) ?? null;
         }
 
-        if (!blogEntry.Content && getContent) {
+        if (blogEntry != null && !blogEntry.Content && getContent) {
             // async load of blog entry content
-            this.getBlogEntryContent(blogEntry).subscribe((content) => { blogEntry.Content = content; });
+            this.getBlogEntryContent(blogEntry).subscribe((content) => { (blogEntry ?? new BlogEntry()).Content = content; });
         }
-        return blogEntry;
+        return blogEntry ?? new BlogEntry();
     }
 
     public getBlogEntryContent(blogEntry: BlogEntry): Observable<string> {
-        let returnValue: Observable<string> = null;
+        let returnValue: Observable<string> = new Observable<string>();
         if (blogEntry.Source) {
             returnValue = this.httpClient.get(blogEntry.Source, { responseType: 'text' });
         }

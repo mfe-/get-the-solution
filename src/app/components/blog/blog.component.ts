@@ -36,12 +36,12 @@ export class BlogComponent implements OnInit {
     let day = this.route.snapshot.paramMap.get("day");
     this.BlogEntry = blogEntries;
     if (title != null || (year != null && month != null && day != null)) {
-      let blogentry: BlogEntry = null;
+      let blogentry: BlogEntry | undefined = undefined;
       if ((year != null && month != null && day != null)) {
-        blogentry = this.blogService.GetBlogEntry(+year, +month, +day, title, blogEntries);
+        blogentry = this.blogService.GetBlogEntry(+year!, +month!, +day!, title!, blogEntries);
       }
       else {
-        blogentry = this.blogService.GetBlogEntry(0, 0, 0, title, blogEntries);
+        blogentry = this.blogService.GetBlogEntry(0, 0, 0, title!, blogEntries);
       }
       if (blogentry != undefined) {
         this.BlogEntry = [blogentry];

@@ -21,14 +21,14 @@ export class ThemeSwitcherComponent implements OnInit {
   @Input()
   defaultCssFile: string;
   @Input()
-  switchCssFile: string="";
+  switchCssFile: string = "";
   /**
    * current css file which is used
    */
   currentCssFile: string;
 
   @Input()
-  switchCssClass: string="";
+  switchCssClass: string = "";
   switchCssClassKey: string = "switchCssClass";
 
   constructor(@Inject(DOCUMENT) private document: Document) {
@@ -36,7 +36,7 @@ export class ThemeSwitcherComponent implements OnInit {
     this.currentCssFile = this.defaultCssFile;
   }
   ngOnInit(): void {
-    if (this.switchCssClass != undefined && this.switchCssFile != undefined) {
+    if (( this.switchCssClass != "") && (this.switchCssFile != "")) {
       throw new Error("Please set switchCssClass or switchCssFile. Can't use both combinations at the same time!");
     }
     if (localStorage.getItem(this.switchCssClassKey) != null) {
@@ -49,7 +49,7 @@ export class ThemeSwitcherComponent implements OnInit {
     }
   }
   switch(): void {
-    if (this.switchCssFile != undefined) {
+    if (this.switchCssFile != "") {
       var newCss = this.currentCssFile == this.defaultCssFile ? this.switchCssFile : this.defaultCssFile;
       this.setCssLink(newCss);
       this.currentCssFile = newCss;
@@ -60,22 +60,18 @@ export class ThemeSwitcherComponent implements OnInit {
        * abuses cssFile variables to indicate whether the ligt is on or off (see template) 
        */
       var bodyElement = document.getElementsByTagName("body").item(0);
-      if (this.currentCssFile == undefined) {
+      if (this.currentCssFile == "") {
         this.currentCssFile = "";
       }
-      if (this.defaultCssFile == undefined) {
+      if (this.defaultCssFile == "") {
         this.defaultCssFile = "";
       }
       var classValue = this.currentCssFile == this.defaultCssFile ? this.switchCssClass : "";
       if (classValue == this.switchCssClass) {
-        if (bodyElement != null) {
-          bodyElement.setAttribute("class", classValue);
-        }
+        bodyElement?.setAttribute("class", classValue);
       }
       else {
-        if (bodyElement != null) {
-          bodyElement.removeAttribute("class");
-        }
+        bodyElement?.removeAttribute("class");
       }
       this.currentCssFile = classValue;
       localStorage.setItem(this.switchCssClassKey, this.currentCssFile);
@@ -87,10 +83,10 @@ export class ThemeSwitcherComponent implements OnInit {
     var links = document.getElementsByTagName("link");
     for (i; i < links.length; i++) {
       if (links[i].getAttribute("rel") == "stylesheet") {
-        return links[i].getAttribute("href") ?? "";
+        return links[i].getAttribute("href") || '';
       }
     }
-    return "";
+    return '';
   }
   public setCssLink(cssLink: string) {
     var i = 0;

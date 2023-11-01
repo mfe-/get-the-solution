@@ -12,11 +12,11 @@ export class PageNotFoundComponent implements OnInit {
   private readonly REGEXLINKBLOG: string = "index-blog-[0-9]+-[0-9]+-([0-9]+)-.+";
   private readonly REGEXLINKPAGE: string = "index-[0-9]+-[0-9]+-(.+)";
 
-  constructor(private route: ActivatedRoute, private router: Router, @Inject('IBlogService') private blogService: IBlogService) { 
-    this.Link="";
+  constructor(private route: ActivatedRoute, private router: Router, @Inject('IBlogService') private blogService: IBlogService) {
+    this.Link = "";
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     let id = this.route.snapshot.paramMap.get('p');
     let autoforward = true;
     if (id == null) {
@@ -37,13 +37,17 @@ export class PageNotFoundComponent implements OnInit {
           //we found the blog id
           let blogid = +regexmatch[1];
           autoforward = false;
-          this.blogService.GetBlogEntries(false).subscribe((b: BlogEntry[]) => {
-            let blogentry: BlogEntry | undefined = b.find((blog) => blog.BlogEntryId == blogid);
-            if (blogentry != null) {
-              this.Link = "/blog/" + blogentry.Title;
-              this.router.navigate([this.Link]);
-            }
-          });
+          let blogEntries = await this.blogService.GetBlogEntries(false, 0);
+
+          let blogentry: BlogEntry | undefined = blogEntries.find((blog) => blog.BlogEntryId == blogid);
+          if (blogentry != null) {
+            this.Link = "/blog/" + blogentry.Title;
+            this.router.navigate([this.Link]);
+          }
+          else {
+            this.Link = "/blog";
+            this.router.navigate([this.Link]);
+          }
         }
       }
       //example index-1-3-Image Resizer.html

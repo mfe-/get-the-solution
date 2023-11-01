@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IBlogService } from 'src/app/contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
 import { ActivatedRoute } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { IBlogService } from 'src/app/contract/IBlogService';
 
 @Component({
   selector: 'app-blog',
@@ -18,18 +19,20 @@ export class BlogComponent implements OnInit {
     this.BlogEntry = [];
     this.FiltertedBlogEntry = [];
   }
-  public ngOnInit() {
+  public async ngOnInit() {
     let year = this.route.snapshot.paramMap.get("year");
     let month = this.route.snapshot.paramMap.get("month");
     let day = this.route.snapshot.paramMap.get("day");
     if (year != null && month != null && day != null) {
-      this.blogService.GetBlogEntries(false).subscribe(this.ApplyBlogEntry.bind(this));
+      const promiseblogEntries = await this.blogService.GetBlogEntries(false, 0);
+      this.ApplyBlogEntry(promiseblogEntries);
     }
     else {
-      this.blogService.GetBlogEntries(true).subscribe(this.ApplyBlogEntry.bind(this));
+      const promiseblogEntries = await this.blogService.GetBlogEntries(true, this.maxloadBlogEntries);
+      this.ApplyBlogEntry(promiseblogEntries);
     }
   }
-  protected ApplyBlogEntry(blogEntries: BlogEntry[]): void {
+  protected async ApplyBlogEntry(blogEntries: BlogEntry[]): Promise<void> {
     let title = this.route.snapshot.paramMap.get("title");
     let year = this.route.snapshot.paramMap.get("year");
     let month = this.route.snapshot.paramMap.get("month");
@@ -38,10 +41,10 @@ export class BlogComponent implements OnInit {
     if (title != null || (year != null && month != null && day != null)) {
       let blogentry: BlogEntry | undefined = undefined;
       if ((year != null && month != null && day != null)) {
-        blogentry = this.blogService.GetBlogEntry(+year!, +month!, +day!, title!, blogEntries);
+        blogentry = await this.blogService.GetBlogEntry(+year!, +month!, +day!, title!, blogEntries);
       }
       else {
-        blogentry = this.blogService.GetBlogEntry(0, 0, 0, title!, blogEntries);
+        blogentry = await this.blogService.GetBlogEntry(0, 0, 0, title!, blogEntries);
       }
       if (blogentry != undefined) {
         this.BlogEntry = [blogentry];
@@ -56,10 +59,15 @@ export class BlogComponent implements OnInit {
       }
     }
   }
-  public AddBlogEntry() {
+  public async AddBlogEntry() {
     if (this.maxloadBlogEntries < this.BlogEntry.length) {
       this.maxloadBlogEntries++;
       if (this.BlogEntry.length > this.loadedBlogEntries) {
+        let blogEntry = this.BlogEntry[this.loadedBlogEntries];
+        if (blogEntry.Content == null) {
+          await this.blogService.GetBlogEntry(0, 0, 0, blogEntry.Title, this.BlogEntry);
+        }
+
         this.FiltertedBlogEntry.push(this.BlogEntry[this.loadedBlogEntries]);
         this.loadedBlogEntries++;
       }

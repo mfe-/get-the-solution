@@ -24,10 +24,8 @@ import { ImageResizerComponent } from './components/projects/image-resizer/image
 import { ConvolutionDiscretComponent } from './components/projects/convolution.discret.component'
 import { FormsModule } from '@angular/forms';
 import { ThemeSwitcherComponent } from './components/theme-switcher.component';
-// import { SanitizeHtmlPipe} from './SanitizeHtmlPipe';
-// import { MathjaxDirective } from './Mathjax.Directive';
+import { MathjaxDirective } from './Mathjax.Directive';
 import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-resizer/image-resizer-privacy-policy';
-import { BrowserStateInterceptor } from './service/BrowserStateInterceptor';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -64,11 +62,6 @@ import { BrowserStateInterceptor } from './service/BrowserStateInterceptor';
   ],
   providers: [
     { provide: 'IBlogService', useClass: BlogService },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BrowserStateInterceptor,
-      multi: true
-    },
   ],
   bootstrap: [AppComponent]
 

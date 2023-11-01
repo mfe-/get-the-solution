@@ -13,9 +13,7 @@
     <span class="regards">Regards:
         <a *ngFor="let tag of blogEntryValue.Regards" href="category/{{encodeURIComponent(tag)}}">{{tag}}; </a>
     </span>
-    <p [innerHtml]="getSanitizedContent(blogEntryValue.Content)"></p>
-    
-    <!-- <p Mathjax [innerHtml]="blogEntryValue.Content | sanitizeHtml"> </p>-->
+    <p Mathjax [innerHtml]="getSanitizedContent(blogEntryValue.Content)"></p>
     
     <a rel="author" [attr.href]="this.EditUrl()" title="Edit on Github by sending a PR">
         <svg height="20" class="octicon octicon-mark-github d-block" alt="GitHub" viewBox="0 0 16 16" version="1.1"

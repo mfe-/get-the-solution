@@ -22,7 +22,15 @@ Using pandoc in Linux:
 
 ## Development server
 
+### compute angular app on browser
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### compute angular app on server
+
+Run `npm run dev:ssr`
+
+Debug `npx --node-options=--inspect-brk ng run get-the-solution-app:serve-ssr` server side. You need to attach to the instance.
+
 
 ## Code scaffolding
 

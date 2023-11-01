@@ -3,7 +3,6 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { IBlogService } from 'src/app/contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blogcategory',
@@ -23,8 +22,9 @@ export class BlogCategoryComponent implements OnInit {
       this.Category = decodeURIComponent(this.Category);
     }
   }
-  public ngOnInit() {
-    this.blogService.GetBlogEntries(false).subscribe(this.ApplyBlogEntry.bind(this));
+  public async ngOnInit() {
+    const blogEntries = await this.blogService.GetBlogEntries(false, 0);
+    this.ApplyBlogEntry(blogEntries);
   }
   protected ApplyBlogEntry(blogEntries: BlogEntry[]): void {
     for (let blogEntry of blogEntries) {

@@ -13,14 +13,14 @@ export class MathjaxDirective {
     /**
      * Promise whether mathjax dependency is ready
      */
-    private MathjaxPromise: Promise<boolean>;
-    private MathjaxPromiseResolve;
+    private MathjaxPromise: Promise<boolean>= new Promise((resolve) => {});
+    private MathjaxPromiseResolve: any;
 
     /**
      * Promise whether content which should be rendered by Mathjax is ready 
      */
-    private ElementInnerTextPromise: Promise<boolean>;
-    private ElementInnerTextPromiseResolve;
+    private ElementInnerTextPromise: Promise<boolean> = new Promise((resolve) => {});
+    private ElementInnerTextPromiseResolve: any;
 
     MutationCallBack(mutations: MutationRecord[], observer: MutationObserver): void {
         mutations.forEach((mutation) => {
@@ -41,50 +41,50 @@ export class MathjaxDirective {
 
     constructor(private elRef: ElementRef) {
 
-        this.ElementInnerTextPromise = new Promise<boolean>(resolve => {
-            this.ElementInnerTextPromiseResolve = resolve
-        });
+        // this.ElementInnerTextPromise = new Promise<boolean>(resolve => {
+        //     this.ElementInnerTextPromiseResolve = resolve
+        // });
 
-        // observe inner text of Element
-        var observer = new MutationObserver(this.MutationCallBack.bind(this));
-        var config = { attributes: false, childList: true, characterData: false, subtree: true };
-        observer.observe(this.elRef.nativeElement, config);
+        // // observe inner text of Element
+        // var observer = new MutationObserver(this.MutationCallBack.bind(this));
+        // var config = { attributes: false, childList: true, characterData: false, subtree: true };
+        // observer.observe(this.elRef.nativeElement, config);
 
-        // wait until mathjax is ready
-        this.MathjaxPromise = new Promise((resolve) => {
-            this.MathjaxPromiseResolve = resolve;
-            this.loadMathjaxScript(this.uri);
-        });
+        // // wait until mathjax is ready
+        // this.MathjaxPromise = new Promise((resolve) => {
+        //     this.MathjaxPromiseResolve = resolve;
+        //     this.loadMathjaxScript(this.uri);
+        // });
 
-        // await until the math content and mathjax is ready
-        const promiseArray = [];
-        promiseArray.push(this.ElementInnerTextPromise);
-        promiseArray.push(this.MathjaxPromise);
+        // // await until the math content and mathjax is ready
+        // const promiseArray = [];
+        // promiseArray.push(this.ElementInnerTextPromise);
+        // promiseArray.push(this.MathjaxPromise);
 
-        Promise.all(promiseArray).then((asdf) => {
+        // Promise.all(promiseArray).then((asdf) => {
 
-            if (this.MathJax.startup.document == null && this.MathJax.startup.defaultReady !== undefined) {
-                //renders complete page
-                this.MathJax.startup.defaultReady();
-            }
-            else {
-                // const node = document.getElementById('has-math');
-                // (<any>window).MathJax.typesetClear([node]);
-                // node.innerHTML = el.nativeElement;
-                // (<any>window).MathJax.typesetPromise([node]).then(() => {
-                //   // the new content is has been typeset
-                // });
+        //     if (this.MathJax.startup.document == null && this.MathJax.startup.defaultReady !== undefined) {
+        //         //renders complete page
+        //         this.MathJax.startup.defaultReady();
+        //     }
+        //     else {
+        //         // const node = document.getElementById('has-math');
+        //         // (<any>window).MathJax.typesetClear([node]);
+        //         // node.innerHTML = el.nativeElement;
+        //         // (<any>window).MathJax.typesetPromise([node]).then(() => {
+        //         //   // the new content is has been typeset
+        //         // });
 
-                if (this.MathJax.typesetClear !== undefined) {
-                    if (this.MathJax.startup.document != null) {
-                        this.MathJax.startup.document.state(0);
-                    }
-                    this.MathJax.texReset();
-                    this.MathJax.typeset();
-                }
+        //         if (this.MathJax.typesetClear !== undefined) {
+        //             if (this.MathJax.startup.document != null) {
+        //                 this.MathJax.startup.document.state(0);
+        //             }
+        //             this.MathJax.texReset();
+        //             this.MathJax.typeset();
+        //         }
 
-            }
-        });
+        //     }
+        // });
     }
     private readonly uri: string = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
     /**
@@ -113,7 +113,7 @@ export class MathjaxDirective {
                 node.src = dynamicScripts[i];
                 node.type = 'text/javascript';
                 node.async = true;
-                node.onload = this.OnScriptLoaded.bind(this);
+                // node.onload = (this.OnScriptLoaded.bind(this));
                 node.charset = 'utf-8';
                 document.getElementsByTagName('head')[0].appendChild(node);
             }

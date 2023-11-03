@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Inject, NgModule, PLATFORM_ID } from '@angular/core';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeSwitcherComponent } from './components/theme-switcher.component';
 import { MathjaxDirective } from './Mathjax.Directive';
 import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-resizer/image-resizer-privacy-policy';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 
 // The @NgModule decorator identifies AppModule as an NgModule class.
@@ -52,7 +53,7 @@ import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-
     ImpressumComponent,
     ConvolutionDiscretComponent,
     ThemeSwitcherComponent,
-    // MathjaxDirective
+    MathjaxDirective
   ],
   imports: [
     HttpClientModule,
@@ -69,8 +70,10 @@ import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-
 })
 export class AppModule {
 
-  public constructor() {
-    window.onscroll = this.stickyHeader;
+  public constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      window.onscroll = this.stickyHeader;
+    }
   }
   private stickyHeader() {
     var navElement = document.getElementsByTagName("nav").item(0);

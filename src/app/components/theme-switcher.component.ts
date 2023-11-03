@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-theme-switcher',
@@ -31,20 +31,22 @@ export class ThemeSwitcherComponent implements OnInit {
   switchCssClass: string = "";
   switchCssClassKey: string = "switchCssClass";
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) {
     this.defaultCssFile = this.getCssLink();
     this.currentCssFile = this.defaultCssFile;
   }
   ngOnInit(): void {
-    if (( this.switchCssClass != "") && (this.switchCssFile != "")) {
-      throw new Error("Please set switchCssClass or switchCssFile. Can't use both combinations at the same time!");
-    }
-    if (localStorage.getItem(this.switchCssClassKey) != null) {
-      if (localStorage.getItem(this.switchCssClassKey) != "") {
-        this.currentCssFile = "";
-        this.defaultCssFile = "";
-        //will switch off the light
-        this.switch();
+    if (isPlatformBrowser(this.platformId)) {
+      if ((this.switchCssClass != "") && (this.switchCssFile != "")) {
+        throw new Error("Please set switchCssClass or switchCssFile. Can't use both combinations at the same time!");
+      }
+      if (localStorage.getItem(this.switchCssClassKey) != null) {
+        if (localStorage.getItem(this.switchCssClassKey) != "") {
+          this.currentCssFile = "";
+          this.defaultCssFile = "";
+          //will switch off the light
+          this.switch();
+        }
       }
     }
   }
@@ -79,11 +81,13 @@ export class ThemeSwitcherComponent implements OnInit {
 
   }
   public getCssLink(): string {
-    var i = 0;
-    var links = document.getElementsByTagName("link");
-    for (i; i < links.length; i++) {
-      if (links[i].getAttribute("rel") == "stylesheet") {
-        return links[i].getAttribute("href") || '';
+    if (isPlatformBrowser(this.platformId)) {
+      var i = 0;
+      var links = document.getElementsByTagName("link");
+      for (i; i < links.length; i++) {
+        if (links[i].getAttribute("rel") == "stylesheet") {
+          return links[i].getAttribute("href") || '';
+        }
       }
     }
     return '';

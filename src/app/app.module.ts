@@ -70,33 +70,36 @@ import { ImageResizerPrivacyPolicyComponent } from './components/projects/image-
 export class AppModule {
 
   public constructor() {
-    // window.onscroll = this.stickyHeader;
+    window.onscroll = this.stickyHeader;
   }
-  // private stickyHeader() {
-  //   var navElement = document.getElementsByTagName("nav").item(0);
+  private stickyHeader() {
+    var navElement = document.getElementsByTagName("nav").item(0);
 
-  //   var pElements = document.getElementsByTagName("footer").item(0).getElementsByTagName("p");
-  //   if (window.pageYOffset > (navElement.offsetHeight + 20)) {
+    var pElements = document.getElementsByTagName("footer").item(0)?.getElementsByTagName("p");
+    if (navElement && window.pageYOffset > (navElement.offsetHeight + 20)) {
 
-  //     if (pElements.length < 3) {
-  //       //add new p element to avoid jumping scrollbar
-  //       var para = document.createElement("p");
-  //       para.setAttribute("style", "visibility:hidden;");
-  //       var node = document.createTextNode("This is a new paragraph.");
-  //       para.appendChild(node);
-  //       document.getElementsByTagName("footer").item(0).appendChild(para);
-  //     }
-  //     //add sticky header css
-  //     navElement.classList.add("sticky");
-  //   } else {
-  //     //remove p
-  //     var i = 0;
-  //     for (i; i < pElements.length; i++) {
-  //       document.getElementsByTagName("footer").item(0).removeChild(pElements[i]);
-  //     }
-  //     //remove sticky header
-  //     navElement.classList.remove("sticky");
-  //   }
-  // }
+      if (pElements != null && pElements.length < 3) {
+        //add new p element to avoid jumping scrollbar
+        var para = document.createElement("p");
+        para.setAttribute("style", "visibility:hidden;");
+        var node = document.createTextNode("This is a new paragraph.");
+        para.appendChild(node);
+        document.getElementsByTagName("footer").item(0)?.appendChild(para);
+      }
+      //add sticky header css
+      navElement?.classList.add("sticky");
+    } else {
+      //remove p
+      var i = 0;
+      if (pElements != null) {
+        for (i; i < pElements.length; i++) {
+          document.getElementsByTagName("footer").item(0)?.removeChild(pElements[i]);
+        }
+      }
+      //remove sticky header
+      navElement?.classList.remove("sticky");
+    }
+
+  }
 
 }

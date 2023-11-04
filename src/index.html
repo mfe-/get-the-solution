@@ -8,6 +8,18 @@
   <meta name="keywords" lang="en" content="get-the-solution">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -15,6 +27,16 @@
     style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
   <app-root></app-root>
+  
+  <!-- <script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      console.log("doc ready");
+      MathJax.typeset();
+      }, false);
+
+  </script> -->
+
 </body>
 
 </html>

@@ -1,7 +1,11 @@
 <article>
     {{this.Category}}
     <ul *ngFor="let blogEntry of FiltertedBlogEntry" [attr.data-blogEntry-blogEntryId]="blogEntry.BlogEntryId">
-        <li> {{blogEntry.Release | date : "y.MM.dd"}} <a routerLink="/blog/{{blogEntry.Title}}"
-                title="{{blogEntry.Title + ' ' + blogEntry.BlogEntryId}}"> {{blogEntry.Title}}</a></li>
+        <li> {{blogEntry.Release | date : "y.MM.dd"}} 
+            <!-- <a routerLink="/blog/{{blogEntry.Title}}"
+                title="{{blogEntry.Title + ' ' + blogEntry.BlogEntryId}}"> {{blogEntry.Title}}</a> -->
+                <a href="/blog/{{blogEntry.Title}}"
+                title="{{blogEntry.Title + ' ' + blogEntry.BlogEntryId}}"> {{blogEntry.Title}}</a>
+            </li>
     </ul>
 </article>

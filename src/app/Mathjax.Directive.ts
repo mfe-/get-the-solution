@@ -1,4 +1,5 @@
-import { Directive, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Directive, ElementRef, Inject, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
 
 @Directive({
     selector: '[Mathjax]'
@@ -8,18 +9,18 @@ import { Directive, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
  * Sample: <p Mathjax [innerHtml]="blogEntryValue.Content" />
  * where blogEntryValue.Content contains a html string with the mathjax content.
  */
-export class MathjaxDirective {
+export class MathjaxDirective implements AfterViewInit {
 
     /**
      * Promise whether mathjax dependency is ready
      */
-    private MathjaxPromise: Promise<boolean>= new Promise((resolve) => {});
+    private MathjaxPromise: Promise<boolean> = new Promise((resolve) => { });
     private MathjaxPromiseResolve: any;
 
     /**
      * Promise whether content which should be rendered by Mathjax is ready 
      */
-    private ElementInnerTextPromise: Promise<boolean> = new Promise((resolve) => {});
+    private ElementInnerTextPromise: Promise<boolean> = new Promise((resolve) => { });
     private ElementInnerTextPromiseResolve: any;
 
     MutationCallBack(mutations: MutationRecord[], observer: MutationObserver): void {
@@ -39,13 +40,29 @@ export class MathjaxDirective {
         return (<any>window).MathJax;
     }
 
-    constructor(private elRef: ElementRef) {
+    constructor(private elRef: ElementRef, @Inject(PLATFORM_ID) private platformId: Object) {
 
+
+    }
+    ngAfterViewInit() {
+        //remember this code can get called multiple times since the directive is used on <p Mathjax [innerHtml]="blogEntryValue.Content" />
+        // if (isPlatformBrowser(this.platformId)) {
+        //     this.MathJax.startup.defaultReady();
+        //     this.MathJax.typeset();
+        // }
+
+    }
+    /**
+     * Legacy code for injecting MathJax client side
+     * Waits until the content of the element is ready and MathJax is loaded
+     *  <p MathJax [innerHtml]="getSanitizedContent(blogEntryValue.Content)"></p>
+     */
+    private setupClientSideMathJax() {
         this.ElementInnerTextPromise = new Promise<boolean>(resolve => {
             this.ElementInnerTextPromiseResolve = resolve
         });
 
-        // observe inner text of Element
+        // observe inner text of Element <p MathJax [innerHtml]
         var observer = new MutationObserver(this.MutationCallBack.bind(this));
         var config = { attributes: false, childList: true, characterData: false, subtree: true };
         observer.observe(this.elRef.nativeElement, config);

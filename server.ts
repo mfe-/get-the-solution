@@ -10,7 +10,14 @@ import { AppServerModule } from './src/main.server';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/get-the-solution-app/browser');
+  let distFolder;
+  //on windows use set NODE_ENV=production      on linux use export NODE_ENV=production
+  console.log("process.env.NODE_ENV:", process.env['NODE_ENV']);
+  if (process.env['NODE_ENV'] === 'production') {
+    distFolder = join(process.cwd(), 'browser');  //the app service root directory is from this git repo /dist/get-the-solution-app
+  } else {
+    distFolder = join(process.cwd(), 'dist/get-the-solution-app/browser');
+  }
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)

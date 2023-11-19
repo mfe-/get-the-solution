@@ -6,7 +6,9 @@ name: Build and deploy Node.js app to Azure Web App - get-the-solution
 on:
   push:
     branches:
-      - feature/mathjax-and-other-fixes
+      - feature/universal
+      - main
+      - master
   workflow_dispatch:
 
 jobs:

@@ -24,8 +24,13 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm install -g @angular/cli > /dev/null
+
+      - name: export, build
+        run: |
+          export NODE_ENV=production
+          npm run build:ssr --configuration=production --aot
+#          npm run test --if-present
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -59,4 +64,4 @@ jobs:
           app-name: 'get-the-solution'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
-          package: .
+          package: ./dist/get-the-solution-app

@@ -1,13 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-
 name: Build and deploy Node.js app to Azure Web App - get-the-solution
 
 on:
   push:
     branches:
-      - feature/universal
+      - feature/mathjax-and-other-fixes
   workflow_dispatch:
 
 jobs:
@@ -20,14 +19,18 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
 
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build:ssr --prod
-#          npm run test --if-present  
-        working-directory: .
+          npm install -g @angular/cli > /dev/null
+
+      - name: export, build
+        run: |
+          export NODE_ENV=production
+          npm run build:ssr --configuration=production --aot
+#          npm run test --if-present
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -60,5 +63,5 @@ jobs:
         with:
           app-name: 'get-the-solution'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1D20FAC2006C4DB687A2009DB836C12A }}
-          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
+          package: ./dist/get-the-solution-app

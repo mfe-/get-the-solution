@@ -1,4 +1,5 @@
-import { Directive, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Directive, ElementRef, Inject, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
 
 @Directive({
     selector: '[Mathjax]'
@@ -8,18 +9,18 @@ import { Directive, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
  * Sample: <p Mathjax [innerHtml]="blogEntryValue.Content" />
  * where blogEntryValue.Content contains a html string with the mathjax content.
  */
-export class MathjaxDirective {
+export class MathjaxDirective implements AfterViewInit {
 
     /**
      * Promise whether mathjax dependency is ready
      */
-    private MathjaxPromise: Promise<boolean>= new Promise((resolve) => {});
+    private MathjaxPromise: Promise<boolean> = new Promise((resolve) => { });
     private MathjaxPromiseResolve: any;
 
     /**
      * Promise whether content which should be rendered by Mathjax is ready 
      */
-    private ElementInnerTextPromise: Promise<boolean> = new Promise((resolve) => {});
+    private ElementInnerTextPromise: Promise<boolean> = new Promise((resolve) => { });
     private ElementInnerTextPromiseResolve: any;
 
     MutationCallBack(mutations: MutationRecord[], observer: MutationObserver): void {
@@ -39,52 +40,68 @@ export class MathjaxDirective {
         return (<any>window).MathJax;
     }
 
-    constructor(private elRef: ElementRef) {
+    constructor(private elRef: ElementRef, @Inject(PLATFORM_ID) private platformId: Object) {
 
-        // this.ElementInnerTextPromise = new Promise<boolean>(resolve => {
-        //     this.ElementInnerTextPromiseResolve = resolve
-        // });
 
-        // // observe inner text of Element
-        // var observer = new MutationObserver(this.MutationCallBack.bind(this));
-        // var config = { attributes: false, childList: true, characterData: false, subtree: true };
-        // observer.observe(this.elRef.nativeElement, config);
+    }
+    ngAfterViewInit() {
+        //remember this code can get called multiple times since the directive is used on <p Mathjax [innerHtml]="blogEntryValue.Content" />
+        // if (isPlatformBrowser(this.platformId)) {
+        //     this.MathJax.startup.defaultReady();
+        //     this.MathJax.typeset();
+        // }
 
-        // // wait until mathjax is ready
-        // this.MathjaxPromise = new Promise((resolve) => {
-        //     this.MathjaxPromiseResolve = resolve;
-        //     this.loadMathjaxScript(this.uri);
-        // });
+    }
+    /**
+     * Legacy code for injecting MathJax client side
+     * Waits until the content of the element is ready and MathJax is loaded
+     *  <p MathJax [innerHtml]="getSanitizedContent(blogEntryValue.Content)"></p>
+     */
+    private setupClientSideMathJax() {
+        this.ElementInnerTextPromise = new Promise<boolean>(resolve => {
+            this.ElementInnerTextPromiseResolve = resolve
+        });
 
-        // // await until the math content and mathjax is ready
-        // const promiseArray = [];
-        // promiseArray.push(this.ElementInnerTextPromise);
-        // promiseArray.push(this.MathjaxPromise);
+        // observe inner text of Element <p MathJax [innerHtml]
+        var observer = new MutationObserver(this.MutationCallBack.bind(this));
+        var config = { attributes: false, childList: true, characterData: false, subtree: true };
+        observer.observe(this.elRef.nativeElement, config);
 
-        // Promise.all(promiseArray).then((asdf) => {
+        // wait until mathjax is ready
+        this.MathjaxPromise = new Promise((resolve) => {
+            this.MathjaxPromiseResolve = resolve;
+            this.loadMathjaxScript(this.uri);
+        });
 
-        //     if (this.MathJax.startup.document == null && this.MathJax.startup.defaultReady !== undefined) {
-        //         //renders complete page
-        //         this.MathJax.startup.defaultReady();
-        //     }
-        //     else {
-        //         // const node = document.getElementById('has-math');
-        //         // (<any>window).MathJax.typesetClear([node]);
-        //         // node.innerHTML = el.nativeElement;
-        //         // (<any>window).MathJax.typesetPromise([node]).then(() => {
-        //         //   // the new content is has been typeset
-        //         // });
+        // await until the math content and mathjax is ready
+        const promiseArray = [];
+        promiseArray.push(this.ElementInnerTextPromise);
+        promiseArray.push(this.MathjaxPromise);
 
-        //         if (this.MathJax.typesetClear !== undefined) {
-        //             if (this.MathJax.startup.document != null) {
-        //                 this.MathJax.startup.document.state(0);
-        //             }
-        //             this.MathJax.texReset();
-        //             this.MathJax.typeset();
-        //         }
+        Promise.all(promiseArray).then((asdf) => {
 
-        //     }
-        // });
+            if (this.MathJax.startup.document == null && this.MathJax.startup.defaultReady !== undefined) {
+                //renders complete page
+                this.MathJax.startup.defaultReady();
+            }
+            else {
+                // const node = document.getElementById('has-math');
+                // (<any>window).MathJax.typesetClear([node]);
+                // node.innerHTML = el.nativeElement;
+                // (<any>window).MathJax.typesetPromise([node]).then(() => {
+                //   // the new content is has been typeset
+                // });
+
+                if (this.MathJax.typesetClear !== undefined) {
+                    if (this.MathJax.startup.document != null) {
+                        this.MathJax.startup.document.state(0);
+                    }
+                    this.MathJax.texReset();
+                    this.MathJax.typeset();
+                }
+
+            }
+        });
     }
     private readonly uri: string = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
     /**

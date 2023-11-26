@@ -46,7 +46,7 @@ jobs:
       - name: export, build
         run: |
           export NODE_ENV=production
-          npm run build:ssr --configuration=production --aot
+          npm run build:ssr --prod --configuration=production --aot
 #          npm run test --if-present
 
       - name: Zip artifact for deployment

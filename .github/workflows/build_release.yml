@@ -43,6 +43,10 @@ jobs:
           npm install
           npm install -g @angular/cli > /dev/null
 
+      - name: enviroment file transformation
+        run: |
+            cp src/environments/environment.prod.ts src/environments/environment.ts -f
+
       - name: export, build
         run: |
           export NODE_ENV=production

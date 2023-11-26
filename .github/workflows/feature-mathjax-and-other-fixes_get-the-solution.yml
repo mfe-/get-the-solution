@@ -19,6 +19,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: info
+        run: |
+          run: echo "Event name: ${{ github.event_name }}"
+          run: echo "Branch name: ${{ github.ref }}"
+          run: echo "Workflow: ${{ github.workflow }}"
+          run: echo "Action: ${{ github.action }}"
+          run: echo "Actor: ${{ github.actor }}"
+          run: echo "Repository: ${{ github.repository }}"
+          run: echo "Repository owner: ${{ github.repository_owner }}"
+          run: echo "Repository name: ${{ github.repository_name }}"
+          run: echo "Repository URL: ${{ github.repository_url }}"
+          run: echo "Run ID: ${{ github.run_id }}"
+          run: echo "Run number: ${{ github.run_number }}"
+                  
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:

@@ -52,6 +52,10 @@ jobs:
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'
         run: |
+          ls -la
+          ls src -la
+          ls src/assets -la
+          ls src/assets/database -la
           cp src/assets/database/blog.json dist/get-the-solution-app/assets/database/blog.json
           zip release.zip ./dist/* -r
 

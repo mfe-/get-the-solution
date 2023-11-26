@@ -50,7 +50,7 @@ jobs:
 #          npm run test --if-present
 
       - name: Zip artifact for deployment
-#        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           cat src/assets/database/blog.json
 

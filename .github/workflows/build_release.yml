@@ -38,30 +38,23 @@ jobs:
         with:
           node-version: '20.x'
 
-#       - name: npm install, build, and test
-#         run: |
-#           npm install
-#           npm install -g @angular/cli > /dev/null
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm install -g @angular/cli > /dev/null
 
-#       - name: export, build
-#         run: |
-#           export NODE_ENV=production
-#           npm run build:ssr --configuration=production --aot
-# #          npm run test --if-present
+      - name: export, build
+        run: |
+          export NODE_ENV=production
+          npm run build:ssr --configuration=production --aot
+#          npm run test --if-present
 
       - name: Zip artifact for deployment
 #        if: github.event_name != 'pull_request'
         run: |
           cat src/assets/database/blog.json
-          ls -la
-          ls src -la
-          ls src/assets -la
-          ls src/assets/database -la
-          cd src
-          cd src/assets/database
-          ls dist/get-the-solution-app/assets/
-          ls dist/get-the-solution-app/assets/database
-          cp src/assets/database/blog.json dist/get-the-solution-app/assets/database/blog.json
+
+          cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
           zip release.zip ./dist/* -r
 
       - name: Upload artifact for deployment job

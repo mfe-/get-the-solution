@@ -46,6 +46,7 @@ jobs:
       - name: enviroment file transformation
         run: |
             cp src/environments/environment.prod.ts src/environments/environment.ts -f
+            cat src/environments/environment.ts
 
       - name: export, build
         run: |
@@ -56,8 +57,6 @@ jobs:
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'
         run: |
-          cat src/assets/database/blog.json
-
           cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
           zip release.zip ./dist/* -r
 

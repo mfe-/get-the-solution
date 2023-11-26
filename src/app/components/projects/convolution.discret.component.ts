@@ -17,8 +17,8 @@ export class ConvolutionDiscretComponent implements OnInit {
     let x = this.route.snapshot.paramMap.get('x');
     let h = this.route.snapshot.paramMap.get('h');
 
-    this.myH = h;
-    this.myX = x;
+    this.myH = h == null ? this.myH : h;
+    this.myX = x == null ? this.myX : x;
 
     this.calculateConv1();
   }
@@ -27,7 +27,7 @@ export class ConvolutionDiscretComponent implements OnInit {
   }
   public _x: number[];
   public _h: number[];
-  public conv: number[];
+  public conv: number[] = Array();
   public steps: string[] = Array();
 
   conv1(x: number[], h: number[], only_overlap: boolean): number[] {
@@ -96,10 +96,6 @@ export class ConvolutionDiscretComponent implements OnInit {
   }
   getH(nM: number) {
     return nM <= this._h.length - 1 ? this._h[nM] : 0;
-  }
-
-  identify(index, item) {
-    return index;
   }
 
   private _myX: string = "";

@@ -1,4 +1,5 @@
 <div>
+
   <div *ngFor="let blogEntry of FiltertedBlogEntry" [attr.data-blogEntry-blogEntryId]="blogEntry.BlogEntryId">
     <app-blogentry [blogEntryValue]="blogEntry"></app-blogentry>
   </div>

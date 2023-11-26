@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-theme-switcher',
@@ -21,35 +21,37 @@ export class ThemeSwitcherComponent implements OnInit {
   @Input()
   defaultCssFile: string;
   @Input()
-  switchCssFile: string;
+  switchCssFile: string = "";
   /**
    * current css file which is used
    */
   currentCssFile: string;
 
   @Input()
-  switchCssClass: string;
+  switchCssClass: string = "";
   switchCssClassKey: string = "switchCssClass";
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) {
     this.defaultCssFile = this.getCssLink();
     this.currentCssFile = this.defaultCssFile;
   }
   ngOnInit(): void {
-    if (this.switchCssClass != undefined && this.switchCssFile != undefined) {
-      throw new Error("Please set switchCssClass or switchCssFile. Can't use both combinations at the same time!");
-    }
-    if (localStorage.getItem(this.switchCssClassKey) != null) {
-      if (localStorage.getItem(this.switchCssClassKey) != "") {
-        this.currentCssFile="";
-        this.defaultCssFile="";
-        //will switch off the light
-        this.switch();
+    if (isPlatformBrowser(this.platformId)) {
+      if ((this.switchCssClass != "") && (this.switchCssFile != "")) {
+        throw new Error("Please set switchCssClass or switchCssFile. Can't use both combinations at the same time!");
+      }
+      if (localStorage.getItem(this.switchCssClassKey) != null) {
+        if (localStorage.getItem(this.switchCssClassKey) != "") {
+          this.currentCssFile = "";
+          this.defaultCssFile = "";
+          //will switch off the light
+          this.switch();
+        }
       }
     }
   }
   switch(): void {
-    if (this.switchCssFile != undefined) {
+    if (this.switchCssFile != "") {
       var newCss = this.currentCssFile == this.defaultCssFile ? this.switchCssFile : this.defaultCssFile;
       this.setCssLink(newCss);
       this.currentCssFile = newCss;
@@ -60,18 +62,18 @@ export class ThemeSwitcherComponent implements OnInit {
        * abuses cssFile variables to indicate whether the ligt is on or off (see template) 
        */
       var bodyElement = document.getElementsByTagName("body").item(0);
-      if (this.currentCssFile == undefined) {
+      if (this.currentCssFile == "") {
         this.currentCssFile = "";
       }
-      if (this.defaultCssFile == undefined) {
+      if (this.defaultCssFile == "") {
         this.defaultCssFile = "";
       }
       var classValue = this.currentCssFile == this.defaultCssFile ? this.switchCssClass : "";
       if (classValue == this.switchCssClass) {
-        bodyElement.setAttribute("class", classValue);
+        bodyElement?.setAttribute("class", classValue);
       }
       else {
-        bodyElement.removeAttribute("class");
+        bodyElement?.removeAttribute("class");
       }
       this.currentCssFile = classValue;
       localStorage.setItem(this.switchCssClassKey, this.currentCssFile);
@@ -79,13 +81,16 @@ export class ThemeSwitcherComponent implements OnInit {
 
   }
   public getCssLink(): string {
-    var i = 0;
-    var links = document.getElementsByTagName("link");
-    for (i; i < links.length; i++) {
-      if (links[i].getAttribute("rel") == "stylesheet") {
-        return links[i].getAttribute("href");
+    if (isPlatformBrowser(this.platformId)) {
+      var i = 0;
+      var links = document.getElementsByTagName("link");
+      for (i; i < links.length; i++) {
+        if (links[i].getAttribute("rel") == "stylesheet") {
+          return links[i].getAttribute("href") || '';
+        }
       }
     }
+    return '';
   }
   public setCssLink(cssLink: string) {
     var i = 0;
@@ -96,7 +101,7 @@ export class ThemeSwitcherComponent implements OnInit {
         newlink.setAttribute("rel", "stylesheet");
         newlink.setAttribute("type", "text/css");
         newlink.setAttribute("href", cssLink);
-        document.getElementsByTagName("head").item(0).replaceChild(newlink, links[i]);
+        document.getElementsByTagName("head").item(0)?.replaceChild(newlink, links[i]);
         return;
       }
     }

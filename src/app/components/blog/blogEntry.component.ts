@@ -47,6 +47,7 @@ export class BlogEntryComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       (<any>window).MathJax.startup.defaultReady();
       (<any>window).MathJax.typeset();
+      console.log("MathJax typeset");
     }
   }
   encodeURIComponent(uri: string) {

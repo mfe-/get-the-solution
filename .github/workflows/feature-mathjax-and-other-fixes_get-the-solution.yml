@@ -9,6 +9,7 @@ on:
       - feature/universal
       - main
       - master
+  pull_request:
   workflow_dispatch:
 
 jobs:

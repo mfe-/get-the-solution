@@ -6,11 +6,13 @@ import { environment } from 'src/environments/environment';
 import { DomSanitizer, Title } from "@angular/platform-browser";
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
+
+
 @Component({
   selector: 'app-blogentry',
   templateUrl: './blogEntry.component.html'
 })
-export class BlogEntryComponent implements OnInit {
+export class BlogEntryComponent implements OnInit, AfterViewInit {
   private _blogEntryValue: BlogEntry = new BlogEntry();
 
   constructor(@Inject('IBlogService') private blogService: IBlogService, private titleService: Title, private sanitizer: DomSanitizer,
@@ -30,7 +32,7 @@ export class BlogEntryComponent implements OnInit {
    * Remarks: When this method is binded to the innerHtml property of a html element, the method can get called several times
    * @param content The html content which should be displayed
    * @returns 
-   */
+  */
   public getSanitizedContent(content: string): any {
     if (isPlatformServer(this.platformId)) {
       console.log("sanitize content" + this.platformId);
@@ -40,6 +42,12 @@ export class BlogEntryComponent implements OnInit {
   }
   public ngOnInit() {
 
+  }
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      (<any>window).MathJax.startup.defaultReady();
+      (<any>window).MathJax.typeset();
+    }
   }
   encodeURIComponent(uri: string) {
     return encodeURIComponent(uri);

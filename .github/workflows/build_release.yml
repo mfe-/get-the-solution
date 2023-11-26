@@ -46,7 +46,7 @@ jobs:
       - name: export, build
         run: |
           export NODE_ENV=production
-          npm run build:ssr --prod --configuration=production --aot
+          npm run build:ssr --prod --configuration=production --aot --build-optimizer --vendor-chunk --common-chunk --delete-output-path --output-hashing=all --named-chunks --extract-css --source-map=false --optimization=true --progress=true --stats-json=false --watch=false --output-path=./dist/get-the-solution-app/browser
 #          npm run test --if-present
 
       - name: Zip artifact for deployment

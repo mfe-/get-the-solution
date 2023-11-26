@@ -52,7 +52,6 @@ jobs:
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'
         run: |
-          cp -r src/assets ./dist/get-the-solution-app/browser/assets
           zip release.zip ./dist/* -r
 
       - name: Upload artifact for deployment job

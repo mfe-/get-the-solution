@@ -1,65 +1,60 @@
 <h3 id="use-dotnet-trace-on-a-sample-project">Use dotnet-trace on a sample project</h3>
-<p>A couple a days ago, I watched the Video <code>Adam Sitnik — Running .NET Core performance investigation on Linux</code> (click <a href="https://youtu.be/y4-h3qyDpJo">here</a>) which demonstrated how to use common profilers for dotnet applications. I'm interested in program optimization and I wanted to give <code>dotnet-trace</code> a try on a simple project. The profiler should give me some hints where optimizations are needed.</p>
-<p>Note: You can accomplish the underneath steps with Visual Studio using the Diagnostic Tools, see <a href="https://docs.microsoft.com/en-us/visualstudio/profiling/beginners-guide-to-performance-profiling?view=vs-2022">here</a>.</p>
+<p>A few days ago, I stumbled upon a video titled <code>Adam Sitnik — Running .NET Core performance investigation on Linux</code> (watch it <a href="https://youtu.be/y4-h3qyDpJo">here</a>). This video showcased the use of common profilers for .NET applications. As someone with a keen interest in program optimization, I was intrigued and decided to experiment with <code>dotnet-trace</code> on a simple project. I was hopeful that the profiler would provide valuable insights for potential optimizations.</p>
+<p>Note: The steps outlined below can also be achieved using Visual Studio’s Diagnostic Tools. You can learn more about this <a href="https://docs.microsoft.com/en-us/visualstudio/profiling/beginners-guide-to-performance-profiling?view=vs-2022">here</a>.</p>
 <h4 id="install-and-setup">Install and setup</h4>
-<p>First of all we need to install <code>dotnet-trace</code> with:</p>
+<p>Our first order of business is to install <code>dotnet-trace</code>. This can be done with the following command:</p>
 <p><code>dotnet tool install --global dotnet-trace</code></p>
-<p>The next step is to check the project settings of the app which you want to profile. Ensure the following:</p>
-<ol style="list-style-type: decimal">
+<p>Next, we need to scrutinize the project settings of the app we wish to profile. Here are a few things to ensure:</p>
+<ol type="1">
 <li>the program needs to be run in <code>Release</code> configuration</li>
 <li>Make sure the <code>.csproj</code> contains</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;DebugType&gt;</span>pdbonly<span class="kw">&lt;/DebugType&gt;</span>
-    <span class="kw">&lt;DebugSymbols&gt;</span>true<span class="kw">&lt;/DebugSymbols&gt;</span>
-    <span class="kw">&lt;TieredCompilation&gt;</span>false<span class="kw">&lt;/TieredCompilation&gt;</span></code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>I removed or disabled <code>System.Console.WriteLine</code> as it's a very time consuming method.</li>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" title="1">    <span class="kw">&lt;DebugType&gt;</span>pdbonly<span class="kw">&lt;/DebugType&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="kw">&lt;DebugSymbols&gt;</span>true<span class="kw">&lt;/DebugSymbols&gt;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">&lt;TieredCompilation&gt;</span>false<span class="kw">&lt;/TieredCompilation&gt;</span></a></code></pre></div>
+<ol start="3" type="1">
+<li>I removed or disabled <code>System.Console.WriteLine</code> as it’s a very time consuming method.</li>
 </ol>
 <h4 id="collect-data">Collect data</h4>
-<p>I'll profile my recently created <a href="https://github.com/mfe-/ConsoleApp5BoundaryFollowingTracing/tree/feature/fourierdescriptor">ConsoleApp5BoundaryFollowingTracing</a> application to get some new insights. Let's start one terminal for the app we want to profile and a second terminal on which we collect the profiling information with <code>dotnet trace</code>.</p>
+<p>I’ll profile my recently created <a href="https://github.com/mfe-/ConsoleApp5BoundaryFollowingTracing/tree/feature/fourierdescriptor">ConsoleApp5BoundaryFollowingTracing</a> application to get some new insights. Let’s start one terminal for the app we want to profile and a second terminal on which we collect the profiling information with <code>dotnet trace</code>.</p>
 <p>In the first terminal I execute the app with <code>dotnet run ConsoleApp5BoundaryFollowingTracing.csproj -c Release</code>. This process is expected to be a long running task. Otherwise we will not be able to capture the <code>PID</code> and furthermore collect the profiled traces!</p>
 <p>Meanwhile we can determine the <code>PID</code> of the app with <code>dotnet trace ps</code> in the second terminal, which lists all currently executed dotnet applications.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">dotnet</span> trace ps
-      <span class="ex">8736</span> ConsoleApp5BoundaryFollowingTracing [..]\ConsoleApp5BoundaryFollowingTracing.exe
-     <span class="ex">22356</span> dotnet     C:\Program Files\dotnet\dotnet.exe
-     <span class="ex">23488</span> dotnet     C:\Program Files\dotnet\dotnet.exe
-     <span class="ex">24008</span> dotnet     C:\Program Files\dotnet\dotnet.exe</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">dotnet</span> trace ps</a>
+<a class="sourceLine" id="cb2-2" title="2">      <span class="ex">8736</span> ConsoleApp5BoundaryFollowingTracing [..]\ConsoleApp5BoundaryFollowingTracing.exe</a>
+<a class="sourceLine" id="cb2-3" title="3">     <span class="ex">22356</span> dotnet     C:\Program Files\dotnet\dotnet.exe</a>
+<a class="sourceLine" id="cb2-4" title="4">     <span class="ex">23488</span> dotnet     C:\Program Files\dotnet\dotnet.exe</a>
+<a class="sourceLine" id="cb2-5" title="5">     <span class="ex">24008</span> dotnet     C:\Program Files\dotnet\dotnet.exe</a></code></pre></div>
 <p>In the next step we start profiling with <code>dotnet trace collect -p 8736</code>. To stop profiling press <code>CTRL</code>+<code>C</code>.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">dotnet</span> trace collect -p 8736
-<span class="ex">No</span> profile or providers specified, defaulting to trace profile <span class="st">&#39;cpu-sampling&#39;</span>
-
-<span class="ex">Provider</span> Name                           Keywords            Level               Enabled By
-<span class="ex">Microsoft-DotNETCore-SampleProfiler</span>     0x0000F00000000000  Informational(4)    <span class="ex">--profile</span>
-<span class="ex">Microsoft-Windows-DotNETRuntime</span>         0x00000014C14FCCBD  Informational(4)    <span class="ex">--profile</span>
-
-<span class="ex">Process</span>        : [...]\ConsoleApp5BoundaryFollowingTracing.exe
-<span class="ex">Output</span> File    : [...]\ConsoleApp5BoundaryFollowingTracing\ConsoleApp5BoundaryFollowingTracing.exe_20220106_123540.nettrace
-
-
-[<span class="ex">00</span>:00:00:03]   Recording trace 1.405    (MB)
-<span class="ex">Press</span> <span class="op">&lt;</span>Enter<span class="op">&gt;</span> or <span class="op">&lt;</span>Ctrl+C<span class="op">&gt;</span> to exit...
-<span class="ex">Stopping</span> the trace. This may take several minutes depending on the application being traced.
-
-<span class="ex">Trace</span> completed.</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">dotnet</span> trace collect -p 8736</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">No</span> profile or providers specified, defaulting to trace profile <span class="st">&#39;cpu-sampling&#39;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="ex">Provider</span> Name                           Keywords            Level               Enabled By</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="ex">Microsoft-DotNETCore-SampleProfiler</span>     0x0000F00000000000  Informational(4)    <span class="ex">--profile</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="ex">Microsoft-Windows-DotNETRuntime</span>         0x00000014C14FCCBD  Informational(4)    <span class="ex">--profile</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="ex">Process</span>        : [...]\ConsoleApp5BoundaryFollowingTracing.exe</a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="ex">Output</span> File    : [...]\ConsoleApp5BoundaryFollowingTracing\ConsoleApp5BoundaryFollowingTracing.exe_20220106_123540.nettrace</a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11"></a>
+<a class="sourceLine" id="cb3-12" title="12">[<span class="ex">00</span>:00:00:03]   Recording trace 1.405    (MB)</a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="ex">Press</span> <span class="op">&lt;</span>Enter<span class="op">&gt;</span> or <span class="op">&lt;</span>Ctrl+C<span class="op">&gt;</span> to exit...</a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="ex">Stopping</span> the trace. This may take several minutes depending on the application being traced.</a>
+<a class="sourceLine" id="cb3-15" title="15"></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="ex">Trace</span> completed.</a></code></pre></div>
 <h4 id="analyse-data-with-speedscope">Analyse data with speedscope</h4>
 <p>Under windows you can open the file <code>ConsoleApp5BoundaryFollowingTracing.exe_20220106_123540.nettrace</code> with Visual Studio. An alternative approach is to use the web app <code>speedscope</code> where you can view the profiled information. For this you need to convert the trace file to the <code>speedscope</code> format with:</p>
 <p><code>dotnet trace convert ConsoleApp5BoundaryFollowingTracing.exe_20220106_123540.nettrace --format speedscope</code></p>
-<p>Afterwards start the web app <a href="https://www.speedscope.app/" class="uri">https://www.speedscope.app/</a> and open the created <code>ConsoleApp5BoundaryFollowingTracing.exe_20220106_123540.speedscope.json</code> file.</p>
-<p>At the top you can select the thread you want to investigate. In my case, the relevant data processing happened in the &quot;second&quot; thread. The horizontal timeline can be read from left to right.</p>
-<div class="figure">
-<img src="assets/img/blog/speedscope0.png" />
-
-</div>
-<div class="figure">
-<img src="assets/img/blog/speedscope1.png" alt="(Fig 2. BuildFourierDecriptorsAsync and ReadLine)" />
-<p class="caption">(Fig 2. BuildFourierDecriptorsAsync and ReadLine)</p>
-</div>
-<p>From the figure we see that application execution was busy from 0s to about 2.25s with the function <code>BuildFourierDecriptorsAsync</code>. Afterwards <code>System.Console.ReadLine</code> &quot;blocked&quot; the application.</p>
-<p>It's possible to zoom into a specific time range.</p>
-<div class="figure">
-<img src="assets/img/blog/speedscope3.png" alt="(Fig 3. load)" />
-<p class="caption">(Fig 3. load)</p>
-</div>
+<p>Afterwards start the web app <a href="https://www.speedscope.app/">https://www.speedscope.app/</a> and open the created <code>ConsoleApp5BoundaryFollowingTracing.exe_20220106_123540.speedscope.json</code> file.</p>
+<p>At the top you can select the thread you want to investigate. In my case, the relevant data processing happened in the “second” thread. The horizontal timeline can be read from left to right.</p>
+<p><img src="assets/img/blog/speedscope0.png" /></p>
+<figure>
+<img src="assets/img/blog/speedscope1.png" alt="(Fig 2. BuildFourierDecriptorsAsync and ReadLine)" /><figcaption>(Fig 2. BuildFourierDecriptorsAsync and ReadLine)</figcaption>
+</figure>
+<p>From the figure we see that application execution was busy from 0s to about 2.25s with the function <code>BuildFourierDecriptorsAsync</code>. Afterwards <code>System.Console.ReadLine</code> “blocked” the application.</p>
+<p>It’s possible to zoom into a specific time range.</p>
+<figure>
+<img src="assets/img/blog/speedscope3.png" alt="(Fig 3. load)" /><figcaption>(Fig 3. load)</figcaption>
+</figure>
 <p>From the graphics (Fig.2 and Fig.3) we can conclude that the app was mostly busy computing the discrete fourier transformation <code>Fourier.Forward(fourier);</code> from <code>MathNet</code> while executing <code>BuildFourierDecriptorsAsync</code>.</p>
 <h4 id="summary">Summary</h4>
 <p>dotnet trace is a good alternative beside Visual Studio for profiling. It can be used to collect the necessary profiler data. For analyzing the data you need external tools like speedscope, etc.</p>
@@ -71,6 +66,6 @@
 </ul>
 <p>Links:</p>
 <ul>
-<li><a href="https://www.speedscope.app/" class="uri">https://www.speedscope.app/</a></li>
-<li><a href="https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-trace" class="uri">https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-trace</a></li>
+<li><a href="https://www.speedscope.app/">https://www.speedscope.app/</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-trace">https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-trace</a></li>
 </ul>

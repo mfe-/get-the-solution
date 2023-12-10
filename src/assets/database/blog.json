@@ -1,5 +1,15 @@
 [
     {
+        "BlogEntryId": 217,
+        "Source": "assets/database/23.1207-Azure-Virtual-Machine-Scale-Sets.html",
+        "Author": "Martin",
+        "Regards": [
+            "Infrastructure"
+        ],
+        "Release": "2022-10-25T00:00:00",
+        "Title": "Hands on - Azure Scale Sets"
+    },
+    {
         "BlogEntryId": 216,
         "Source": "assets/database/22.10.25-Install-Linux-from-hdd.html",
         "Author": "Martin",

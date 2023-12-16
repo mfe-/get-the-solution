@@ -1,12 +1,12 @@
 [
     {
         "BlogEntryId": 217,
-        "Source": "assets/database/23.1207-Azure-Virtual-Machine-Scale-Sets.html",
+        "Source": "assets/database/23.12.07-Azure-Virtual-Machine-Scale-Sets.html",
         "Author": "Martin",
         "Regards": [
             "Infrastructure"
         ],
-        "Release": "2022-10-25T00:00:00",
+        "Release": "2023-12-07T00:00:00",
         "Title": "Hands on - Azure Scale Sets"
     },
     {

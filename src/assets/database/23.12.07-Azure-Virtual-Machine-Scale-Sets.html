@@ -1,0 +1,144 @@
+<h2 id="why-azure-scale-sets">Why Azure Scale Sets?</h2>
+<p>To set the stage, let’s first delve into the context and requirements of our scenario. Our clientele primarily utilizes our application during a specific recurring time frame in the afternoon to streamline their business operations. The application was hosted on-premises on a limited number of static machines.</p>
+<p>While it’s possible to horizontally scale the application by incorporating additional machines, this approach has its limitations. It requires significant manual intervention and lacks the flexibility to adapt to fluctuating demand. This is where Azure Scale Sets come into play.</p>
+<p>Azure Scale set is a group of identical, scaling VMs when using Orchestration mode Uniform (optimized for large scale stateless workloads with identical instances). Which means, you cannot have in your scale set virtual machines with different hardware specifications. There is also the option flexible: achieve high availability at scale with identical or multiple virtual machine types.</p>
+<p>Since the on-premise machines should be decommissioned soon, we decided to migrate the application to Azure. The application has some dependencies to the Windows operating system and is not yet ready to be containerized. This was the main reason why we had to choose Azure Scale Sets over azure Kubernetes.</p>
+<h2 id="scaling">Scaling</h2>
+<p>There are different scaling types:</p>
+<ul>
+<li>Manual scaling
+<ul>
+<li>define manual how many VMs you want to have in your scale set</li>
+<li><img src="assets/img/blog/Azure-Virtual-Machine-manual.png" alt="(Fig 1. manual scaling)" width="480" /></li>
+</ul></li>
+<li>Time based scaling
+<ul>
+<li>You can define a schedule to scale up or down the number of VMs in the scale set. This is useful if you know the demand for your application will increase or decrease at specific times.</li>
+<li><img src="assets/img/blog/Azure-Virtual-Machine-time-based.png" alt="(Fig 2. time based scaling)" width="480" /></li>
+</ul></li>
+<li>Metric based scaling (CPU, Memory, Network, Disk I/O, etc.)
+<ul>
+<li>This is provided out of the box. Each VM in the scale set will have a metric agent installed that will send the metrics to Azure Monitor.</li>
+</ul></li>
+<li>Log based scaling (Application logs, Event logs, etc.)
+<ul>
+<li>For this you need to customize your app and write specific logs or metrics, which can be than used to scale the VMs. For example, you could track the number of business cases that needs to be processed and scale the VMs based on that.</li>
+</ul></li>
+</ul>
+<p>Considering the substantial costs associated with running multiple VMs, log-based scaling could be an optimal choice. This is because CPU and memory metrics may not always accurately indicate the necessary number of instances. However, implementing log-based scaling could be quite labor-intensive. As we preferred not to modify the application and knew that our application’s demand would fluctuate at specific times, we opted for time-based scaling.</p>
+<h2 id="application-deployment-within-the-scale-set">Application deployment within the scale set</h2>
+<p>Now the question is, how do we get the application to the virtual machine’s instances in the azure scale set? First you need to find a proper base image for the VMs. We use a base image provided by microsoft with 1GB RAM and 1 CPU as this was sufficient for our application. Base images with more RAM and CPU are also available but they are more expensive. Keep in mind, that the azure web portal does not provide all base images. You can find more base images using the azure cli.</p>
+<p>The most straightforward method to install your application onto the VM involves storing the application in a blob storage and downloading it during the VM creation. But how do we achieve this?</p>
+<p>We have three alternatives:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-dsc">Azure DSC Extension</a> (Desired State Configuration)
+<ul>
+<li>This seems to be complex, outdated and not recommended anymore.</li>
+</ul></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows">Azure Custom Script Extension</a>
+<ul>
+<li>This is really straight forward. From the azure portal you can select from an existing blog storage a powershell script which will be executed during the VM creation. This script can be used to download the application from the blob storage and install it on the VM. Bear in mind that the script will be executed only once during the VM creation. If you want to update the application, you need to create a new VM. Also, if you install a lot of software on the VM, the VM creation will take a lot of time. This brings us to the third option.</li>
+</ul></li>
+<li>Custom Image
+<ul>
+<li>You create your own image with all the software you need. Using the custom image for the VMs your application would be much sooner ready compared to the Azure custom Script Extension approach. Building such an image can take a lot of time and you also would need some staging environment to test the images. Also, you probably need to update the image from time to time. This would not be necessary if you use the provided Microsoft base images as they contain always the latest hot patches.</li>
+</ul></li>
+</ul>
+<p>In our scenario the Azure Custom Script Extension was the best option, as it seems to be straight forward, and we didn’t need to install a lot of software on the VMs. The final solution consisted of a resource group with the following resources:</p>
+<ul>
+<li>Storage account
+<ul>
+<li>contain a PowerShell script which is downloading the application as zip file from the blob storage and installing it on the VM</li>
+<li>the application itself as zip file</li>
+</ul></li>
+<li>Azure Scale Set as Managed Identity which can access the storage account using its system assigned identity</li>
+<li>Application Insights (which is used by the application)</li>
+</ul>
+<h2 id="final-picture">Final Picture</h2>
+<figure>
+<img src="assets/img/blog/Azure-Virtual-Machine-System.png" alt="(Fig 3. Architecture Azure Scale Set)" /><figcaption>(Fig 3. Architecture Azure Scale Set)</figcaption>
+</figure>
+<p>The application which should be hosted in the azure scale set already had a CICD pipeline. The pipeline was extended and modified in a way with the following steps:</p>
+<ol type="1">
+<li>build the application</li>
+<li>create a zip file containing the application (see image above 2)</li>
+<li>create an additional artifact containing the powershell script which is used to setup the VMs (see image above 2)</li>
+<li>create and deploy the required azure infrastructure (Azure Scale Set storage account) using IaC (see image above 3)</li>
+<li>upload the artifacts from step 2 and 3 to the storage account</li>
+</ol>
+<h2 id="iac-infrastructure-as-code">IaC (Infrastructure as Code)</h2>
+<p>Our Azure infrastructure was successfully deployed using a YAML pipeline, specifically utilizing the <code>AzureResourceManagerTemplateDeployment</code> task. This task allows us to define a template, using either an ARM or Bicep file, to create the necessary Azure resources.</p>
+<p>As part of this process, we deployed a new subnet within an existing virtual network. This virtual network establishes a connection between Azure and our on-premise network. This newly created subnet is then utilized within the Azure scale set.</p>
+<p>Each instance generated by the Azure scale set will automatically adopt an IP address from our defined subnet. Therefore, it’s essential to consider the number of instances you’ll need for your resources upfront, as this will influence the subnet definition.</p>
+<p>To enhance flexibility during the Infrastructure as Code (IaC) deployment, we incorporated parameters into the template. These parameters allow for easy adjustments to the Azure resources. For instance, within the parameter section, one can define the subnet range or the base image for the Azure scale set.</p>
+<p>Additionally, the IaC template outputs certain values, such as the created resource group, storage account, the URL of blob storage, the container names of the storage account and other data which is required later for uploading for example the artifact to the storage account. Also these outputs can be particularly useful for debugging during the template creation process.</p>
+<h3 id="customscriptextension-storage-account">CustomScriptExtension &amp; Storage Account</h3>
+<p>The deployment of IaC templates is designed to be incremental. This implies that if you modify the IaC template and redeploy it, only the changes will be implemented. However, this process doesn’t always go as planned, and you might encounter a deployment failure with an uninformative error message. In such scenarios, you’ll need to delete the resource group and redeploy the IaC template.</p>
+<p>This issue often arises when changes are made to the <code>commandToExecute</code> within the <code>CustomScriptExtension</code>. This <code>commandToExecute</code> is a PowerShell script that is executed during the VM’s creation. Furthermore, alterations to the storage account permissions or Azure scale set properties like <code>osProfile.windowsConfiguration.timezone</code> may require the removal of Azure resources and a redeployment of the IaC template. If these changes are made, the deployment may fail, returning an error message: <code>{"code":"DeploymentFailed","message":"At least one resource deployment operation failed. Please list deployment operations for details.","details":[{"code":"PropertyChangeNotAllowed","target":"windowsConfiguration.timeZone","message":"Changing property 'windowsConfiguration.timeZone' is not allowed."}]}</code>.</p>
+<p>Now, let’s return to the discussion on how the <code>CustomScriptExtension</code> and the storage account interact.</p>
+<p>To begin with, we’ve configured the storage account and its container to restrict access solely to Azure Managed Identities with the <code>Storage Blob Data Reader</code> role. This ensures that the hosted files are secure and inaccessible to unauthorized entities.</p>
+<p>The Azure scale set, equipped with a system-assigned identity, is granted access to the storage account via the <code>Storage Blob Data Reader</code> role. With this setup in place, we can attempt to download the artifacts from the storage account using a VM within the Azure scale set for testing purposes.</p>
+<p>Our ultimate goal is to download these artifacts, which include the PowerShell install script, during the VM creation process.</p>
+<p>In theory, the <code>CustomScriptExtension</code> should support the direct downloading of artifacts from a storage account. An example of this can be found <a href="https://ochzhen.com/blog/azure-custom-script-extension-windows#custom-script-extension-on-virtual-machine-vm">here</a>. However, I suspect that our storage account’s restriction policy might have hindered this functionality. As a result, I implemented a workaround, which involves acquiring an access token from the Azure scale set to access the storage account.</p>
+<p>For guidance on how to do this, refer to “<a href="https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-powershell">Acquire an access token</a>”. This process is similar to the <a href="/blog/Create%20an%20Azure%20App%20registrations%20daemon%20app">token acquisition for App Registrations</a>. However, I tried to simplify the process of acquiring the access token, downloading the install script, and executing it on the VM into a single command. This was necessary because the <code>commandToExecute</code> in the <code>CustomScriptExtension</code> is designed to execute only one command.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><a class="sourceLine" id="cb1-1" title="1">powershell.<span class="fu">exe</span> -ExecutionPolicy Unrestricted <span class="st">&quot;$access_token = (curl.exe &#39;http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&amp;resource=https%3A%2F%2Fstorage.azure.com%2F&#39; -H Metadata:true -s | ConvertFrom-Json).access_token; </span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="fu">curl</span>.<span class="fu">exe</span> &#39;https://{YourStoreageaccount}.<span class="fu">blob</span>.<span class="fu">core</span>.<span class="fu">windows</span>.<span class="fu">net</span>/{YourContainerName}/{YourPowershellInstallScriptOnVmCreation}.<span class="fu">ps1</span>&#39; -H &#39;x-ms-version: 2017-11-09&#39; -H (&#39;Authorization: Bearer &#39; + <span class="va">$access_token</span>) -o {YourPowershellInstallScriptOnVmCreation}.<span class="fu">ps1</span>; .\{YourPowershellInstallScriptOnVmCreation}<span class="st">&quot; </span></a></code></pre></div>
+<h3 id="configuring-the-azure-scale-set-instances">Configuring the Azure Scale Set Instances</h3>
+<p>Each time a new instance is initiated, a virtual machine (VM) is created using the base image specified in the Azure scale set (for instance, a <code>datacenter-azure-edition-core-smalldisk</code> image). Thanks to the <code>CustomScriptExtension</code>, the Windows image includes a Windows service installed in (<code>C:\Packages\Plugins\Microsoft.Compute.CustomScriptExtension\</code>). This service executes the <code>commandToExecute</code> of the <code>CustomScriptExtension</code>. In our case we should find the script at <code>C:\Packages\Plugins\Microsoft.Compute.CustomScriptExtension\1.9.5\Downloads\1\{YourPowershellInstallScriptOnVmCreation}.ps1</code>. You can verify this by connecting to the VM via Remote Desktop Protocol (RDP).</p>
+<p>The <code>1.status</code> file, located in <code>C:\Packages\Plugins\Microsoft.Compute.CustomScriptExtension\1.9.5\Status</code>, should contain the output of the <code>{YourPowershellInstallScriptOnVmCreation}.ps1</code> script when executed.</p>
+<p>The logs of the CustomScriptExtension can be found in <code>C:\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\1.9.5\</code>.</p>
+<p>The powershell script <code>YourPowershellInstallScriptOnVmCreation.ps1</code> itself is downloading the application from the storage account and installing it on the VM.</p>
+<p>Please check <a href="https://ochzhen.com/blog/azure-custom-script-extension-windows#view-extension-installation-on-vm-using-rdp">ochzhen.com blog</a> for more information about the CustomScriptExtension.</p>
+<h3 id="uploading-the-artifacts-to-the-storage-account">Uploading the artifacts to the storage account</h3>
+<p>Once the Infrastructure as Code (IaC) template is deployed, the next step is to upload the artifacts (the application and PowerShell script) to the storage account. To do this, we first need the storage account’s URL. Fortunately, we’ve already included the resource group name and storage account name, among other details, in the output of the IaC template deployment.</p>
+<p>In the Azure pipeline, we can access the output of the IaC template deployment using the <code>$(ArmOut_rgName)</code> syntax. This can be accomplished using the Azure CLI. The script below demonstrates how to upload the artifacts to the storage account:</p>
+<p>Job: DeployIaC</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">[</span>...<span class="kw">]</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">-</span> <span class="fu">task:</span><span class="at"> AzureResourceManagerTemplateDeployment@3</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="fu">inputs:</span></a>
+<a class="sourceLine" id="cb2-4" title="4">      <span class="fu">deploymentScope:</span><span class="at"> </span><span class="st">&#39;Subscription&#39;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">      <span class="fu">deploymentMode:</span><span class="at"> </span><span class="st">&#39;Incremental&#39;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="kw">[</span>...<span class="kw">]</span></a>
+<a class="sourceLine" id="cb2-7" title="7">      <span class="fu">deploymentOutputs:</span><span class="at"> </span><span class="st">&#39;ArmOut&#39;</span></a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">  - </span><span class="fu">pwsh:</span><span class="at"> </span><span class="st">|</span></a>
+<a class="sourceLine" id="cb2-10" title="10">        echo &quot;##vso[task.setvariable variable=rgName;isOutput=true]$(ArmOut_rgName)&quot;</a>
+<a class="sourceLine" id="cb2-11" title="11">        [...]</a>
+<a class="sourceLine" id="cb2-12" title="12">    <span class="fu">name:</span><span class="at"> outputVars</span></a></code></pre></div>
+<p>Job: UploadScripts</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">[</span>...<span class="kw">]</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="fu">jobs:</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">-</span> <span class="fu">job:</span><span class="at"> deployment</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="fu">displayName:</span><span class="at"> </span><span class="st">&#39;Upload Script &amp; Application&#39;</span></a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="fu">dependsOn:</span><span class="at"> DeployIaC</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="fu">variables:</span></a>
+<a class="sourceLine" id="cb3-7" title="7">    <span class="kw">-</span> <span class="fu">name:</span><span class="at"> </span><span class="st">&#39;storageAccountName&#39;</span> </a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="fu">value:</span><span class="at"> $[dependencies.DeployIaC.outputs[&#39;outputVars.storageAccountName&#39;]]</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="kw">-</span> <span class="fu">name:</span><span class="at"> </span><span class="st">&#39;rgName&#39;</span></a>
+<a class="sourceLine" id="cb3-10" title="10">      <span class="fu">value:</span><span class="at"> $[dependencies.DeployIaC.outputs[&#39;outputVars.rgName&#39;]]</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="kw">[</span>... download artifacts<span class="kw">]</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="kw">-</span> <span class="fu">task:</span><span class="at"> AzureCLI@2</span></a>
+<a class="sourceLine" id="cb3-13" title="13">    <span class="fu">displayName:</span><span class="at"> </span><span class="st">&#39;Upload Script&#39;</span></a>
+<a class="sourceLine" id="cb3-14" title="14">    <span class="fu">inputs:</span></a>
+<a class="sourceLine" id="cb3-15" title="15">      <span class="fu">azureSubscription:</span><span class="at"> </span></a>
+<a class="sourceLine" id="cb3-16" title="16">      <span class="fu">scriptType:</span><span class="at"> </span><span class="st">&#39;pscore&#39;</span></a>
+<a class="sourceLine" id="cb3-17" title="17">      <span class="fu">scriptLocation:</span><span class="at"> </span><span class="st">&#39;inlineScript&#39;</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="fu">      inlineScript:</span> <span class="st">|</span></a>
+<a class="sourceLine" id="cb3-19" title="19">        az config set extension.use_dynamic_install=yes_without_prompt</a>
+<a class="sourceLine" id="cb3-20" title="20">        az storage azcopy blob upload -c &quot;{YourPowershellInstallScriptOnVmCreation}.ps1&quot; --account-name $(storageAccountName) -s $(Pipeline.Workspace)/Scripts/{YourPowershellInstallScriptOnVmCreation}.ps1</a></code></pre></div>
+<h2 id="upgrade-policy">Upgrade policy</h2>
+<p>The upgrade policy defines how the VMs in the scale set are updated. There are three options:</p>
+<ul>
+<li>Manual</li>
+<li>Automatic</li>
+<li>Rolling</li>
+</ul>
+<p>At present, we employ the <code>Manual</code> upgrade policy as our VMs are created daily and operate within a specific timeframe. After this timeframe, all VMs are removed. Consequently, new VMs are recreated, and the application is reinstalled the following day. This approach guarantees that the application remains updated.</p>
+<p>If your application operates continuously and frequently receives updates, you might want to consider an upgrade policy other than <code>Manual</code>. In the azure scale set select <code>Instances</code> to check the state of the VMs.</p>
+<figure>
+<img src="assets/img/blog/Azure-Virtual-Machine-instances.png" alt="(Fig 4. instances)" /><figcaption>(Fig 4. instances)</figcaption>
+</figure>
+<p>If you see a warning sign in the column <code>Latest model</code> you would need to <code>reimage</code> the selected instance to have the VM in the latest state with the latest application version.</p>
+<p>However when uploading a new version of your application to the storage account, within the azure pipeline you would need to <code>reimage</code> all VMs in the scale set. This can be done using the azure cli: <code>az vmss update-instances</code></p>
+<h2 id="summary">Summary</h2>
+<p>In conclusion, Azure Scale Sets provide a powerful and flexible solution for managing and scaling applications. By leveraging features like time-based scaling, Custom Script Extensions, and Managed Identities, we were able to create a system that adapts to our application’s specific needs and usage patterns. Remember, the choice of upgrade policy and scaling type should align with your application’s requirements and operational patterns. I’ll be sure to update this article as we continue to explore Azure Scale Sets and their capabilities.</p>

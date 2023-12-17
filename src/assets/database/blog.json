@@ -4,6 +4,7 @@
         "Source": "assets/database/23.12.07-Azure-Virtual-Machine-Scale-Sets.html",
         "Author": "Martin",
         "Regards": [
+            "Azure",
             "Infrastructure"
         ],
         "Release": "2023-12-07T00:00:00",

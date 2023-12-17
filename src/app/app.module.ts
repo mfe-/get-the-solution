@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Inject, NgModule, PLATFORM_ID } from '@angular/core';
 
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { FetchBackend, HTTP_INTERCEPTORS, HttpBackend, HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -63,6 +63,8 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
   ],
   providers: [
     { provide: 'IBlogService', useClass: BlogService },
+    FetchBackend,
+    {provide: HttpBackend, useExisting: FetchBackend}
   ],
   bootstrap: [AppComponent]
 

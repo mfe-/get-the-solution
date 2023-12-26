@@ -4,8 +4,9 @@
         "Source": "assets/database/23.12.26-dotnet-docker-experiences.html",
         "Author": "Martin",
         "Regards": [
-            "C#",
-            "Docker"
+            "Infrastructure",
+            "Docker",
+            "Azure"
         ],
         "Release": "2023-12-26T00:00:00",
         "Title": "Dotnet docker experiences"

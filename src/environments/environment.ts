@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  git: "https://github.com/mfe-/get-the-solution/edit/main/src/",
   baseUri: "http://localhost:4200/"
 };
 

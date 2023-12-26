@@ -1,5 +1,17 @@
 [
     {
+        "BlogEntryId": 220,
+        "Source": "assets/database/23.12.26-dotnet-docker-experiences.html",
+        "Author": "Martin",
+        "Regards": [
+            "Infrastructure",
+            "Docker",
+            "Azure"
+        ],
+        "Release": "2023-12-26T00:00:00",
+        "Title": "Dotnet docker experiences"
+    },
+    {
         "BlogEntryId": 217,
         "Source": "assets/database/23.12.07-Azure-Virtual-Machine-Scale-Sets.html",
         "Author": "Martin",

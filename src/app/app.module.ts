@@ -35,7 +35,8 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 // imports—import BrowserModule to have browser specific services such as DOM rendering, sanitization, and location.
 // providers—the service providers.
 // bootstrap—the root component that Angular creates and inserts into the index.html host web page.
-@NgModule({
+@NgModule(/* TODO(standalone-migration): clean up removed NgModule class manually. 
+{
     declarations: [AppComponent],
     imports: [
         HttpClientModule,
@@ -65,7 +66,7 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
         { provide: HttpBackend, useExisting: FetchBackend }
     ],
     bootstrap: [AppComponent]
-})
+} */)
 export class AppModule {
 
   public constructor(@Inject(PLATFORM_ID) private platformId: Object) {

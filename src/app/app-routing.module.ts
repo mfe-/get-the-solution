@@ -14,7 +14,7 @@ import { BlogCategoryComponent } from './components/blog/blog-category.component
 import { BlogComponent } from './components/blog/blog.component';
 
 // https://mfe-.github.io/get-the-solution/?p=/blog/Add%20Token%20Authorization%20to%20AngularJS%20and%20WebApi
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'impressum', component: ImpressumComponent },

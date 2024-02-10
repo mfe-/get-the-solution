@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-theme-switcher',
-  template: '<a [routerLink]="" queryParamsHandling="preserve" '
-    + '(click)="switch()">{{currentCssFile==defaultCssFile ? \'Turn Light off\' : \'Turn Light on\'}}</a>',
-  styles: [
-  ],
+    selector: 'app-theme-switcher',
+    template: '<a [routerLink]="" queryParamsHandling="preserve" '
+        + '(click)="switch()">{{currentCssFile==defaultCssFile ? \'Turn Light off\' : \'Turn Light on\'}}</a>',
+    styles: [],
+    standalone: true,
+    imports: [RouterLink],
 })
 /**
  * can swap the css file which is used in

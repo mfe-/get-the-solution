@@ -3,10 +3,13 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { IBlogService } from 'src/app/contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
 import { ActivatedRoute } from '@angular/router';
+import { NgFor, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-blogcategory',
-  templateUrl: './blog-category.component.html'
+    selector: 'app-blogcategory',
+    templateUrl: './blog-category.component.html',
+    standalone: true,
+    imports: [NgFor, DatePipe]
 })
 export class BlogCategoryComponent implements OnInit {
 

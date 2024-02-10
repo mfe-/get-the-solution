@@ -1,7 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { StickHeaderDirective } from './stick-header.directive';
 import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 
 describe('StickHeaderDirective', () => {
   let platformId: Object;

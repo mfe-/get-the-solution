@@ -2,9 +2,9 @@ import { Component, OnInit, Inject, Input, PLATFORM_ID, ViewChild, ElementRef, A
 
 import { IBlogService } from 'src/app/contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
-import { environment } from 'src/environments/environment';
 import { DomSanitizer, Title } from "@angular/platform-browser";
 import { isPlatformBrowser, isPlatformServer, NgFor, DatePipe } from '@angular/common';
+import { environment } from 'src/app/app.config';
 
 
 

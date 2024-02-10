@@ -6,8 +6,8 @@ import { catchError, map } from 'rxjs/operators';
 import { IBlogService } from '../contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
 import { firstValueFrom } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { isPlatformServer } from '@angular/common';
+import { environment } from '../app.config';
 
 @Injectable()
 export class BlogService implements IBlogService {

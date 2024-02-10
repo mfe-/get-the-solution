@@ -36,39 +36,35 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 // providers—the service providers.
 // bootstrap—the root component that Angular creates and inserts into the index.html host web page.
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    HomeComponent,
-    ProjectsComponent,
-    ImageResizerComponent,
-    ImageResizerPrivacyPolicyComponent,
-    BlogComponent,
-    BlogEntryComponent,
-    BlogCategoryComponent,
-    ContactComponent,
-    FooterComponent,
-    PageNotFoundComponent,
-    PrivacyComponent,
-    ImpressumComponent,
-    ConvolutionDiscretComponent,
-    ThemeSwitcherComponent,
-    MathjaxDirective
-  ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
-  ],
-  providers: [
-    { provide: 'IBlogService', useClass: BlogService },
-    FetchBackend,
-    {provide: HttpBackend, useExisting: FetchBackend}
-  ],
-  bootstrap: [AppComponent]
-
-
+    declarations: [AppComponent],
+    imports: [
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HeaderComponent,
+        HomeComponent,
+        ProjectsComponent,
+        ImageResizerComponent,
+        ImageResizerPrivacyPolicyComponent,
+        BlogComponent,
+        BlogEntryComponent,
+        BlogCategoryComponent,
+        ContactComponent,
+        FooterComponent,
+        PageNotFoundComponent,
+        PrivacyComponent,
+        ImpressumComponent,
+        ConvolutionDiscretComponent,
+        ThemeSwitcherComponent,
+        MathjaxDirective
+    ],
+    providers: [
+        { provide: 'IBlogService', useClass: BlogService },
+        FetchBackend,
+        { provide: HttpBackend, useExisting: FetchBackend }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 

@@ -1,12 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IBlogService } from '../contract/IBlogService';
 import { BlogEntry } from '../model/BlogEntry';
 
 @Component({
-  selector: 'app-page-not-found',
-  templateUrl: './page-not-found.component.html',
-  styleUrls: []
+    selector: 'app-page-not-found',
+    templateUrl: './page-not-found.component.html',
+    styleUrls: [],
+    standalone: true,
+    imports: [RouterLink]
 })
 export class PageNotFoundComponent implements OnInit {
   private readonly REGEXLINKBLOG: string = "index-blog-[0-9]+-[0-9]+-([0-9]+)-.+";

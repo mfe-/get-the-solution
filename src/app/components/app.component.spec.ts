@@ -5,13 +5,11 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+    ],
+    declarations: [AppComponent],
+}).compileComponents();
   }));
 
   it('should create the app', () => {

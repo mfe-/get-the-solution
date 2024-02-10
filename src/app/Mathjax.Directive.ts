@@ -2,7 +2,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Directive, ElementRef, Inject, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
 
 @Directive({
-    selector: '[Mathjax]'
+    selector: '[Mathjax]',
+    standalone: true
 })
 /**
  * Loads Mathjax async and applies it on the used element.

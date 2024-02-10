@@ -8,8 +8,8 @@ describe('ConvolutionDiscretComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConvolutionDiscretComponent ]
-    })
+    imports: [ConvolutionDiscretComponent]
+})
     .compileComponents();
   }));
 

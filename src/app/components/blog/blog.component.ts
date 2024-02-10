@@ -1,13 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { BlogEntry } from 'src/app/model/BlogEntry';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { IBlogService } from 'src/app/contract/IBlogService';
+import { BlogEntryComponent } from './blogEntry.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+    selector: 'app-blog',
+    templateUrl: './blog.component.html',
+    styleUrls: ['./blog.component.css'],
+    standalone: true,
+    imports: [NgFor, BlogEntryComponent, NgIf, RouterLink]
 })
 export class BlogComponent implements OnInit {
 

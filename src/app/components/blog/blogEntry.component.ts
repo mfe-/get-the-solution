@@ -4,13 +4,15 @@ import { IBlogService } from 'src/app/contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer, Title } from "@angular/platform-browser";
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer, NgFor, DatePipe } from '@angular/common';
 
 
 
 @Component({
-  selector: 'app-blogentry',
-  templateUrl: './blogEntry.component.html'
+    selector: 'app-blogentry',
+    templateUrl: './blogEntry.component.html',
+    standalone: true,
+    imports: [NgFor, DatePipe]
 })
 export class BlogEntryComponent implements OnInit, AfterViewInit {
   private _blogEntryValue: BlogEntry = new BlogEntry();

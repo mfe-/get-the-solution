@@ -13,93 +13,88 @@
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/home</loc>
+  <loc>https://get-the-solution.net/home.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/projects</loc>
+  <loc>https://get-the-solution.net/projects.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog</loc>
+  <loc>https://get-the-solution.net/blog.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/contact</loc>
+  <loc>https://get-the-solution.net/contact.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/privacy</loc>
+  <loc>https://get-the-solution.net/privacy.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/impressum</loc>
+  <loc>https://get-the-solution.net/impressum.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/projects/discret-convolution</loc>
+  <loc>https://get-the-solution.net/projects/discret-convolution.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/projects/image-resizer</loc>
+  <loc>https://get-the-solution.net/projects/image-resizer.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/projects/image-resizer-privacy-policy</loc>
+  <loc>https://get-the-solution.net/projects/image-resizer-privacy-policy.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Hands%20on%20-%20Azure%20Scale%20Sets</loc>
+  <loc>https://get-the-solution.net/blog/Hands%20on%20-%20Azure%20Scale%20Sets.html</loc>
   <lastmod>2023-12-07</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Hands%20on%20-%20Azure%20Scale%20Sets</loc>
-  <lastmod>2023-12-07</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://get-the-solution.net/blog/Using Azure Key vault with AzureDevOps</loc>
+  <loc>https://get-the-solution.net/blog/Using Azure Key vault with AzureDevOps.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Connecting to Azure Devops with a Service Principal</loc>
+  <loc>https://get-the-solution.net/blog/Connecting to Azure Devops with a Service Principal.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Create an Azure App registrations daemon app</loc>
+  <loc>https://get-the-solution.net/blog/Create an Azure App registrations daemon app.html</loc>
   <lastmod>2023-08-14</lastmod>
   <priority>0.80</priority>
 </url>
 
 <url>
-  <loc>https://get-the-solution.net/blog/Checkout dotnet-trace</loc>
+  <loc>https://get-the-solution.net/blog/Checkout dotnet-trace.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Use boundary trace to find contour of object in images</loc>
+  <loc>https://get-the-solution.net/blog/Use boundary trace to find contour of object in images.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Create a Self-Signed Certificate for Code Signing</loc>
+  <loc>https://get-the-solution.net/blog/Create a Self-Signed Certificate for Code Signing.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Discrete Wavelet transformation</loc>
+  <loc>https://get-the-solution.net/blog/Discrete Wavelet transformation.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
@@ -111,154 +106,154 @@
 </url>
 
 <url>
-  <loc>https://get-the-solution.net/blog/Discrete cosine transform</loc>
+  <loc>https://get-the-solution.net/blog/Discrete cosine transform.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Signal hilbert transformation</loc>
+  <loc>https://get-the-solution.net/blog/Signal hilbert transformation.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Signal filtering</loc>
+  <loc>https://get-the-solution.net/blog/Signal filtering.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Signal sampling</loc>
+  <loc>https://get-the-solution.net/blog/Signal sampling.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Fast Fourier Transform</loc>
+  <loc>https://get-the-solution.net/blog/Fast Fourier Transform.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Working with adb aka Android Debug Bridge</loc>
+  <loc>https://get-the-solution.net/blog/Working with adb aka Android Debug Bridge.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Signal processing</loc>
+  <loc>https://get-the-solution.net/blog/Signal processing.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/.so undefined reference to openssl</loc>
+  <loc>https://get-the-solution.net/blog/.so undefined reference to openssl.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Creating exercises with the R exams package</loc>
+  <loc>https://get-the-solution.net/blog/Creating exercises with the R exams package.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Add Token Authorization to AngularJS and WebApi</loc>
+  <loc>https://get-the-solution.net/blog/Add Token Authorization to AngularJS and WebApi.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0</loc>
+  <loc>https://get-the-solution.net/blog/DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Datenbankoptimierung</loc>
+  <loc>https://get-the-solution.net/blog/Datenbankoptimierung.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Email Subject mit UTF8 im Header</loc>
+  <loc>https://get-the-solution.net/blog/Email Subject mit UTF8 im Header.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Shenyang</loc>
+  <loc>https://get-the-solution.net/blog/Shenyang.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Glassfish 4 and Realm</loc>
+  <loc>https://get-the-solution.net/blog/Glassfish 4 and Realm.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/reinstall grub</loc>
+  <loc>https://get-the-solution.net/blog/reinstall grub.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Logische Schaltungen</loc>
+  <loc>https://get-the-solution.net/blog/Logische Schaltungen.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Digitale Standardbaugruppen</loc>
+  <loc>https://get-the-solution.net/blog/Digitale Standardbaugruppen.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Sequenzielle Logik</loc>
+  <loc>https://get-the-solution.net/blog/Sequenzielle Logik.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/MySQL Cursor alternative – Dynamische SQL Cursor</loc>
+  <loc>https://get-the-solution.net/blog/MySQL Cursor alternative – Dynamische SQL Cursor.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Datenbank erstellen mit dem ER-Diagramm und MySql</loc>
+  <loc>https://get-the-solution.net/blog/Datenbank erstellen mit dem ER-Diagramm und MySql.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Modelle in der Informatik</loc>
+  <loc>https://get-the-solution.net/blog/Modelle in der Informatik.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 
 
 <url>
-  <loc>https://get-the-solution.net/blog/Subversion – Repositories zusammenlegen – exportieren</loc>
+  <loc>https://get-the-solution.net/blog/Subversion – Repositories zusammenlegen – exportieren.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/ONLINE COMMUNITIES</loc>
+  <loc>https://get-the-solution.net/blog/ONLINE COMMUNITIES.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Tray Icon mit WPF</loc>
+  <loc>https://get-the-solution.net/blog/Tray Icon mit WPF.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/MarkupExtension – Bilder aus Resource direkt ins XAML laden</loc>
+  <loc>https://get-the-solution.net/blog/MarkupExtension – Bilder aus Resource direkt ins XAML laden.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/ListBox – SelectedItem Zusatzinformationen anzeigen</loc>
+  <loc>https://get-the-solution.net/blog/ListBox – SelectedItem Zusatzinformationen anzeigen.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Einführung in die Programmierung</loc>
+  <loc>https://get-the-solution.net/blog/Einführung in die Programmierung.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/ItemsSource%20zu%20UserControl%20hinzuf%C3%BCgen</loc>
+  <loc>https://get-the-solution.net/blog/ItemsSource%20zu%20UserControl%20hinzuf%C3%BCgen.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://get-the-solution.net/blog/Subklassen in XAML ansprechen</loc>
+  <loc>https://get-the-solution.net/blog/Subklassen in XAML ansprechen.html</loc>
   <lastmod>2023-08-10</lastmod>
   <priority>0.80</priority>
 </url>

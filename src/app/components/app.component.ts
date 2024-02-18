@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FooterComponent } from './footer.component';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { StickHeaderDirective } from '../stick-header.directive';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,13 @@ import { StickHeaderDirective } from '../stick-header.directive';
   ],
 })
 export class AppComponent {
-  public constructor() {
+  constructor(@Inject(Router) private router: Router, @Inject(Title) private titleService: Title) {
+    //set default page title using the url
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
+        if (ev.url.indexOf("blog") == -1)
+          titleService.setTitle("get-the-solution.net" + " - " + ev.url.replace("/", ""));
+      }
+    });
   }
 }

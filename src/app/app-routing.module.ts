@@ -1,5 +1,3 @@
-import { Title } from '@angular/platform-browser';
-import { Inject, Injectable, NgModule } from '@angular/core';
 import { Routes, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { ContactComponent } from './components/contact.component';
 import { HomeComponent } from './components/home.component';
@@ -15,44 +13,33 @@ import { BlogComponent } from './components/blog/blog.component';
 
 // https://mfe-.github.io/get-the-solution/?p=/blog/Add%20Token%20Authorization%20to%20AngularJS%20and%20WebApi
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'privacy', component: PrivacyComponent },
-  { path: 'impressum', component: ImpressumComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'projects/image-resizer', component: ImageResizerComponent },
-  { path: 'projects/image-resizer-privacy-policy',component: ImageResizerPrivacyPolicyComponent},
+  { path: 'home.html', component: HomeComponent },
+  { path: '', redirectTo: '/home.html', pathMatch: 'full' },
+  { path: 'home', redirectTo: '/home.html', pathMatch: 'full' },
+  { path: 'projects.html', component: ProjectsComponent },
+  { path: 'projects', redirectTo: '/projects.html', pathMatch: 'full' },
+  { path: 'privacy.html', component: PrivacyComponent },
+  { path: 'privacy', redirectTo: '/privacy.html', pathMatch: 'full' },
+  { path: 'impressum', redirectTo: '/impressum.html', pathMatch: 'full' },
+  { path: 'impressum.html', component: ImpressumComponent },
+  { path: 'projects/image-resizer.html', component: ImageResizerComponent },
+  { path: 'projects/image-resizer', redirectTo: '/projects/image-resizer.html', pathMatch: 'full' },
+  { path: 'projects/image-resizer-privacy-policy', redirectTo: 'projects/image-resizer-privacy-policy.html', pathMatch: 'full' },
+  { path: 'projects/image-resizer-privacy-policy.html', component: ImageResizerPrivacyPolicyComponent },
   { path: 'projects/discret-convolution/h/:h/x/:x', component: ConvolutionDiscretComponent },
-  { path: 'projects/discret-convolution', component: ConvolutionDiscretComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'blog', component: BlogComponent },
+  { path: 'projects/discret-convolution.html', component: ConvolutionDiscretComponent },
+  { path: 'projects/discret-convolution',redirectTo:'projects/discret-convolution.html' },
+  { path: 'contact.html', component: ContactComponent },
+  { path: 'contact', redirectTo: '/contact.html', pathMatch: 'full' },
+  { path: 'blog.html', component: BlogComponent },
+  { path: 'blog', redirectTo: '/blog.html', pathMatch: 'full' },
   { path: 'blog/:title', component: BlogComponent },
+  { path: 'blog/:title.html', component: BlogComponent },
   { path: 'category/:category', component: BlogCategoryComponent },
-  { path: 'category', component: BlogCategoryComponent },
+  { path: 'category.html', component: BlogCategoryComponent },
+  { path: 'category', redirectTo: '/category.html', pathMatch: 'full' },
   { path: ':year/:month/:day/:title', component: BlogComponent },
   { path: ':p', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
 
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-})],
-  exports: [RouterModule]
-})
-
-
-@Injectable()
-export class AppRoutingModule {
-  constructor(@Inject(Router) private router: Router, @Inject(Title) private titleService: Title) {
-    //set default page title using the url
-    this.router.events.subscribe((ev) => {
-      if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
-        if (ev.url.indexOf("blog") == -1)
-          titleService.setTitle("get-the-solution.net" + " - " + ev.url.replace("/", ""));
-      }
-    });
-  }
-}
-

@@ -24,6 +24,7 @@ export class BlogComponent implements OnInit {
     this.FiltertedBlogEntry = [];
   }
   public async ngOnInit() {
+    //check how to load the blog entries
     let year = this.route.snapshot.paramMap.get("year");
     let month = this.route.snapshot.paramMap.get("month");
     let day = this.route.snapshot.paramMap.get("day");
@@ -38,6 +39,11 @@ export class BlogComponent implements OnInit {
   }
   protected async ApplyBlogEntry(blogEntries: BlogEntry[]): Promise<void> {
     let title = this.route.snapshot.paramMap.get("title");
+    if (title) {
+      if (title.endsWith('.html')) {
+          title = title.replace('.html', '');
+      }
+  }
     let year = this.route.snapshot.paramMap.get("year");
     let month = this.route.snapshot.paramMap.get("month");
     let day = this.route.snapshot.paramMap.get("day");

@@ -215,7 +215,7 @@
     {
         "BlogEntryId": 200,
         "Source": "assets/database/20.02.22-ILT0005-ARMilcTools64nutc_driver.html",
-        "Title": "ILT0005: C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\runtime.win10-arm.microsoft.net.native.compiler\\2.2.7-rel-27913-00\\tools\\ARM\\ilc\\Tools64\\nutc_driver.exe @\\obj\\ARM\\Release\\ilc\\intermediate\\MDIL\\...rsp' returned exit code -1073741819",
+        "Title": "ILT0005: runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp' returned exit code -1073741819",
         "Author": "Martin",
         "Release": "2020-02-22T00:00:00",
         "Regards": [
@@ -227,7 +227,7 @@
     {
         "BlogEntryId": 178,
         "Source": "assets/database/19.08.02-ExamsGame.html",
-        "Title": "Das Aufgabenkönig-Spiel (ExamsGame)",
+        "Title": "Das Aufgabenkönig-Spiel ExamsGame",
         "Author": "Simon",
         "Release": "2019-08-02T00:00:00",
         "Regards": [
@@ -394,7 +394,7 @@
     },
     {
         "BlogEntryId": 89,
-        "Title": "C# Plugins mit AppDomains realisieren",
+        "Title": "C-Sharp Plugins mit AppDomains realisieren",
         "Author": "Martin",
         "Release": "2010-08-23T00:00:00",
         "Source": "assets/database/10.08.23-Csharp-Plugins-mit-AppDomains-realisieren.html",
@@ -405,7 +405,7 @@
     },
     {
         "BlogEntryId": 88,
-        "Title": "C# Anwendung Plugin fähig machen",
+        "Title": "C-Sharp Anwendung Plugin fähig machen",
         "Author": "Martin",
         "Release": "2010-07-23T00:00:00",
         "Source": "assets/database/10.07.23-Anwendung-Plugin-faehig-machen.html",

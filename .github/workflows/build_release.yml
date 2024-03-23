@@ -31,7 +31,12 @@ jobs:
           echo "Repository URL: ${{ github.repository_url }}"
           echo "Run ID: ${{ github.run_id }}"
           echo "Run number: ${{ github.run_number }}"
-             
+          
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:

@@ -26,7 +26,7 @@ jobs:
       - name: run pandoc
         working-directory: src/assets/database
         run: |
-          for i in *.md; do pandoc "$i" -o "${i%.*}".html --wrap=preserve --highlight-style=breezeDark --verbose; done
+          for i in *.md; do pandoc "$i" -o "${i%.*}".html --wrap=preserve --highlight-style=breezeDark --table-of-contents --verbose; done
 
       # output generated file to build artifacts
       - uses: actions/upload-artifact@v3

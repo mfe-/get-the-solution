@@ -12,11 +12,41 @@ on:
   workflow_dispatch:
 
 jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
+
+    container: 
+      image: pandoc/latex:latest
+
+    steps:
+      # checkout repo contents
+      - uses: actions/checkout@v4
+
+      # run pandoc to generate html from markdown
+      - name: run pandoc
+        working-directory: src/assets/database
+        run: |
+          for i in *.md; do pandoc --from markdown --table-of-contents "$i" -o "${i%.*}".html --wrap=preserve --highlight-style=breezeDark --verbose; done
+
+      # output generated file to build artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: generated-html-files
+          path: |
+            src/assets/database/*.html
+
   build:
+    needs: convert_via_pandoc
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: generated-html-files
+          path: src/assets/database
 
       - name: info
         run: |
@@ -31,7 +61,12 @@ jobs:
           echo "Repository URL: ${{ github.repository_url }}"
           echo "Run ID: ${{ github.run_id }}"
           echo "Run number: ${{ github.run_number }}"
-             
+          
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:

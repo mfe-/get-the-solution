@@ -42,21 +42,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: before
-        working-directory: src/assets/database
-        run: |
-          ls -lah
-
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
           name: generated-html-files
           path: src/assets/database
-
-      - name: after
-        working-directory: src/assets/database
-        run: |
-          ls -lah
 
       - name: info
         run: |

@@ -10,12 +10,12 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 }
 
 module webAppModule './webApp.bicep' = {
-  name: 'resourceGroupModuleDeployment'
+  name: 'webAppModuleDeployment'
   scope: resourceGroup
   params: {
     location: rgLocation
     webAppName: appName
-    publishingUserName: '$get-the-solution'
+    // publishingUserName: '$get-the-solution'
   }
 }
 output uniqueServerFarmsNameFromModule string = webAppModule.outputs.uniqueServerFarmsNameOutput

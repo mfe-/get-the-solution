@@ -39,7 +39,8 @@ jobs:
   build:
     # needs: convert_via_pandoc
     runs-on: ubuntu-latest
-
+    env:
+      LOCATION: germanywestcentral  
     steps:
       - uses: actions/checkout@v4
 
@@ -74,10 +75,10 @@ jobs:
           scope: 'subscription'
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           template: ./infra/main.bicep
-          region: 'germanywestcentral'
+          region: ${{ env.LOCATION }}
           parameters: >-
                 rgName=get-the-solution 
-                rgLocation=germanywestcentral
+                rgLocation=${{ env.LOCATION }}
           failOnStdErr: true
 
 #       - name: Set up Node.js version

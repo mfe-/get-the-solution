@@ -171,3 +171,5 @@ resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {
 
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName
+output webAppName string = webApp.name
+

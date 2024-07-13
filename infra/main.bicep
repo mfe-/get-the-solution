@@ -19,3 +19,4 @@ module webAppModule './webApp.bicep' = {
   }
 }
 output uniqueServerFarmsNameFromModule string = webAppModule.outputs.uniqueServerFarmsNameOutput
+output webAppName string = webAppModule.outputs.webAppName

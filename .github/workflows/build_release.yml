@@ -102,6 +102,16 @@ jobs:
           echo "Web App Name: $WEB_APP_NAME"
           echo "Resource Group Name: $RG_NAME"
 
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            output=$(az webapp deployment list-publishing-profiles --name $WEB_APP_NAME --resource-group $RG_NAME --query "[?ends_with(profileName, 'FTP')].{publishUrl: publishUrl}" --output json)
+            publishUrl=$(echo $output | jq -r '.[0].publishUrl')
+            echo "PUBLISH_URL=$publishUrl" >> $GITHUB_ENV
+            echo "Publish URL: $PUBLISH_URL"
+
 #       - name: Set up Node.js version
 #         uses: actions/setup-node@v3
 #         with:

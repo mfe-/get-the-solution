@@ -13,44 +13,41 @@ on:
   workflow_dispatch:
 
 jobs:
-  # convert_via_pandoc:
-  #   runs-on: ubuntu-latest
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
 
-  #   container: 
-  #     image: pandoc/latex:latest
+    container: 
+      image: pandoc/latex:latest
 
-  #   steps:
-  #     # checkout repo contents
-  #     - uses: actions/checkout@v4
+    steps:
+      # checkout repo contents
+      - uses: actions/checkout@v4
 
-  #     # run pandoc to generate html from markdown
-  #     - name: run pandoc
-  #       working-directory: src/assets/database
-  #       run: |
-  #         for i in *.md; do pandoc "$i" -o "${i%.*}".html --highlight-style=breezeDark --verbose; done
+      # run pandoc to generate html from markdown
+      - name: run pandoc
+        working-directory: src/assets/database
+        run: |
+          for i in *.md; do pandoc "$i" -o "${i%.*}".html --highlight-style=breezeDark --verbose; done
 
-  #     # output generated file to build artifacts
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: generated-html-files
-  #         path: |
-  #           src/assets/database/*.html
+      # output generated file to build artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: generated-html-files
+          path: |
+            src/assets/database/*.html
 
   build:
-    # needs: convert_via_pandoc
+    needs: convert_via_pandoc
     runs-on: ubuntu-latest
-    env:
-      LOCATION: germanywestcentral
-      AZDEPLOYMENT_NAME: mainBicepDeployment
 
     steps:
       - uses: actions/checkout@v4
 
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: generated-html-files
-      #     path: src/assets/database
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: generated-html-files
+          path: src/assets/database
 
       - name: info
         run: |
@@ -66,6 +63,60 @@ jobs:
           echo "Run ID: ${{ github.run_id }}"
           echo "Run number: ${{ github.run_number }}"
           
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm install -g @angular/cli > /dev/null
+
+      - name: export, build
+        run: |
+          export NODE_ENV=production
+          npm run build:ssr --configuration=production --aot
+#          npm run test --if-present
+
+      - name: Zip artifact for deployment
+        if: github.event_name != 'pull_request'
+        run: |
+          cat src/assets/database/blog.json
+
+          cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
+          zip release.zip ./dist/* -r
+
+      - name: Upload artifact for deployment job
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: release.zip
+
+  deploy:
+    # if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    env: # Define environment variables for the entire job
+      LOCATION: germanywestcentral
+      AZDEPLOYMENT_NAME: mainBicepDeployment
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app
+
+      - name: Unzip artifact for deployment and list contents
+        run: |
+          unzip release.zip
+          sudo apt-get install -y tree
+          tree
 
       - uses: azure/login@v1
         with:
@@ -107,65 +158,21 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            output=$(az webapp deployment list-publishing-profiles --name $WEB_APP_NAME --resource-group $RG_NAME --query "[?ends_with(profileName, 'FTP')].{publishUrl: publishUrl}" --output json)
-            echo $output
+            output=$(az webapp deployment list-publishing-profiles --name $WEB_APP_NAME --resource-group $RG_NAME --query "[?publishMethod=='FTP'].{publishUrl: publishUrl, userName: userName, userPWD: userPWD}" --output json)
             publishUrl=$(echo $output | jq -r '.[0].publishUrl')
+            ftpUsername=$(echo $output | jq -r '.[0].userName')
+            ftpPassword=$(echo $output | jq -r '.[0].userPWD')
             echo "PUBLISH_URL=$publishUrl" >> $GITHUB_ENV
-            echo "Publish URL: $PUBLISH_URL"
+            echo "FTP_USERNAME=$ftpUsername" >> $GITHUB_ENV
+            echo "FTP_PASSWORD=$ftpPassword" >> $GITHUB_ENV
 
-#       - name: Set up Node.js version
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: '20.x'
+    
 
-#       - name: npm install, build, and test
-#         run: |
-#           npm install
-#           npm install -g @angular/cli > /dev/null
-
-#       - name: export, build
-#         run: |
-#           export NODE_ENV=production
-#           npm run build:ssr --configuration=production --aot
-# #          npm run test --if-present
-
-#       - name: Zip artifact for deployment
-#         if: github.event_name != 'pull_request'
-#         run: |
-#           cat src/assets/database/blog.json
-
-#           cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
-#           zip release.zip ./dist/* -r
-
-#       - name: Upload artifact for deployment job
-#         if: github.event_name != 'pull_request'
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: node-app
-#           path: release.zip
-
-  # deploy:
-  #   if: github.event_name != 'pull_request'
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   environment:
-  #     name: 'Production'
-  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-  #   steps:
-  #     - name: Download artifact from build job
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: node-app
-
-  #     - name: Unzip artifact for deployment
-  #       run: unzip release.zip
-
-  #     - name: 'Deploy to Azure Web App'
-  #       id: deploy-to-webapp
-  #       uses: azure/webapps-deploy@v2
-  #       with:
-  #         app-name: 'get-the-solution'
-  #         slot-name: 'Production'
-  #         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
-  #         package: ./dist/get-the-solution-app
+      # - name: 'Deploy to Azure Web App'
+      #   id: deploy-to-webapp
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: 'get-the-solution'
+      #     slot-name: 'Production'
+      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
+      #     package: ./dist/get-the-solution-app

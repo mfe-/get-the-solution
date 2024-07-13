@@ -157,17 +157,17 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
   }
 }
 
-resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
-  name: 'web'  
-  parent: webApp  
-  properties: {  
-    repoUrl: 'https://github.com/mfe-/get-the-solution'  
-    branch: 'main'  
-    deploymentRollbackEnabled: false  
-    isGitHubAction: true  
-    isManualIntegration: false  
-  }  
-}  
+// resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
+//   name: 'web'  
+//   parent: webApp  
+//   properties: {  
+//     repoUrl: 'https://github.com/mfe-/get-the-solution'  
+//     branch: 'main'  
+//     deploymentRollbackEnabled: false  
+//     isGitHubAction: true  
+//     isManualIntegration: false  
+//   }  
+// }  
 
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName

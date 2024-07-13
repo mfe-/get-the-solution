@@ -1,3 +1,5 @@
+targetScope = 'subscription'
+
 param rgName string = 'get-the-solution'
 param rgLocation string = 'Germany West Central'
 

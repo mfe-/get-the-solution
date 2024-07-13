@@ -77,7 +77,7 @@ jobs:
           template: ./infra/main.bicep
           region: ${{ env.LOCATION }}
           parameters: >-
-                rgName=get-the-solution 
+                rgName=rg-get-the-solution-net
                 rgLocation=${{ env.LOCATION }}
           failOnStdErr: true
 

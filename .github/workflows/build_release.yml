@@ -130,6 +130,7 @@ jobs:
       - name: Unzip artifact for deployment and list contents
         run: |
           unzip iac.zip
+          unzip release.zip
           sudo apt-get install -y tree
           tree
 
@@ -181,7 +182,15 @@ jobs:
             echo "FTP_USERNAME=$ftpUsername" >> $GITHUB_ENV
             echo "FTP_PASSWORD=$ftpPassword" >> $GITHUB_ENV
 
-    
+      - name: Upload files to SFTP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.PUBLISH_URL }}
+          port: 22 # Standard port for SFTP
+          username: ${{ env.FTP_USERNAME }}
+          password: ${{ env.FTP_PASSWORD }}
+          source: "./dist/get-the-solution-app"
+          target: "./site/wwwroot"
 
       # - name: 'Deploy to Azure Web App'
       #   id: deploy-to-webapp

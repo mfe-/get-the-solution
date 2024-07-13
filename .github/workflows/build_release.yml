@@ -81,6 +81,7 @@ jobs:
                 appName=get-the-solution
                 rgLocation=${{ env.LOCATION }}
           failOnStdErr: true
+          deploymentName: mainBicepDeployment
 
       # Example step showing how to use the deployment name output
       - name: Print deployment name

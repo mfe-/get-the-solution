@@ -105,7 +105,7 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
     acrUseManagedIdentityCreds: false
     logsDirectorySizeLimit: 35
     detailedErrorLoggingEnabled: false
-    publishingUsername: '$${uniqueSiteName}'
+    publishingUsername: '$${webAppName}'
     webSocketsEnabled: false
     alwaysOn: false
     appCommandLine: 'node /home/site/wwwroot/server/main.js'
@@ -157,19 +157,23 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
   }
 }
 
-// resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
-//   name: 'web'  
-//   parent: webApp  
-//   properties: {  
-//     repoUrl: 'https://github.com/mfe-/get-the-solution'  
-//     branch: 'main'  
-//     deploymentRollbackEnabled: false  
-//     isGitHubAction: true  
-//     isManualIntegration: false  
-//   }  
-// }  
+resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
+  name: 'web'  
+  parent: webApp  
+  properties: {  
+    repoUrl: 'https://github.com/mfe-/get-the-solution'  
+    branch: 'main'  
+    deploymentRollbackEnabled: false  
+    isGitHubAction: false  
+    isManualIntegration: true
+  }  
+}  
 
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName
 output webAppName string = webApp.name
 
+var publishingCredentialsId = resourceId('Microsoft.Web/sites/config', appServiceName, 'publishingCredentials')
+
+// Full publishing credentials
+output publishingCredentials object = list(publishingCredentialsId, '2022-03-01')

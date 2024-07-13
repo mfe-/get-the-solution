@@ -11,7 +11,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 module resourceGroupModule './resourceGroupModule.bicep' = {
   name: 'resourceGroupModuleDeployment'
-  scope: resourceGroup(rgName)
+  scope: resourceGroup
   params: {
     rgLocation: rgLocation
     appName: appName

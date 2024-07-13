@@ -15,7 +15,6 @@ module webAppModule './webApp.bicep' = {
   params: {
     location: rgLocation
     webAppName: appName
-    // publishingUserName: '$get-the-solution'
   }
 }
 output uniqueServerFarmsNameFromModule string = webAppModule.outputs.uniqueServerFarmsNameOutput

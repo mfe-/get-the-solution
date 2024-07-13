@@ -105,7 +105,7 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
     acrUseManagedIdentityCreds: false
     logsDirectorySizeLimit: 35
     detailedErrorLoggingEnabled: false
-    // publishingUsername: publishingUserName
+    publishingUsername: '$${uniqueSiteName}'
     webSocketsEnabled: false
     alwaysOn: false
     appCommandLine: 'node /home/site/wwwroot/server/main.js'

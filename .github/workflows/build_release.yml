@@ -182,13 +182,22 @@ jobs:
             echo "FTP_USERNAME=$ftpUsername" >> $GITHUB_ENV
             echo "FTP_PASSWORD=$ftpPassword" >> $GITHUB_ENV
 
+      - name: Prepare SFTP Host and Username
+        run: |
+          echo "CLEANED_PUBLISH_URL=$(echo $PUBLISH_URL | sed -E 's|ftps?://([^/]+).*|\1|')" >> $GITHUB_ENV
+          # Assuming the double backslash is not required and should be replaced with a single backslash
+          echo "CLEANED_FTP_USERNAME=$(echo $FTP_USERNAME | sed 's|\\\\|\\|g')" >> $GITHUB_ENV
+        env:
+          PUBLISH_URL: ${{ env.PUBLISH_URL }}
+          FTP_USERNAME: ${{ env.FTP_USERNAME }}
+
       - name: Upload files to SFTP
         uses: appleboy/scp-action@master
         with:
           host: ${{ env.PUBLISH_URL }}
-          port: 22 # Standard port for SFTP
-          username: ${{ env.FTP_USERNAME }}
-          password: ${{ env.FTP_PASSWORD }}
+          port: 990 # Standard port for SFTP
+          username: ${{ env.CLEANED_FTP_USERNAME }}
+          password: ${{ env.CLEANED_FTP_USERNAME }}
           source: "./dist/get-the-solution-app"
           target: "./site/wwwroot"
 

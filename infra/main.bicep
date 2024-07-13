@@ -3,7 +3,8 @@ targetScope = 'subscription'
 param rgLocation string
 param appName string
 param rgName string
-var uniqueServerFarmsName = 'AppServiceplan-${appName}-${uniqueString(serverFarmsName)}'
+var serverFarmsName = 'AppServiceplan'
+var uniqueServerFarmsName = '${serverFarmsName}-${appName}-${uniqueString(serverFarmsName)}'
 var webAppName=appName
 var location=rgLocation
 

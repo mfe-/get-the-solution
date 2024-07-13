@@ -1,5 +1,6 @@
 param location string
 param webAppName string
+param publishingUsername string
 param serverFarmsName string = 'AppServiceplan'
 
 var uniqueServerFarmsName = '${serverFarmsName}-${webAppName}-${uniqueString(serverFarmsName)}'
@@ -34,7 +35,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
 
 resource webApp 'Microsoft.Web/sites@2023-12-01' = {
   name: uniqueSiteName
-  // location: 'East US'
   location: location
   kind: 'app,linux'
   properties: {
@@ -80,6 +80,86 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
   }
 }
 
+resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
+  name: '${uniqueSiteName}/web'
+  location: location
+  dependsOn: [
+    webApp
+  ]
+  properties: {
+    numberOfWorkers: 1
+    defaultDocuments: [
+      'Default.htm'
+      'Default.html'
+      'Default.asp'
+      'index.htm'
+      'index.html'
+      'iisstart.htm'
+      'default.aspx'
+      'index.php'
+      'hostingstart.html'
+    ]
+    netFrameworkVersion: 'v4.0'
+    linuxFxVersion: 'NODE|20-lts'
+    requestTracingEnabled: false
+    remoteDebuggingEnabled: false
+    httpLoggingEnabled: false
+    acrUseManagedIdentityCreds: false
+    logsDirectorySizeLimit: 35
+    detailedErrorLoggingEnabled: false
+    publishingUsername: publishingUsername
+    scmType: 'GitHubAction'
+    use32BitWorkerProcess: true
+    webSocketsEnabled: false
+    alwaysOn: false
+    appCommandLine: 'node /home/site/wwwroot/server/main.js'
+    managedPipelineMode: 'Integrated'
+    virtualApplications: [
+      {
+        virtualPath: '/'
+        physicalPath: 'site\\wwwroot'
+        preloadEnabled: false
+      }
+    ]
+    loadBalancing: 'LeastRequests'
+    experiments: {
+      rampUpRules: []
+    }
+    autoHealEnabled: false
+    vnetRouteAllEnabled: false
+    vnetPrivatePortsCount: 0
+    publicNetworkAccess: 'Enabled'
+    localMySqlEnabled: false
+    ipSecurityRestrictions: [
+      {
+        ipAddress: 'Any'
+        action: 'Allow'
+        priority: 2147483647
+        name: 'Allow all'
+        description: 'Allow all access'
+      }
+    ]
+    scmIpSecurityRestrictions: [
+      {
+        ipAddress: 'Any'
+        action: 'Allow'
+        priority: 2147483647
+        name: 'Allow all'
+        description: 'Allow all access'
+      }
+    ]
+    scmIpSecurityRestrictionsUseMain: false
+    http20Enabled: false
+    minTlsVersion: '1.2'
+    scmMinTlsVersion: '1.2'
+    ftpsState: 'FtpsOnly'
+    preWarmedInstanceCount: 0
+    elasticWebAppScaleLimit: 0
+    functionsRuntimeScaleMonitoringEnabled: false
+    minimumElasticInstanceCount: 0
+    azureStorageAccounts: {}
+  }
+}
 
 // resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2021-02-01' = if(contains(repoUrl,'http')){
 //   name: 'web'

@@ -131,81 +131,47 @@ jobs:
         run: |
           unzip iac.zip
           unzip release.zip
-          sudo apt-get install -y tree
-          tree
 
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Bicep file
-        uses: azure/arm-deploy@v1
-        with:
-          scope: 'subscription'
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          template: ./infra/main.bicep
-          region: ${{ env.LOCATION }}
-          parameters: >-
-                rgName=rg-get-the-solution-net
-                appName=get-the-solution
-                rgLocation=${{ env.LOCATION }}
-          failOnStdErr: true
-          deploymentName: ${{ env.AZDEPLOYMENT_NAME }}
-
-      - name: Get deployment outputs
-        run: |
-          outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
-          uniqueServerFarmsNameFromModule=$(echo $outputs | jq -r '.uniqueServerFarmsNameFromModule.value')
-          webAppName=$(echo $outputs | jq -r '.webAppName.value')
-          rgName=$(echo $outputs | jq -r '.rgName.value')
-          echo "UNIQUE_SERVER_FARMS_NAME_FROM_MODULE=$uniqueServerFarmsNameFromModule" >> $GITHUB_ENV
-          echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
-          echo "RG_NAME=$rgName" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Use the Environment Variables
-        run: |
-          echo "Unique Server Farms Name from Module: $UNIQUE_SERVER_FARMS_NAME_FROM_MODULE"
-          echo "Web App Name: $WEB_APP_NAME"
-          echo "Resource Group Name: $RG_NAME"
-
-      - name: Azure CLI script
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            output=$(az webapp deployment list-publishing-profiles --name $WEB_APP_NAME --resource-group $RG_NAME --query "[?publishMethod=='FTP'].{publishUrl: publishUrl, userName: userName, userPWD: userPWD}" --output json)
-            publishUrl=$(echo $output | jq -r '.[0].publishUrl')
-            ftpUsername=$(echo $output | jq -r '.[0].userName')
-            ftpPassword=$(echo $output | jq -r '.[0].userPWD')
-            echo "PUBLISH_URL=$publishUrl" >> $GITHUB_ENV
-            echo "FTP_USERNAME=$ftpUsername" >> $GITHUB_ENV
-            echo "FTP_PASSWORD=$ftpPassword" >> $GITHUB_ENV
-
-      - name: Prepare SFTP Host and Username
-        run: |
-          echo "CLEANED_PUBLISH_URL=$(echo $PUBLISH_URL | sed -E 's|ftps?://([^/]+).*|\1|')" >> $GITHUB_ENV
-          # Assuming the double backslash is not required and should be replaced with a single backslash
-          echo "CLEANED_FTP_USERNAME=$(echo $FTP_USERNAME | sed 's|\\\\|\\|g')" >> $GITHUB_ENV
-        env:
-          PUBLISH_URL: ${{ env.PUBLISH_URL }}
-          FTP_USERNAME: ${{ env.FTP_USERNAME }}
-
-      - name: Upload files to SFTP
-        uses: appleboy/scp-action@master
-        with:
-          host: waws-prod-fra-023.ftp.azurewebsites.windows.net
-          port: 990 # Standard port for SFTP
-          username: ${{ env.CLEANED_FTP_USERNAME }}
-          password: ${{ env.FTP_PASSWORD }}
-          source: "./dist/get-the-solution-app"
-          target: "./site/wwwroot"
-
-      # - name: 'Deploy to Azure Web App'
-      #   id: deploy-to-webapp
-      #   uses: azure/webapps-deploy@v2
+      # - name: Deploy Bicep file
+      #   uses: azure/arm-deploy@v1
       #   with:
-      #     app-name: 'get-the-solution'
-      #     slot-name: 'Production'
-      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
-      #     package: ./dist/get-the-solution-app
+      #     scope: 'subscription'
+      #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+      #     template: ./infra/main.bicep
+      #     region: ${{ env.LOCATION }}
+      #     parameters: >-
+      #           rgName=rg-get-the-solution-net
+      #           appName=get-the-solution
+      #           rgLocation=${{ env.LOCATION }}
+      #     failOnStdErr: true
+      #     deploymentName: ${{ env.AZDEPLOYMENT_NAME }}
+
+      # - name: Get deployment outputs
+      #   run: |
+      #     outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+      #     uniqueServerFarmsNameFromModule=$(echo $outputs | jq -r '.uniqueServerFarmsNameFromModule.value')
+      #     webAppName=$(echo $outputs | jq -r '.webAppName.value')
+      #     rgName=$(echo $outputs | jq -r '.rgName.value')
+      #     echo "UNIQUE_SERVER_FARMS_NAME_FROM_MODULE=$uniqueServerFarmsNameFromModule" >> $GITHUB_ENV
+      #     echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
+      #     echo "RG_NAME=$rgName" >> $GITHUB_ENV
+      #   shell: bash
+
+      # - name: Use the Environment Variables
+      #   run: |
+      #     echo "Unique Server Farms Name from Module: $UNIQUE_SERVER_FARMS_NAME_FROM_MODULE"
+      #     echo "Web App Name: $WEB_APP_NAME"
+      #     echo "Resource Group Name: $RG_NAME"
+
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'get-the-solution'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
+          package: ./dist/get-the-solution-app

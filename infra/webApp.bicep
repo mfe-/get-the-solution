@@ -1,6 +1,6 @@
 param location string
 param webAppName string
-param publishingUserName string
+// param publishingUserName string
 param serverFarmsName string = 'AppServiceplan'
 
 var uniqueServerFarmsName = '${serverFarmsName}-${webAppName}-${uniqueString(serverFarmsName)}'

@@ -75,7 +75,8 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           template: ./infra/main.bicep
           region: 'Germany West Central'
-          parameters: "rgName='get-the-solution' rgLocation='Germany West Central'"
+          parameters: >-
+                rgName='get-the-solution' rgLocation="Germany West Central"
           failOnStdErr: true
 
       - name: Set up Node.js version

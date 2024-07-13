@@ -17,3 +17,4 @@ module resourceGroupModule './resourceGroupModule.bicep' = {
     webAppName: appName
   }
 }
+output uniqueServerFarmsNameFromModule string = resourceGroupModule.outputs.uniqueServerFarmsNameOutput

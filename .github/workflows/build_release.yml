@@ -75,7 +75,8 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./infra/main.bicep
-          parameters: 'rgName=get-the-solution storageSKU=Standard_LRS'
+          region: 'Germany West Central'
+          parameters: 'rgName=get-the-solution rgLocation=Germany West Central'
           failOnStdErr: true
 
       - name: Set up Node.js version

@@ -2,7 +2,7 @@ param location string
 param webAppName string
 param serverFarmsName string = 'AppServiceplan'
 
-var uniqueServerFarmsName = '${serverFarmsName}-${appName}-${uniqueString(serverFarmsName)}'
+var uniqueServerFarmsName = '${serverFarmsName}-${webAppName}-${uniqueString(serverFarmsName)}'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: uniqueServerFarmsName

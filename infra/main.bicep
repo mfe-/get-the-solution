@@ -13,6 +13,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 resource serverFarms 'Microsoft.Web/serverfarms@2023-12-01' = {
   name: uniqueServerFarmsName
+  scope: resourceGroup
   location: 'West Europe'
   sku: {
     name: 'Y1'

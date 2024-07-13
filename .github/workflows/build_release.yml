@@ -78,6 +78,7 @@ jobs:
           region: ${{ env.LOCATION }}
           parameters: >-
                 rgName=rg-get-the-solution-net
+                appName=get-the-solution
                 rgLocation=${{ env.LOCATION }}
           failOnStdErr: true
 

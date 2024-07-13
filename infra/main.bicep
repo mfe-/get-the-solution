@@ -13,8 +13,7 @@ module resourceGroupModule './resourceGroupModule.bicep' = {
   name: 'resourceGroupModuleDeployment'
   scope: resourceGroup
   params: {
-    rgLocation: rgLocation
-    appName: appName
-    rgName: rgName
+    location: rgLocation
+    webAppName: appName
   }
 }

@@ -1,17 +1,34 @@
-param rgLocation string
-param appName string
-param rgName string
+param location string
+param webAppName string
 param serverFarmsName string = 'AppServiceplan'
 
 var uniqueServerFarmsName = '${serverFarmsName}-${appName}-${uniqueString(serverFarmsName)}'
-var webAppName = appName
-var location = rgLocation
 
-// resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
-//   name: uniqueServerFarmsName
-//   location: location
-//   // Add the rest of your app service plan properties here
-// }
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: uniqueServerFarmsName
+  location: location
+  sku: {
+    name: 'B1'
+    tier: 'Basic'
+    size: 'B1'
+    family: 'B'
+    capacity: 1
+  }
+  kind: 'linux'
+  properties: {
+    perSiteScaling: false
+    elasticScaleEnabled: false
+    maximumElasticWorkerCount: 1
+    isSpot: false
+    // freeOfferExpirationTime: '2023-12-19T10:50:00'
+    reserved: true
+    isXenon: false
+    hyperV: false
+    targetWorkerCount: 0
+    targetWorkerSizeId: 0
+    zoneRedundant: false
+  }
+}
 
 // resource webApp 'Microsoft.Web/sites@2021-02-01' = {
 //   name: webAppName
@@ -30,3 +47,5 @@ var location = rgLocation
 //     isManualIntegration: true
 //   }
 // }
+
+output uniqueServerFarmsNameOutput string = uniqueServerFarmsName

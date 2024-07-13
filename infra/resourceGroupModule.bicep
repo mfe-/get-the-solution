@@ -80,12 +80,9 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
   }
 }
 
-resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' {
+resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
   parent: webApp
   name: 'web'
-  dependsOn: [
-    webApp
-  ]
   properties: {
     numberOfWorkers: 1
     defaultDocuments: [
@@ -107,7 +104,7 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' {
     acrUseManagedIdentityCreds: false
     logsDirectorySizeLimit: 35
     detailedErrorLoggingEnabled: false
-    publishingUsername: publishingUsername
+    publishingUsername: param.publishingUsername
     scmType: 'GitHubAction'
     use32BitWorkerProcess: true
     webSocketsEnabled: false

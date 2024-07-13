@@ -96,6 +96,7 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
       'index.php'
       'hostingstart.html'
     ]
+    scmType: 'GitHub'
     netFrameworkVersion: 'v4.0'
     linuxFxVersion: 'NODE|20-lts'
     requestTracingEnabled: false
@@ -105,8 +106,6 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
     logsDirectorySizeLimit: 35
     detailedErrorLoggingEnabled: false
     publishingUsername: publishingUserName
-    scmType: 'GitHubAction'
-    use32BitWorkerProcess: true
     webSocketsEnabled: false
     alwaysOn: false
     appCommandLine: 'node /home/site/wwwroot/server/main.js'
@@ -158,15 +157,17 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
   }
 }
 
-resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2021-02-01' = {
-  name: 'web'
-  parent: webApp
-  properties: {
-    repoUrl: 'https://github.com/mfe-/get-the-solution'
-    branch: 'main'
-    deploymentRollbackEnabled:false
-    isManualIntegration: true
-  }
-}
+resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
+  name: 'web'  
+  parent: webApp  
+  properties: {  
+    repoUrl: 'https://github.com/mfe-/get-the-solution'  
+    branch: 'main'  
+    deploymentRollbackEnabled: false  
+    isGitHubAction: true  
+    isManualIntegration: false  
+  }  
+}  
+
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName

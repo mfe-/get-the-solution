@@ -15,7 +15,7 @@ module resourceGroupModule './resourceGroupModule.bicep' = {
   params: {
     location: rgLocation
     webAppName: appName
-    publishingUsername: '$get-the-solution'
+    publishingUserName: '$get-the-solution'
   }
 }
 output uniqueServerFarmsNameFromModule string = resourceGroupModule.outputs.uniqueServerFarmsNameOutput

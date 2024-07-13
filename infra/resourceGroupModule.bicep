@@ -1,6 +1,6 @@
 param location string
 param webAppName string
-param publishingUsername string
+param publishingUserName string
 param serverFarmsName string = 'AppServiceplan'
 
 var uniqueServerFarmsName = '${serverFarmsName}-${webAppName}-${uniqueString(serverFarmsName)}'
@@ -104,7 +104,7 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
     acrUseManagedIdentityCreds: false
     logsDirectorySizeLimit: 35
     detailedErrorLoggingEnabled: false
-    publishingUsername: param.publishingUsername
+    publishingUsername: publishingUserName
     scmType: 'GitHubAction'
     use32BitWorkerProcess: true
     webSocketsEnabled: false

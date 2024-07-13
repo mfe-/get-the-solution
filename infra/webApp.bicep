@@ -163,7 +163,7 @@ resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {
     repoUrl: 'https://github.com/mfe-/get-the-solution'  
     branch: 'main'  
     deploymentRollbackEnabled: false  
-    isGitHubAction: false  
+    isGitHubAction: true  
     isManualIntegration: true
   }  
 }  

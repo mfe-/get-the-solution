@@ -91,10 +91,16 @@ jobs:
           uniqueServerFarmsNameFromModule=$(echo $outputs | jq -r '.uniqueServerFarmsNameFromModule.value')
           webAppName=$(echo $outputs | jq -r '.webAppName.value')
           rgName=$(echo $outputs | jq -r '.rgName.value')
-          echo "Unique Server Farms Name from Module: $uniqueServerFarmsNameFromModule"
-          echo "Web App Name: $webAppName"
-          echo "Resource Group Name: $rgName"
+          echo "UNIQUE_SERVER_FARMS_NAME_FROM_MODULE=$uniqueServerFarmsNameFromModule" >> $GITHUB_ENV
+          echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
+          echo "RG_NAME=$rgName" >> $GITHUB_ENV
         shell: bash
+
+      - name: Use the Environment Variables
+        run: |
+          echo "Unique Server Farms Name from Module: $UNIQUE_SERVER_FARMS_NAME_FROM_MODULE"
+          echo "Web App Name: $WEB_APP_NAME"
+          echo "Resource Group Name: $RG_NAME"
 
 #       - name: Set up Node.js version
 #         uses: actions/setup-node@v3

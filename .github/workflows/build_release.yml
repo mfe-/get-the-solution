@@ -95,6 +95,16 @@ jobs:
           name: node-app
           path: release.zip
 
+      - name: Zip infra directory for IaC deployment
+        run: |
+          zip -r iac.zip ./infra/*
+  
+      - name: Upload IaC artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: iac
+          path: iac.zip
+
   deploy:
     # if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -112,9 +122,14 @@ jobs:
         with:
           name: node-app
 
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: iac
+
       - name: Unzip artifact for deployment and list contents
         run: |
-          unzip release.zip
+          unzip iac.zip
           sudo apt-get install -y tree
           tree
 

@@ -81,7 +81,7 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
 }
 
 resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
-  name: '${uniqueSiteName}/web'
+  name: '${webAppName}/web'
   location: location
   dependsOn: [
     webApp

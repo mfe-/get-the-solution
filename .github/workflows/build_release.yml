@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - feature/Iac
 
   pull_request:
   workflow_dispatch:
@@ -63,10 +64,6 @@ jobs:
           echo "Run number: ${{ github.run_number }}"
           
 
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -98,6 +95,16 @@ jobs:
           name: node-app
           path: release.zip
 
+      - name: Zip infra directory for IaC deployment
+        run: |
+          zip -r iac.zip ./infra/*
+  
+      - name: Upload IaC artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: iac
+          path: iac.zip
+
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -105,6 +112,9 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    env: # Define environment variables for the entire job
+      LOCATION: germanywestcentral
+      AZDEPLOYMENT_NAME: mainBicepDeployment
 
     steps:
       - name: Download artifact from build job
@@ -112,9 +122,52 @@ jobs:
         with:
           name: node-app
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: iac
 
+      - name: Unzip artifact for deployment and list contents
+        run: |
+          unzip iac.zip
+          unzip release.zip
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # - name: Deploy Bicep file
+      #   uses: azure/arm-deploy@v1
+      #   with:
+      #     scope: 'subscription'
+      #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+      #     template: ./infra/main.bicep
+      #     region: ${{ env.LOCATION }}
+      #     parameters: >-
+      #           rgName=rg-get-the-solution-net
+      #           appName=get-the-solution
+      #           rgLocation=${{ env.LOCATION }}
+      #     failOnStdErr: true
+      #     deploymentName: ${{ env.AZDEPLOYMENT_NAME }}
+
+      # - name: Get deployment outputs
+      #   run: |
+      #     outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+      #     uniqueServerFarmsNameFromModule=$(echo $outputs | jq -r '.uniqueServerFarmsNameFromModule.value')
+      #     webAppName=$(echo $outputs | jq -r '.webAppName.value')
+      #     rgName=$(echo $outputs | jq -r '.rgName.value')
+      #     echo "UNIQUE_SERVER_FARMS_NAME_FROM_MODULE=$uniqueServerFarmsNameFromModule" >> $GITHUB_ENV
+      #     echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
+      #     echo "RG_NAME=$rgName" >> $GITHUB_ENV
+      #   shell: bash
+
+      # - name: Use the Environment Variables
+      #   run: |
+      #     echo "Unique Server Farms Name from Module: $UNIQUE_SERVER_FARMS_NAME_FROM_MODULE"
+      #     echo "Web App Name: $WEB_APP_NAME"
+      #     echo "Resource Group Name: $RG_NAME"
+
+      # Dont forget to connect the Site (created by bicep) to github actions under deployment center in Azure Portal
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2

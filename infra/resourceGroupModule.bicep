@@ -3,6 +3,7 @@ param webAppName string
 param serverFarmsName string = 'AppServiceplan'
 
 var uniqueServerFarmsName = '${serverFarmsName}-${webAppName}-${uniqueString(serverFarmsName)}'
+var uniqueSiteName = 'WebApp-${webAppName}-${uniqueString(webAppName)}'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: uniqueServerFarmsName
@@ -32,7 +33,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
 
 
 resource webApp 'Microsoft.Web/sites@2023-12-01' = {
-  name: webAppName
+  name: uniqueSiteName
   // location: 'East US'
   location: location
   kind: 'app,linux'

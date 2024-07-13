@@ -72,8 +72,15 @@ jobs:
       - name: Print Azure Service Principal Details
         run: |
           az account show --query "{displayName: user.name, objectId: user.assignments[0].principalId}" --output json
-        
-        
+
+      - name: Print Azure Service Principal Details
+        run: |
+          az account show --output json
+      
+      - name: Print Azure Service Principal Object ID
+        run: |
+          az ad sp show --id <Application (Client) ID> --query objectId --output tsv
+
       - name: Deploy Bicep file
         uses: azure/arm-deploy@v1
         with:

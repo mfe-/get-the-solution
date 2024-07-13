@@ -96,7 +96,6 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
       'index.php'
       'hostingstart.html'
     ]
-    scmType: 'GitHub'
     netFrameworkVersion: 'v4.0'
     linuxFxVersion: 'NODE|20-lts'
     requestTracingEnabled: false

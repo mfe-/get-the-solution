@@ -194,10 +194,10 @@ jobs:
       - name: Upload files to SFTP
         uses: appleboy/scp-action@master
         with:
-          host: ${{ env.PUBLISH_URL }}
+          host: waws-prod-fra-023.ftp.azurewebsites.windows.net
           port: 990 # Standard port for SFTP
           username: ${{ env.CLEANED_FTP_USERNAME }}
-          password: ${{ env.CLEANED_FTP_USERNAME }}
+          password: ${{ env.FTP_PASSWORD }}
           source: "./dist/get-the-solution-app"
           target: "./site/wwwroot"
 

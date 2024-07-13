@@ -156,17 +156,18 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
   }
 }
 
-resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
-  name: 'web'  
-  parent: webApp  
-  properties: {  
-    repoUrl: 'https://github.com/mfe-/get-the-solution'  
-    branch: 'main'  
-    deploymentRollbackEnabled: false  
-    isGitHubAction: true  
-    isManualIntegration: false
-  }  
-}  
+//go to Deployment Center Tab Settings and finish the Setup for the Source Github
+// resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {  
+//   name: 'web'  
+//   parent: webApp  
+//   properties: {  
+//     repoUrl: 'https://github.com/mfe-/get-the-solution'  
+//     branch: 'main'  
+//     deploymentRollbackEnabled: false  
+//     isGitHubAction: false //results with true in Cannot find User with name 832fa6d2-683b-4385-94d3- 
+//     isManualIntegration: true
+//   }  
+// }  
 
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName

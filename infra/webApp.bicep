@@ -173,7 +173,7 @@ resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName
 output webAppName string = webApp.name
 
-var publishingCredentialsId = resourceId('Microsoft.Web/sites/config', appServiceName, 'publishingCredentials')
+// var publishingCredentialsId = resourceId('Microsoft.Web/sites/config', appServiceName, 'publishingCredentials')
 
-// Full publishing credentials
-output publishingCredentials object = list(publishingCredentialsId, '2022-03-01')
+// // Full publishing credentials
+// output publishingCredentials object = list(publishingCredentialsId, '2022-03-01')

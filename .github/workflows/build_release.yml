@@ -40,7 +40,9 @@ jobs:
     # needs: convert_via_pandoc
     runs-on: ubuntu-latest
     env:
-      LOCATION: germanywestcentral  
+      LOCATION: germanywestcentral
+      AZDEPLOYMENT_NAME: mainBicepDeployment
+
     steps:
       - uses: actions/checkout@v4
 
@@ -81,11 +83,18 @@ jobs:
                 appName=get-the-solution
                 rgLocation=${{ env.LOCATION }}
           failOnStdErr: true
-          deploymentName: mainBicepDeployment
+          deploymentName: ${{ env.AZDEPLOYMENT_NAME }}
 
-      # Example step showing how to use the deployment name output
-      - name: Print deployment name
-        run: echo "The deployment name is ${{ steps.deploy_bicep.outputs.deploymentName }}"
+      - name: Get deployment outputs
+        run: |
+          outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+          uniqueServerFarmsNameFromModule=$(echo $outputs | jq -r '.uniqueServerFarmsNameFromModule.value')
+          webAppName=$(echo $outputs | jq -r '.webAppName.value')
+          rgName=$(echo $outputs | jq -r '.rgName.value')
+          echo "Unique Server Farms Name from Module: $uniqueServerFarmsNameFromModule"
+          echo "Web App Name: $webAppName"
+          echo "Resource Group Name: $rgName"
+        shell: bash
 
 #       - name: Set up Node.js version
 #         uses: actions/setup-node@v3

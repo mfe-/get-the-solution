@@ -158,14 +158,14 @@ resource webAppConfig 'Microsoft.Web/sites/config@2023-12-01' = {
   }
 }
 
-// resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2021-02-01' = if(contains(repoUrl,'http')){
-//   name: 'web'
-//   parent: webApp
-//   properties: {
-//     repoUrl: repoUrl
-//     branch: 'main'
-//     isManualIntegration: true
-//   }
-// }
+resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2021-02-01' = {
+  name: 'web'
+  parent: webApp
+  properties: {
+    repoUrl: 'https://github.com/mfe-/get-the-solution'
+    branch: 'main'
+    isManualIntegration: true
+  }
+}
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName

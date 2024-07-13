@@ -9,7 +9,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: rgLocation
 }
 
-module resourceGroupModule './resourceGroupModule.bicep' = {
+module webAppModule './webApp.bicep' = {
   name: 'resourceGroupModuleDeployment'
   scope: resourceGroup
   params: {
@@ -18,4 +18,4 @@ module resourceGroupModule './resourceGroupModule.bicep' = {
     publishingUserName: '$get-the-solution'
   }
 }
-output uniqueServerFarmsNameFromModule string = resourceGroupModule.outputs.uniqueServerFarmsNameOutput
+output uniqueServerFarmsNameFromModule string = webAppModule.outputs.uniqueServerFarmsNameOutput

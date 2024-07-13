@@ -30,14 +30,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource webApp 'Microsoft.Web/sites@2021-02-01' = {
-  name: webAppName
-  location: location
-  properties: {
-    // Define your web app properties here
-  }
-}
-
 
 resource webApp 'Microsoft.Web/sites@2023-12-01' = {
   name: webAppName

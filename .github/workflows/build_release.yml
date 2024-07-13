@@ -13,28 +13,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  convert_via_pandoc:
-    runs-on: ubuntu-latest
+  # convert_via_pandoc:
+  #   runs-on: ubuntu-latest
 
-    container: 
-      image: pandoc/latex:latest
+  #   container: 
+  #     image: pandoc/latex:latest
 
-    steps:
-      # checkout repo contents
-      - uses: actions/checkout@v4
+  #   steps:
+  #     # checkout repo contents
+  #     - uses: actions/checkout@v4
 
-      # run pandoc to generate html from markdown
-      - name: run pandoc
-        working-directory: src/assets/database
-        run: |
-          for i in *.md; do pandoc "$i" -o "${i%.*}".html --highlight-style=breezeDark --verbose; done
+  #     # run pandoc to generate html from markdown
+  #     - name: run pandoc
+  #       working-directory: src/assets/database
+  #       run: |
+  #         for i in *.md; do pandoc "$i" -o "${i%.*}".html --highlight-style=breezeDark --verbose; done
 
-      # output generated file to build artifacts
-      - uses: actions/upload-artifact@v3
-        with:
-          name: generated-html-files
-          path: |
-            src/assets/database/*.html
+  #     # output generated file to build artifacts
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: generated-html-files
+  #         path: |
+  #           src/assets/database/*.html
 
   build:
     # needs: convert_via_pandoc
@@ -71,7 +71,7 @@ jobs:
       - name: Deploy Bicep file
         uses: azure/arm-deploy@v1
         with:
-          scope: 'Subscription'
+          scope: 'subscription'
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./infra/main.bicep

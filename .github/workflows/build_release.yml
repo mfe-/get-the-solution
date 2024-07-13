@@ -69,6 +69,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Print Azure Service Principal Details
+        run: |
+          az account show --query "{displayName: user.name, objectId: user.assignments[0].principalId}" --output json
+        
+        
       - name: Deploy Bicep file
         uses: azure/arm-deploy@v1
         with:

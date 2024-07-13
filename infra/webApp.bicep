@@ -164,13 +164,14 @@ resource webAppSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' = {
     branch: 'main'  
     deploymentRollbackEnabled: false  
     isGitHubAction: true  
-    isManualIntegration: true
+    isManualIntegration: false
   }  
 }  
 
 
 output uniqueServerFarmsNameOutput string = uniqueServerFarmsName
 output webAppName string = webApp.name
+output webAppHostName string = webApp.properties.defaultHostName
 
 // var publishingCredentialsId = resourceId('Microsoft.Web/sites/config', appServiceName, 'publishingCredentials')
 

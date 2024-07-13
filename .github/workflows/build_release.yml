@@ -82,6 +82,10 @@ jobs:
                 rgLocation=${{ env.LOCATION }}
           failOnStdErr: true
 
+      # Example step showing how to use the deployment name output
+      - name: Print deployment name
+        run: echo "The deployment name is ${{ steps.deploy_bicep.outputs.deploymentName }}"
+
 #       - name: Set up Node.js version
 #         uses: actions/setup-node@v3
 #         with:

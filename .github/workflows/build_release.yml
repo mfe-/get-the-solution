@@ -165,6 +165,7 @@ jobs:
       - name: Get deployment outputs
         run: |
           outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+          deployment_token=$(echo $outputs | jq -r '.deployment_token.value')
           rgName=$(echo $outputs | jq -r '.rgName.value')
           echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
           echo "RG_NAME=$rgName" >> $GITHUB_ENV

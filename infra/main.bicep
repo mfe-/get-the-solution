@@ -50,8 +50,8 @@ output rgName string = resourceGroup.name
 output repositoryUrl string = repositoryUrl
 output appName string = appName
 
-// output siteName string = swa.outputs.siteName
-// output siteDefaultHostname string = swa.outputs.defaultHostName
+output siteName string = swa.outputs.siteName
+output siteDefaultHostname string = swa.outputs.defaultHostName
 
 // output uniqueServerFarmsNameFromModule string = webAppModule.outputs.uniqueServerFarmsNameOutput
 // output webAppName string = webAppModule.outputs.webAppName

@@ -157,8 +157,8 @@ jobs:
                 rgName=rg-get-the-solution-net
                 appName=get-the-solution
                 rgLocation=${{ env.LOCATION }}
-                repositoryUrl='https://github.com/mfe-/get-the-solution'
-                repositoryToken='${{ secrets.WORKFLOW_TOKEN }}'
+                repositoryUrl=https://github.com/mfe-/get-the-solution
+                repositoryToken=${{ secrets.WORKFLOW_TOKEN }}
           failOnStdErr: false
           deploymentName: "${{ env.AZDEPLOYMENT_NAME }}${{ github.run_id }}"
 

@@ -1,6 +1,3 @@
-@description('Resource tags.')
-param tags object
-
 @description('Resource location.')
 param location string
 
@@ -48,10 +45,9 @@ param stagingEnvironmentPolicy string = 'Enabled'
 @description('Template Options for the static site. https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep#staticsitetemplateoptions')
 param templateProperties object = {}
 
-resource staticSite 'Microsoft.Web/staticSites@2021-02-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
+resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
   name: staticSiteName
   location: location
-  tags: tags
   identity: {
     type: identityType
     userAssignedIdentities: empty(userAssignedIdentities) ? null : userAssignedIdentities
@@ -59,7 +55,6 @@ resource staticSite 'Microsoft.Web/staticSites@2021-02-01' = { // https://docs.m
   sku: sku
   properties: {
     allowConfigFileUpdates: allowConfigFileUpdates
-    provider: 'GitHub'
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch

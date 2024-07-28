@@ -32,7 +32,6 @@ module swa 'staticSites.bicep' = {
     }
     stagingEnvironmentPolicy: 'Enabled'
     staticSiteName: 'swa-${appName}'
-    tags: tags
   }
 }
 

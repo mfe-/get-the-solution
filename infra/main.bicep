@@ -5,7 +5,6 @@ param appName string
 param rgName string
 param repositoryUrl string
 param repositoryToken string
-param tags object = {}
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: rgName
@@ -14,6 +13,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 
 module swa 'staticSites.bicep' = {
+  scope: resourceGroup
   name: 'deploy-swa-${appName}'
   params: {
     appSettings: {

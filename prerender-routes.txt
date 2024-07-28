@@ -1,45 +1,45 @@
-/blog/23.12.26-dotnet-docker-experiences.html
-/blog/23.12.07-Azure-Virtual-Machine-Scale-Sets.html
-/blog/22.10.25-Install-Linux-from-hdd.html
-/blog/22.03.13-Connect-AzureKeyVault-with-AzureDevOps.html
-/blog/22.03.07-Connecting to Azure Devops with a Service Principal.html
-/blog/22.03.06-Azure-App-registrations-daemon-app.html
-/blog/22.01.06-hands on dotnet-trace.html
-/blog/21.12.19-Contour-Boundary-tracing.html
-/blog/21.12.04-Create-Self-Signed-Certificate-Code-Signing.html
-/blog/21.05.17-Wavelets.html
-/blog/21.06.27-Discrete-cosine-transform.html
-/blog/21.04.28-Signal-hilbert.html
-/blog/20.09.21-Signal-filtering.html
-/blog/20.09.21-Signal-sampling.html
-/blog/21.03.15-fast-fourier-transform.html
-/blog/20.12.19-working-with-adb.html
-/blog/20.09.01-Signal-processing-overview.html
-/blog/20.10.24-openssl-reference-not-found.html
-/blog/20.02.22-ILT0005-ARMilcTools64nutc_driver.html
-/blog/19.08.02-ExamsGame.html
-/blog/19.04.05-ExercisesWithExamsPackage.html
-/blog/15.08.23-Add Token Authorization to AngularJS and WebApi.html
-/blog/15.05.10-DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0.html
-/blog/15.04.05-Datenbankoptimierung.html
-/blog/15.03.14-Email Subject mit UTF8 im Header.html
-/blog/15.01.25-Shenyang.html
-/blog/14.02.07-Glassfish-4-and-Realm.html
-/blog/13.08.24-reinstall-grub.html
-/blog/13.11.27-TGI-Logische-Schaltungen.html
-/blog/13.11.27-TGI-Digitale-Standardbaugruppen.html
-/blog/13.11.27-TGI-Sequenzielle-Logik.html
-/blog/11.03.10-MySQL-Cursor-alternativeâ€“Dynamische-SQL-Cursor.html
-/blog/11.02.09-Datenbank-erstellen-mit-dem-ER-Diagramm-und-MySql.html
-/blog/11.02.09-Modelle-in-der-Informatik.html
-/blog/10.12.15-Subversionâ€“Repositories-zusammenlegenâ€“exportieren.html
-/blog/10.08.23-Csharp-Plugins-mit-AppDomains-realisieren.html
-/blog/10.07.23-Anwendung-Plugin-faehig-machen.html
-/blog/10.04.07-ONLINE COMMUNITIES.html
-/blog/10.02.14-Tray Icon mit WPF.html
-/blog/09.09.02-MarkupExtension - Bilder aus Resource direkt ins XAML laden.html
-/blog/09.04.02-Ueberschriebener Default Style in BasedOn angeben.html
-/blog/09.03.28-ListBox â€“ SelectedItem Zusatzinformationen anzeigen.html
-/blog/09.03.21-Einfuehrung in die Programmierung.html
-/blog/09.02.20-ItemsSource zu UserControl hinzufuegen.html
-/blog/09.02.02-Subklassen in XAML ansprechen.html
+/blog/Dotnet docker experiences
+/blog/Hands on - Azure Scale Sets
+/blog/Install linux from hdd - without usb
+/blog/Using Azure Key vault with AzureDevOps
+/blog/Connecting to Azure Devops with a Service Principal
+/blog/Create an Azure App registrations daemon app
+/blog/Checkout dotnet-trace
+/blog/Use boundary trace to find contour of object in images
+/blog/Create a Self-Signed Certificate for Code Signing
+/blog/Discrete Wavelet transformation
+/blog/Discrete cosine transform
+/blog/Signal hilbert transformation
+/blog/Signal filtering
+/blog/Signal sampling
+/blog/Fast Fourier Transform
+/blog/Working with adb aka Android Debug Bridge
+/blog/Signal processing
+/blog/.so undefined reference to openssl
+/blog/ILT0005 runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp returned exit code -1073741819
+/blog/Das Aufgabenkönig-Spiel ExamsGame
+/blog/Creating exercises with the R exams package
+/blog/Add Token Authorization to AngularJS and WebApi
+/blog/DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0
+/blog/Datenbankoptimierung
+/blog/Email Subject mit UTF8 im Header
+/blog/Shenyang
+/blog/Glassfish 4 and Realm
+/blog/reinstall grub
+/blog/Logische Schaltungen
+/blog/Digitale Standardbaugruppen
+/blog/Sequenzielle Logik
+/blog/MySQL Cursor alternative – Dynamische SQL Cursor
+/blog/Datenbank erstellen mit dem ER-Diagramm und MySql
+/blog/Modelle in der Informatik
+/blog/Subversion – Repositories zusammenlegen – exportieren
+/blog/C-Sharp Plugins mit AppDomains realisieren
+/blog/C-Sharp Anwendung Plugin fähig machen
+/blog/ONLINE COMMUNITIES
+/blog/Tray Icon mit WPF
+/blog/MarkupExtension – Bilder aus Resource direkt ins XAML laden
+/blog/Überschriebener Default Style in BasedOn angeben
+/blog/ListBox-SelectedItem Zusatzinformationen anzeigen
+/blog/Einführung in die Programmierung
+/blog/ItemsSource zu UserControl hinzufügen
+/blog/Subklassen in XAML ansprechen

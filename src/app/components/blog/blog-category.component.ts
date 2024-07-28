@@ -22,9 +22,9 @@ export class BlogCategoryComponent implements OnInit {
     this.Category = this.route.snapshot.paramMap.get("category") ?? "";
 
     if (this.Category != null) {
-      if (this.Category.endsWith('.html')) {
-        this.Category = this.Category.replace('.html', '');
-      }
+      // if (this.Category.endsWith('.html')) {
+      //   this.Category = this.Category.replace('.html', '');
+      // }
       this.Category = decodeURIComponent(this.Category);
     }
   }

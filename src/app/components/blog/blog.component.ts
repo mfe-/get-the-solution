@@ -7,11 +7,11 @@ import { BlogEntryComponent } from './blogEntry.component';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-blog',
-    templateUrl: './blog.component.html',
-    styleUrls: ['./blog.component.css'],
-    standalone: true,
-    imports: [NgFor, BlogEntryComponent, NgIf, RouterLink]
+  selector: 'app-blog',
+  templateUrl: './blog.component.html',
+  styleUrls: ['./blog.component.css'],
+  standalone: true,
+  imports: [NgFor, BlogEntryComponent, NgIf, RouterLink]
 })
 export class BlogComponent implements OnInit {
 
@@ -39,11 +39,11 @@ export class BlogComponent implements OnInit {
   }
   protected async ApplyBlogEntry(blogEntries: BlogEntry[]): Promise<void> {
     let title = this.route.snapshot.paramMap.get("title");
-    if (title) {
-      if (title.endsWith('.html')) {
-          title = title.replace('.html', '');
-      }
-  }
+    // if (title) {
+    //   if (title.endsWith('.html')) {
+    //     title = title.replace('.html', '');
+    //   }
+    // }
     let year = this.route.snapshot.paramMap.get("year");
     let month = this.route.snapshot.paramMap.get("month");
     let day = this.route.snapshot.paramMap.get("day");

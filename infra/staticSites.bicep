@@ -47,7 +47,7 @@ param templateProperties object = {}
 
 resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
   name: staticSiteName
-  location: 'westeurope'
+  location: location
   identity: {
     type: identityType
     userAssignedIdentities: empty(userAssignedIdentities) ? null : userAssignedIdentities

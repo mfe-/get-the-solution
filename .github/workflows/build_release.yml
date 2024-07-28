@@ -85,7 +85,8 @@ jobs:
         run: |
           $jsonFilePath = "./src/assets/database/blog.json"
           $blogEntries = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
-          $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) }
+          $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) } | Out-File -FilePath "./prerender-routes.txt" -Encoding UTF8 -Force
+          Get-Content /prerender-routes.txt
 
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'

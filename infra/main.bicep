@@ -47,6 +47,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 
 output rgName string = resourceGroup.name
+output repositoryUrl string = repositoryUrl
+output appName string = appName
 
 // output siteName string = swa.outputs.siteName
 // output siteDefaultHostname string = swa.outputs.defaultHostName

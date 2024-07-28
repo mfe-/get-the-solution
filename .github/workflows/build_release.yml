@@ -160,7 +160,7 @@ jobs:
                 repositoryUrl='https://github.com/mfe-/get-the-solution'
                 repositoryToken='${{ secrets.WORKFLOW_TOKEN }}'
           failOnStdErr: false
-          deploymentName: "m${{ github.run_id }}" # Unique deployment name ${{ env.AZDEPLOYMENT_NAME }}${{ github.run_id }}
+          deploymentName: "${{ env.AZDEPLOYMENT_NAME }}${{ github.run_id }}" # Unique deployment name ${{ env.AZDEPLOYMENT_NAME }}${{ github.run_id }}
 
       - name: Get deployment outputs
         run: |

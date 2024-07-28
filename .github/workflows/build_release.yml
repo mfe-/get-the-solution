@@ -80,6 +80,13 @@ jobs:
           ng build --configuration=production --aot
 #          npm run test --if-present
 
+      - name: update prerender routes
+        shell: pwsh
+        run: |
+          $jsonFilePath = "./src/assets/database/blog.json"
+          $blogEntries = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
+          $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) }
+
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'
         run: |
@@ -96,10 +103,12 @@ jobs:
           path: release.zip
 
       - name: Zip infra directory for IaC deployment
+        if: github.event_name != 'pull_request'
         run: |
           zip -r iac.zip ./infra/*
   
       - name: Upload IaC artifact for deployment job
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         with:
           name: iac

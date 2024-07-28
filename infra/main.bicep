@@ -48,8 +48,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 output rgName string = resourceGroup.name
 
-output siteName string = swa.outputs.siteName
-output siteDefaultHostname string = swa.outputs.defaultHostName
+// output siteName string = swa.outputs.siteName
+// output siteDefaultHostname string = swa.outputs.defaultHostName
 
 // output uniqueServerFarmsNameFromModule string = webAppModule.outputs.uniqueServerFarmsNameOutput
 // output webAppName string = webAppModule.outputs.webAppName

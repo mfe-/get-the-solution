@@ -74,4 +74,5 @@ resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
 output defaultHostName string = staticSite.properties.defaultHostname // eg epic-shark-0db05de03.azurestaticapps.net
 output siteName string = staticSite.name
 output siteResourceId string = staticSite.id
+output deployment_token string = staticSite.listSecrets().properties.apiKey
 output siteSystemAssignedIdentityId string = (staticSite.identity.type == 'SystemAssigned') ? staticSite.identity.principalId : ''

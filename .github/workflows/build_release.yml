@@ -168,6 +168,11 @@ jobs:
         run: |
             outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
             echo "Raw outputs: $outputs"
+
+            # Clean up the JSON output by removing any unexpected characters
+            cleaned_outputs=$(echo "$outputs" | sed 's/\*\*\*//g')
+            echo "Cleaned outputs: $cleaned_outputs"
+
             echo "outputs=$outputs" >> $GITHUB_ENV
             echo "siteDefaultHostname=$(echo $outputs | jq -r '.siteDefaultHostname.value')" >> $GITHUB_ENV
             echo "deployment_token=$(echo $outputs | jq -r '.deployment_token.value')" >> $GITHUB_ENV

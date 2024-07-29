@@ -176,7 +176,9 @@ jobs:
         shell: bash
 
       - name: Display DEPLOYMENT_TOKEN
-        run: echo "DEPLOYMENT_TOKEN=${{ env.DEPLOYMENT_TOKEN }}"
+        run: |
+          echo "DEPLOYMENT_TOKEN=${{ env.DEPLOYMENT_TOKEN }}"
+          echo "RG_NAME=${{ env.RG_NAME }}"
         shell: bash
 
       - name: Deploy to Azure Static Web Apps

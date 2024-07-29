@@ -176,11 +176,6 @@ jobs:
             echo "SITE_DEFAULT_HOSTNAME=$siteDefaultHostname" >> $GITHUB_ENV
         shell: bash
 
-      - name: Display Outputs
-        run: |
-            echo "siteDefaultHostname=${{ env.SITE_DEFAULT_HOSTNAME }}"
-            echo "deployment_token=${{ env.DEPLOYMENT_TOKEN }}"
-
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
         with:
@@ -191,19 +186,3 @@ jobs:
           api_location: "api"
           output_location: ""
           skip_app_build: true
-
-      # - name: Use the Environment Variables
-      #   run: |
-      #     echo "Unique Server Farms Name from Module: $UNIQUE_SERVER_FARMS_NAME_FROM_MODULE"
-      #     echo "Web App Name: $WEB_APP_NAME"
-      #     echo "Resource Group Name: $RG_NAME"
-
-      # Dont forget to connect the Site (created by bicep) to github actions under deployment center in Azure Portal
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'get-the-solution'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
-          package: ./dist/get-the-solution-app

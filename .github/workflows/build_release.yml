@@ -179,6 +179,7 @@ jobs:
         run: |
           echo "DEPLOYMENT_TOKEN=${{ env.DEPLOYMENT_TOKEN }}"
           echo "RG_NAME=${{ env.RG_NAME }}"
+          echo "SITE_DEFAULT_HOSTNAME=${{ env.SITE_DEFAULT_HOSTNAME }}"
         shell: bash
 
       - name: Deploy to Azure Static Web Apps

@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - feature/Iac
 
   pull_request:
   workflow_dispatch:
@@ -77,14 +76,26 @@ jobs:
       - name: export, build
         run: |
           export NODE_ENV=production
-          npm run build:ssr --configuration=production --aot
+          ng build --configuration=production --aot
 #          npm run test --if-present
+
+      - name: export blogs to prerender routes for 
+        shell: pwsh
+        run: |
+          $jsonFilePath = "./src/assets/database/blog.json"
+          $blogEntries = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
+          $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) } | Out-File -FilePath "./prerender-routes.txt" -Encoding UTF8 -Force
+          
+          $distinctRegards = $blogEntries | ForEach-Object { "/category/" + $_.Regards } | Select-Object -Unique
+          $distinctRegards | ForEach-Object { Add-Content -Path "./prerender-routes.txt" -Value $_ }
+
+          Get-Content ./prerender-routes.txt
 
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'
         run: |
           cat src/assets/database/blog.json
-
+          cp dist/get-the-solution-app/browser/index.csr.html dist/get-the-solution-app/browser/index.html
           cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
           zip release.zip ./dist/* -r
 
@@ -96,10 +107,12 @@ jobs:
           path: release.zip
 
       - name: Zip infra directory for IaC deployment
+        if: github.event_name != 'pull_request'
         run: |
           zip -r iac.zip ./infra/*
   
       - name: Upload IaC artifact for deployment job
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         with:
           name: iac
@@ -113,8 +126,9 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     env: # Define environment variables for the entire job
-      LOCATION: germanywestcentral
-      AZDEPLOYMENT_NAME: mainBicepDeployment
+      LOCATION: westeurope
+      AZDEPLOYMENT_NAME: swa-deployment${{ github.run_id }}
+      RESOURCE_GROUP: rg-get-the-solution-net
 
     steps:
       - name: Download artifact from build job
@@ -136,43 +150,42 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # - name: Deploy Bicep file
-      #   uses: azure/arm-deploy@v1
-      #   with:
-      #     scope: 'subscription'
-      #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-      #     template: ./infra/main.bicep
-      #     region: ${{ env.LOCATION }}
-      #     parameters: >-
-      #           rgName=rg-get-the-solution-net
-      #           appName=get-the-solution
-      #           rgLocation=${{ env.LOCATION }}
-      #     failOnStdErr: true
-      #     deploymentName: ${{ env.AZDEPLOYMENT_NAME }}
-
-      # - name: Get deployment outputs
-      #   run: |
-      #     outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
-      #     uniqueServerFarmsNameFromModule=$(echo $outputs | jq -r '.uniqueServerFarmsNameFromModule.value')
-      #     webAppName=$(echo $outputs | jq -r '.webAppName.value')
-      #     rgName=$(echo $outputs | jq -r '.rgName.value')
-      #     echo "UNIQUE_SERVER_FARMS_NAME_FROM_MODULE=$uniqueServerFarmsNameFromModule" >> $GITHUB_ENV
-      #     echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
-      #     echo "RG_NAME=$rgName" >> $GITHUB_ENV
-      #   shell: bash
-
-      # - name: Use the Environment Variables
-      #   run: |
-      #     echo "Unique Server Farms Name from Module: $UNIQUE_SERVER_FARMS_NAME_FROM_MODULE"
-      #     echo "Web App Name: $WEB_APP_NAME"
-      #     echo "Resource Group Name: $RG_NAME"
-
-      # Dont forget to connect the Site (created by bicep) to github actions under deployment center in Azure Portal
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+      - name: Deploy Bicep file
+        uses: azure/arm-deploy@v1
         with:
-          app-name: 'get-the-solution'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4233675665174DAFBD541E71E7D8D005 }}
-          package: ./dist/get-the-solution-app
+          scope: 'subscription'
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          template: ./infra/main.bicep
+          region: ${{ env.LOCATION }}
+          parameters: >-
+                rgName=${{ env.RESOURCE_GROUP }}
+                appName=get-the-solution
+                rgLocation=${{ env.LOCATION }}
+                repositoryUrl=https://github.com/mfe-/get-the-solution
+                repositoryToken=${{ secrets.WORKFLOW_TOKEN }}
+          failOnStdErr: false
+          deploymentName: "${{ env.AZDEPLOYMENT_NAME }}"
+
+      - name: Get deployment outputs
+        run: |
+            outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+            deployment_token=$(echo $outputs | jq -r '.deployment_token.value')
+            rgName=$(echo $outputs | jq -r '.rgName.value')
+            appName=$(echo $outputs | jq -r '.appName.value')
+            siteDefaultHostname=$(echo $outputs | jq -r '.siteDefaultHostname.value')
+            echo "WEB_APP_NAME=$appName" >> $GITHUB_ENV
+            echo "RG_NAME=$rgName" >> $GITHUB_ENV
+            echo "DEPLOYMENT_TOKEN=$deployment_token" >> $GITHUB_ENV
+            echo "SITE_DEFAULT_HOSTNAME=$siteDefaultHostname" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
+        with:
+          azure_static_web_apps_api_token: ${{env.DEPLOYMENT_TOKEN}}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "dist/get-the-solution-app/browser/"
+          api_location: "api"
+          output_location: ""
+          skip_app_build: true

@@ -125,6 +125,7 @@ jobs:
     env: # Define environment variables for the entire job
       LOCATION: westeurope
       AZDEPLOYMENT_NAME: mainBicepDeployment
+      RESOURCE_GROUP: rg-get-the-solution-net
 
     steps:
       - name: Download artifact from build job
@@ -154,7 +155,7 @@ jobs:
           template: ./infra/main.bicep
           region: ${{ env.LOCATION }}
           parameters: >-
-                rgName=rg-get-the-solution-net
+                rgName=$RESOURCE_GROUP 
                 appName=get-the-solution
                 rgLocation=${{ env.LOCATION }}
                 repositoryUrl=https://github.com/mfe-/get-the-solution
@@ -165,7 +166,7 @@ jobs:
       - name: Get deployment outputs
         id: get_outputs
         run: |
-            outputs=$(az deployment group show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+            outputs=$(az deployment group show --resource-group $RESOURCE_GROUP --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
             echo "outputs=$outputs" >> $GITHUB_ENV
             echo "siteDefaultHostname=$(echo $outputs | jq -r '.siteDefaultHostname.value')" >> $GITHUB_ENV
             echo "deployment_token=$(echo $outputs | jq -r '.deployment_token.value')" >> $GITHUB_ENV

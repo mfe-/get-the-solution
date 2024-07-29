@@ -167,10 +167,11 @@ jobs:
         id: get_outputs
         run: |
             outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+            echo "Raw outputs: $outputs"
             echo "outputs=$outputs" >> $GITHUB_ENV
             echo "siteDefaultHostname=$(echo $outputs | jq -r '.siteDefaultHostname.value')" >> $GITHUB_ENV
             echo "deployment_token=$(echo $outputs | jq -r '.deployment_token.value')" >> $GITHUB_ENV
-    
+        shell: /usr/bin/bash -e {0}
 
       - name: Display Outputs
         run: |

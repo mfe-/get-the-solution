@@ -92,7 +92,7 @@ jobs:
         # if: github.event_name != 'pull_request'
         run: |
           cat src/assets/database/blog.json
-
+          cp dist/get-the-solution-app/browser/index.csr.html dist/get-the-solution-app/browser/index.html
           cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
           zip release.zip ./dist/* -r
 
@@ -168,14 +168,18 @@ jobs:
             outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
             deployment_token=$(echo $outputs | jq -r '.deployment_token.value')
             rgName=$(echo $outputs | jq -r '.rgName.value')
-            echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
+            appName=$(echo $outputs | jq -r '.appName.value')
+            siteDefaultHostname=$(echo $outputs | jq -r '.siteDefaultHostname.value')
+            echo "WEB_APP_NAME=$appName" >> $GITHUB_ENV
             echo "RG_NAME=$rgName" >> $GITHUB_ENV
+            echo "DEPLOYMENT_TOKEN=$deployment_token" >> $GITHUB_ENV
+            echo "SITE_DEFAULT_HOSTNAME=$siteDefaultHostname" >> $GITHUB_ENV
         shell: bash
 
       - name: Display Outputs
         run: |
-            echo "siteDefaultHostname=${{ env.siteDefaultHostname }}"
-            echo "deployment_token=${{ env.deployment_token }}"
+            echo "siteDefaultHostname=${{ env.SITE_DEFAULT_HOSTNAME }}"
+            echo "deployment_token=${{ env.DEPLOYMENT_TOKEN }}"
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9

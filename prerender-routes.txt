@@ -1,4 +1,4 @@
-/blog/Dotnet docker experiences
+﻿/blog/Dotnet docker experiences
 /blog/Hands on - Azure Scale Sets
 /blog/Install linux from hdd - without usb
 /blog/Using Azure Key vault with AzureDevOps
@@ -43,3 +43,25 @@
 /blog/Einführung in die Programmierung
 /blog/ItemsSource zu UserControl hinzufügen
 /blog/Subklassen in XAML ansprechen
+/category/Infrastructure Docker Azure
+/category/Azure Infrastructure
+/category/Infrastructure
+/category/C# Azure Infrastructure
+/category/C#
+/category/education Article image C#
+/category/education Article python sip
+/category/education Article sip
+/category/Android Article linux
+/category/C linux
+/category/.NET Framework C# UWP
+/category/R education Angular TypeScript
+/category/R education
+/category/.NET Framework C#
+/category/.NET Framework
+/category/DBMS
+/category/Other
+/category/Java
+/category/TGI education
+/category/Article
+/category/.NET Framework C# XAML
+/category/Article education

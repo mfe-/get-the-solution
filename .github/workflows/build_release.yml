@@ -88,7 +88,7 @@ jobs:
           $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) } | Out-File -FilePath "./prerender-routes.txt" -Encoding UTF8 -Force
           
           $distinctRegards = $blogEntries | ForEach-Object { "/category/" + $_.Regards } | Select-Object -Unique
-          $distinctRegards | ForEach-Object { Add-Content -Path "./distinct-regards.txt" -Value $_ }
+          $distinctRegards | ForEach-Object { Add-Content -Path "./prerender-routes.txt" -Value $_ }
 
           Get-Content ./prerender-routes.txt
 

@@ -86,6 +86,10 @@ jobs:
           $jsonFilePath = "./src/assets/database/blog.json"
           $blogEntries = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
           $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) } | Out-File -FilePath "./prerender-routes.txt" -Encoding UTF8 -Force
+          
+          $distinctRegards = $blogEntries | ForEach-Object { "/category/" + $_.Regards } | Select-Object -Unique
+          $distinctRegards | ForEach-Object { Add-Content -Path "./distinct-regards.txt" -Value $_ }
+
           Get-Content ./prerender-routes.txt
 
       - name: Zip artifact for deployment

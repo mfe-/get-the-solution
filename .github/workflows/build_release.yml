@@ -164,11 +164,26 @@ jobs:
 
       - name: Get deployment outputs
         run: |
-          outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
-          rgName=$(echo $outputs | jq -r '.rgName.value')
-          echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
-          echo "RG_NAME=$rgName" >> $GITHUB_ENV
+            outputs=$(az deployment sub show --name ${{ env.AZDEPLOYMENT_NAME }} --query properties.outputs -o json)
+            rgName=$(echo $outputs | jq -r '.rgName.value')
+            deploymentToken=$(echo $outputs | jq -r '.deployment_token.value')
+            siteDefaultHostname=$(echo $outputs | jq -r '.siteDefaultHostname.value')
+            appName=$(echo $outputs | jq -r '.appName.value')
+            echo "WEB_APP_NAME=$appName" >> $GITHUB_ENV
+            echo "RG_NAME=$rgName" >> $GITHUB_ENV
+            echo "DEPLOYMENT_TOKEN=$deploymentToken" >> $GITHUB_ENV
+            echo "SITE_DEFAULT_HOSTNAME=$siteDefaultHostname" >> $GITHUB_ENV
         shell: bash
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
+        with:
+          azure_static_web_apps_api_token: ${{ env.DEPLOYMENT_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/"
+          api_location: "api"
+          output_location: "dist/get-the-solution-app/browser/"
 
       # - name: Use the Environment Variables
       #   run: |

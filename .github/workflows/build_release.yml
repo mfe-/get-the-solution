@@ -124,7 +124,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     env: # Define environment variables for the entire job
       LOCATION: westeurope
-      AZDEPLOYMENT_NAME: mainBicepDeployment
+      AZDEPLOYMENT_NAME: bicepdeployment
       RESOURCE_GROUP: rg-get-the-solution-net
 
     steps:

@@ -170,7 +170,7 @@ jobs:
             rgName=$(echo $outputs | jq -r '.rgName.value')
             echo "WEB_APP_NAME=$webAppName" >> $GITHUB_ENV
             echo "RG_NAME=$rgName" >> $GITHUB_ENV
-          shell: bash
+        shell: bash
 
       - name: Display Outputs
         run: |

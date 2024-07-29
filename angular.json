@@ -11,11 +11,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/get-the-solution-app/browser",
+            "outputPath": {
+              "base": "dist/get-the-solution-app"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -25,9 +26,21 @@
               "src/assets"
             ],
             "styles": [
-              { "input": "src/styles.css", "inject": true }
+              {
+                "input": "src/styles.css",
+                "inject": true
+              }
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "src/main.ts",
+            "server": "src/main.server.ts",
+            "prerender": {
+              "routesFile": "prerender-routes.txt",
+              "discoverRoutes": true
+            },
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -61,9 +74,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -106,60 +117,6 @@
             ],
             "scripts": []
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/get-the-solution-app/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "get-the-solution-app:build:development",
-              "serverTarget": "get-the-solution-app:server:development"
-            },
-            "production": {
-              "browserTarget": "get-the-solution-app:build:production",
-              "serverTarget": "get-the-solution-app:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@angular-devkit/build-angular:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "get-the-solution-app:build:production",
-              "serverTarget": "get-the-solution-app:server:production"
-            },
-            "development": {
-              "browserTarget": "get-the-solution-app:build:development",
-              "serverTarget": "get-the-solution-app:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }

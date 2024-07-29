@@ -1,0 +1,67 @@
+﻿/blog/Dotnet docker experiences
+/blog/Hands on - Azure Scale Sets
+/blog/Install linux from hdd - without usb
+/blog/Using Azure Key vault with AzureDevOps
+/blog/Connecting to Azure Devops with a Service Principal
+/blog/Create an Azure App registrations daemon app
+/blog/Checkout dotnet-trace
+/blog/Use boundary trace to find contour of object in images
+/blog/Create a Self-Signed Certificate for Code Signing
+/blog/Discrete Wavelet transformation
+/blog/Discrete cosine transform
+/blog/Signal hilbert transformation
+/blog/Signal filtering
+/blog/Signal sampling
+/blog/Fast Fourier Transform
+/blog/Working with adb aka Android Debug Bridge
+/blog/Signal processing
+/blog/.so undefined reference to openssl
+/blog/ILT0005 runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp returned exit code -1073741819
+/blog/Das Aufgabenkönig-Spiel ExamsGame
+/blog/Creating exercises with the R exams package
+/blog/Add Token Authorization to AngularJS and WebApi
+/blog/DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0
+/blog/Datenbankoptimierung
+/blog/Email Subject mit UTF8 im Header
+/blog/Shenyang
+/blog/Glassfish 4 and Realm
+/blog/reinstall grub
+/blog/Logische Schaltungen
+/blog/Digitale Standardbaugruppen
+/blog/Sequenzielle Logik
+/blog/MySQL Cursor alternative – Dynamische SQL Cursor
+/blog/Datenbank erstellen mit dem ER-Diagramm und MySql
+/blog/Modelle in der Informatik
+/blog/Subversion – Repositories zusammenlegen – exportieren
+/blog/C-Sharp Plugins mit AppDomains realisieren
+/blog/C-Sharp Anwendung Plugin fähig machen
+/blog/ONLINE COMMUNITIES
+/blog/Tray Icon mit WPF
+/blog/MarkupExtension – Bilder aus Resource direkt ins XAML laden
+/blog/Überschriebener Default Style in BasedOn angeben
+/blog/ListBox-SelectedItem Zusatzinformationen anzeigen
+/blog/Einführung in die Programmierung
+/blog/ItemsSource zu UserControl hinzufügen
+/blog/Subklassen in XAML ansprechen
+/category/Infrastructure Docker Azure
+/category/Azure Infrastructure
+/category/Infrastructure
+/category/C# Azure Infrastructure
+/category/C#
+/category/education Article image C#
+/category/education Article python sip
+/category/education Article sip
+/category/Android Article linux
+/category/C linux
+/category/.NET Framework C# UWP
+/category/R education Angular TypeScript
+/category/R education
+/category/.NET Framework C#
+/category/.NET Framework
+/category/DBMS
+/category/Other
+/category/Java
+/category/TGI education
+/category/Article
+/category/.NET Framework C# XAML
+/category/Article education

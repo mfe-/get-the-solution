@@ -215,7 +215,7 @@
     {
         "BlogEntryId": 200,
         "Source": "assets/database/20.02.22-ILT0005-ARMilcTools64nutc_driver.html",
-        "Title": "ILT0005: runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp' returned exit code -1073741819",
+        "Title": "ILT0005 runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp returned exit code -1073741819",
         "Author": "Martin",
         "Release": "2020-02-22T00:00:00",
         "Regards": [
@@ -460,10 +460,10 @@
     },
     {
         "BlogEntryId": 55,
-        "Title": "ListBox – SelectedItem Zusatzinformationen anzeigen",
+        "Title": "ListBox-SelectedItem Zusatzinformationen anzeigen",
         "Author": "Martin",
         "Release": "2009-03-28T00:00:00",
-        "Source": "assets/database/09.03.28-ListBox – SelectedItem Zusatzinformationen anzeigen.html",
+        "Source": "assets/database/09.03.28-ListBox-SelectedItem-Zusatzinformationen-anzeigen.html",
         "Regards": [
             ".NET Framework",
             "C#",

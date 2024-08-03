@@ -57,6 +57,7 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
   name: staticSiteName
   location: location
   properties: {
+    allowConfigFileUpdates: allowConfigFileUpdates
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch

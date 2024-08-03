@@ -26,9 +26,6 @@ param staticSiteName string
 @description('Configuration for the static site.')
 param appSettings object = {}
 
-@description('Build properties for the static site.')
-param buildProperties object = {}
-
 @allowed([
   'Disabled'
   'Enabled'
@@ -36,8 +33,6 @@ param buildProperties object = {}
 @description('State indicating whether staging environments are allowed or not allowed for a static web app.')
 param stagingEnvironmentPolicy string = 'Enabled'
 
-@description('Template Options for the static site. https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep#staticsitetemplateoptions')
-param templateProperties object = {}
 
 resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
   name: staticSiteName
@@ -48,9 +43,8 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.m
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch
-    buildProperties: empty(buildProperties) ? null : buildProperties
     stagingEnvironmentPolicy: stagingEnvironmentPolicy
-    templateProperties: empty(templateProperties) ? null : templateProperties
+    enterpriseGradeCdnStatus: 'Disabled'
   }
 }
 
@@ -59,6 +53,11 @@ resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
   name: 'appsettings'
   kind: 'config'
   properties: appSettings
+}
+
+resource staticwebApplicationDomain 'Microsoft.Web/staticSites/customDomains@2022-03-01' = {
+  name: 'www.get-the-solution.net'
+  parent: staticSite
 }
 
 output defaultHostName string = staticSite.properties.defaultHostname // eg epic-shark-0db05de03.azurestaticapps.net

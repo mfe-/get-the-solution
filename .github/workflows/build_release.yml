@@ -86,10 +86,13 @@ jobs:
           $blogEntries = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
           $blogEntries | ForEach-Object { Write-Output ("/blog/" + $_.Title) } | Out-File -FilePath "./prerender-routes.txt" -Encoding UTF8 -Force
           
-          $distinctRegards = $blogEntries | ForEach-Object { "/category/" + $_.Regards } | Select-Object -Unique
+          $distinctRegards = $blogEntries | ForEach-Object { $_.Regards } | Select-Object -Unique
+          $distinctRegards = $distinctRegards | ForEach-Object { "/category/" + $_ }
           $distinctRegards | ForEach-Object { Add-Content -Path "./prerender-routes.txt" -Value $_ }
 
           Get-Content ./prerender-routes.txt
+
+
 
       - name: Zip artifact for deployment
         if: github.event_name != 'pull_request'

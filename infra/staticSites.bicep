@@ -61,6 +61,7 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch
+    enterpriseGradeCdnStatus: 'Disabled'
   }
   sku: {
       name: 'Free'

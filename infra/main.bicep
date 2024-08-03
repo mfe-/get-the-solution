@@ -16,9 +16,6 @@ module swa 'staticSites.bicep' = {
   scope: resourceGroup
   name: 'deploy-swa-${appName}'
   params: {
-    appSettings: {
-
-    }
     buildProperties: {
       skipGithubActionWorkflowGeneration: true
     }
@@ -30,7 +27,6 @@ module swa 'staticSites.bicep' = {
       name: 'Standard'
       tier: 'Standard'
     }
-    stagingEnvironmentPolicy: 'Enabled'
     staticSiteName: 'swa-${appName}'
   }
 }

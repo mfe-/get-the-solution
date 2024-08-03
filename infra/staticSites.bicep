@@ -22,9 +22,9 @@ param repositoryBranch string
 @description('The name of the static site resource. eg stapp-swa-sso')
 param staticSiteName string
 
-@secure()
-@description('Configuration for the static site.')
-param appSettings object = {}
+// @secure()
+// @description('Configuration for the static site.')
+// param appSettings object = {}
 
 @description('Build properties for the static site.')
 param buildProperties object = {}
@@ -47,18 +47,18 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.m
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch
-    buildProperties: empty(buildProperties) ? null : buildProperties
+    // buildProperties: empty(buildProperties) ? null : buildProperties
     stagingEnvironmentPolicy: stagingEnvironmentPolicy
     enterpriseGradeCdnStatus: 'Disabled'
   }
 }
 
-resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
-  parent: staticSite
-  name: 'appsettings'
-  kind: 'config'
-  properties: appSettings
-}
+// resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
+//   parent: staticSite
+//   name: 'appsettings'
+//   kind: 'config'
+//   properties: appSettings
+// }
 
 resource staticwebApplicationDomain 'Microsoft.Web/staticSites/customDomains@2022-03-01' = {
   name: 'www.get-the-solution.net'

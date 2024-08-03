@@ -61,6 +61,7 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch
+    buildProperties: empty(buildProperties) ? null : buildProperties
     enterpriseGradeCdnStatus: 'Disabled'
     stagingEnvironmentPolicy: stagingEnvironmentPolicy
   }

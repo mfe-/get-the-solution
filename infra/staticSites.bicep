@@ -38,20 +38,34 @@ param stagingEnvironmentPolicy string = 'Enabled'
 
 
 
-resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
+// resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
+//   name: staticSiteName
+//   location: location
+//   sku: sku
+//   properties: {
+//     allowConfigFileUpdates: allowConfigFileUpdates
+//     repositoryUrl: repositoryUrl
+//     repositoryToken: repositoryToken
+//     branch: repositoryBranch
+//     // buildProperties: empty(buildProperties) ? null : buildProperties
+//     stagingEnvironmentPolicy: stagingEnvironmentPolicy
+//     enterpriseGradeCdnStatus: 'Disabled'
+//   }
+// }
+
+resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
   name: staticSiteName
   location: location
-  sku: sku
   properties: {
-    allowConfigFileUpdates: allowConfigFileUpdates
-    repositoryUrl: repositoryUrl
-    repositoryToken: repositoryToken
-    branch: repositoryBranch
-    // buildProperties: empty(buildProperties) ? null : buildProperties
-    stagingEnvironmentPolicy: stagingEnvironmentPolicy
-    enterpriseGradeCdnStatus: 'Disabled'
+    // repositoryUrl: repositoryUrl
+    // repositoryToken: repositoryToken
+    // branch: repositoryBranch
+  }
+  sku: {
+      name: 'Free'
   }
 }
+
 
 // resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
 //   parent: staticSite

@@ -22,9 +22,9 @@ param repositoryBranch string
 @description('The name of the static site resource. eg stapp-swa-sso')
 param staticSiteName string
 
-// @secure()
-// @description('Configuration for the static site.')
-// param appSettings object = {}
+@secure()
+@description('Configuration for the static site.')
+param appSettings object = {}
 
 @description('Build properties for the static site.')
 param buildProperties object = {}

@@ -26,12 +26,16 @@ param staticSiteName string
 @description('Configuration for the static site.')
 param appSettings object = {}
 
+@description('Build properties for the static site.')
+param buildProperties object = {}
+
 @allowed([
   'Disabled'
   'Enabled'
 ])
 @description('State indicating whether staging environments are allowed or not allowed for a static web app.')
 param stagingEnvironmentPolicy string = 'Enabled'
+
 
 
 resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
@@ -43,6 +47,7 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.m
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: repositoryBranch
+    buildProperties: empty(buildProperties) ? null : buildProperties
     stagingEnvironmentPolicy: stagingEnvironmentPolicy
     enterpriseGradeCdnStatus: 'Disabled'
   }

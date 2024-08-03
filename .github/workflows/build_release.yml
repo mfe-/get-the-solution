@@ -144,7 +144,7 @@ jobs:
   
 
       - name: Zip artifact for deployment
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           cp dist/get-the-solution-app/browser/index.csr.html dist/get-the-solution-app/browser/index.html
           cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
@@ -152,26 +152,26 @@ jobs:
           zip release.zip ./dist/* -r
 
       - name: Upload artifact for deployment job
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         with:
           name: node-app
           path: release.zip
 
       - name: Zip infra directory for IaC deployment
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           zip -r iac.zip ./infra/*
   
       - name: Upload IaC artifact for deployment job
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         with:
           name: iac
           path: iac.zip
 
   deploy:
-    # if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: build
     environment:

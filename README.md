@@ -27,10 +27,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ### compute angular app on server
 
-Run `npm run dev:ssr`
-
-Debug `npx --node-options=--inspect-brk ng run get-the-solution-app:serve-ssr` server side. You need to attach to the instance.
-
+Run `ng build` (builds browser and server)
 
 ## Code scaffolding
 

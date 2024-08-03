@@ -139,7 +139,7 @@ jobs:
           # Save the updated XML content back to the file
           $xmlContent.Save($sitemapPath)
 
-          Get-Content $xmlContent
+          Get-Content $sitemapPath
 
   
 

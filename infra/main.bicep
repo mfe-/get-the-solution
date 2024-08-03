@@ -23,10 +23,6 @@ module swa 'staticSites.bicep' = {
     repositoryBranch: 'main'
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
-    sku: {
-      name: 'Standard'
-      tier: 'Standard'
-    }
     staticSiteName: 'swa-${appName}'
   }
 }

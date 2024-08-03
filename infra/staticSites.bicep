@@ -1,6 +1,12 @@
 @description('Resource location.')
 param location string
 
+@description('The SKU for the static site. https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep#skudescription')
+param sku object = {
+  name: 'Free'
+  tier: 'Free'
+}
+
 @description('Lock the config file for this static web app. https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep#staticsite')
 param allowConfigFileUpdates bool = true
 
@@ -43,9 +49,7 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
     enterpriseGradeCdnStatus: 'Disabled'
     stagingEnvironmentPolicy: stagingEnvironmentPolicy
   }
-  sku: {
-      name: 'Free'
-  }
+  sku: sku
 }
 
 

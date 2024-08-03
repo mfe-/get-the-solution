@@ -1,12 +1,6 @@
 @description('Resource location.')
 param location string
 
-@description('The SKU for the static site. https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep#skudescription')
-param sku object = {
-  name: 'Free'
-  tier: 'Free'
-}
-
 @description('Lock the config file for this static web app. https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep#staticsite')
 param allowConfigFileUpdates bool = true
 
@@ -36,22 +30,6 @@ param buildProperties object = {}
 @description('State indicating whether staging environments are allowed or not allowed for a static web app.')
 param stagingEnvironmentPolicy string = 'Enabled'
 
-
-
-// resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = { // https://docs.microsoft.com/en-us/azure/templates/microsoft.web/staticsites?tabs=bicep
-//   name: staticSiteName
-//   location: location
-//   sku: sku
-//   properties: {
-//     allowConfigFileUpdates: allowConfigFileUpdates
-//     repositoryUrl: repositoryUrl
-//     repositoryToken: repositoryToken
-//     branch: repositoryBranch
-//     // buildProperties: empty(buildProperties) ? null : buildProperties
-//     stagingEnvironmentPolicy: stagingEnvironmentPolicy
-//     enterpriseGradeCdnStatus: 'Disabled'
-//   }
-// }
 
 resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
   name: staticSiteName

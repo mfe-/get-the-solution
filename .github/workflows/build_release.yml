@@ -146,9 +146,9 @@ jobs:
       - name: Zip artifact for deployment
         # if: github.event_name != 'pull_request'
         run: |
-          cat src/assets/database/blog.json
           cp dist/get-the-solution-app/browser/index.csr.html dist/get-the-solution-app/browser/index.html
           cp src/assets/database/blog.json dist/get-the-solution-app/browser/assets/database/blog.json
+          cp src/sitemap.xml dist/get-the-solution-app/browser/sitemap.xml
           zip release.zip ./dist/* -r
 
       - name: Upload artifact for deployment job

@@ -71,12 +71,12 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
 }
 
 
-// resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
-//   parent: staticSite
-//   name: 'appsettings'
-//   kind: 'config'
-//   properties: appSettings
-// }
+resource staticSiteAppsettings 'Microsoft.Web/staticSites/config@2021-02-01' = {
+  parent: staticSite
+  name: 'appsettings'
+  kind: 'config'
+  properties: appSettings
+}
 
 resource staticwebApplicationDomain 'Microsoft.Web/staticSites/customDomains@2022-03-01' = {
   name: 'www.get-the-solution.net'

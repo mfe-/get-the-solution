@@ -57,9 +57,9 @@ resource staticSite 'Microsoft.Web/staticSites@2022-09-01' = {
   name: staticSiteName
   location: location
   properties: {
-    // repositoryUrl: repositoryUrl
-    // repositoryToken: repositoryToken
-    // branch: repositoryBranch
+    repositoryUrl: repositoryUrl
+    repositoryToken: repositoryToken
+    branch: repositoryBranch
   }
   sku: {
       name: 'Free'

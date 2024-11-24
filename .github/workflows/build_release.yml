@@ -20,7 +20,7 @@ jobs:
 
     steps:
       # checkout repo contents
-      - uses: actions/checkout@v4
+      - uses: actions/checkout
 
       # run pandoc to generate html from markdown
       - name: run pandoc
@@ -29,7 +29,7 @@ jobs:
           for i in *.md; do pandoc "$i" -o "${i%.*}".html --highlight-style=breezeDark --verbose; done
 
       # output generated file to build artifacts
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact
         with:
           name: generated-html-files
           path: |
@@ -40,10 +40,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout
 
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact
         with:
           name: generated-html-files
           path: src/assets/database
@@ -153,7 +153,7 @@ jobs:
 
       - name: Upload artifact for deployment job
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact
         with:
           name: node-app
           path: release.zip
@@ -165,7 +165,7 @@ jobs:
   
       - name: Upload IaC artifact for deployment job
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact
         with:
           name: iac
           path: iac.zip
@@ -184,12 +184,12 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact
         with:
           name: node-app
 
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact
         with:
           name: iac
 

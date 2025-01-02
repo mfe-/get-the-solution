@@ -1,5 +1,17 @@
 [
     {
+        "BlogEntryId": 230,
+        "Source": "assets/database/02.01.25-PositionEncoder.html",
+        "Author": "Simon",
+        "Regards": [
+            "Machine Learning",
+            "Neural Networks",
+            "Convolution Neural Networks"
+        ],
+        "Release": "2023-12-26T00:00:00",
+        "Title": "A one-layer object position estimator using the expected value"
+    },
+    {
         "BlogEntryId": 220,
         "Source": "assets/database/23.12.26-dotnet-docker-experiences.html",
         "Author": "Martin",

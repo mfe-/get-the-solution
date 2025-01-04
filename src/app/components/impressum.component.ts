@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
     selector: 'impressum-component',
     templateUrl: './impressum.component.html',
     styleUrls: [],
-    standalone: true,
     imports: [RouterLink]
 })
 export class ImpressumComponent{

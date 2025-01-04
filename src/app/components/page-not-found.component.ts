@@ -7,7 +7,6 @@ import { BlogEntry } from '../model/BlogEntry';
     selector: 'app-page-not-found',
     templateUrl: './page-not-found.component.html',
     styleUrls: [],
-    standalone: true,
     imports: [RouterLink]
 })
 export class PageNotFoundComponent implements OnInit {

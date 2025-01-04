@@ -6,15 +6,14 @@ import { StickHeaderDirective } from '../stick-header.directive';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    RouterOutlet,
-    FooterComponent,
-    StickHeaderDirective
-  ],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    imports: [
+        HeaderComponent,
+        RouterOutlet,
+        FooterComponent,
+        StickHeaderDirective
+    ]
 })
 export class AppComponent {
   constructor(@Inject(Router) private router: Router, @Inject(Title) private titleService: Title) {

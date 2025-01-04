@@ -7,11 +7,10 @@ import { BlogEntryComponent } from './blogEntry.component';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css'],
-  standalone: true,
-  imports: [NgFor, BlogEntryComponent, NgIf, RouterLink]
+    selector: 'app-blog',
+    templateUrl: './blog.component.html',
+    styleUrls: ['./blog.component.css'],
+    imports: [NgFor, BlogEntryComponent, NgIf, RouterLink]
 })
 export class BlogComponent implements OnInit {
 

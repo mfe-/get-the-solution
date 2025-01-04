@@ -43,6 +43,7 @@
 /blog/Einführung in die Programmierung
 /blog/ItemsSource zu UserControl hinzufügen
 /blog/Subklassen in XAML ansprechen
+/blog/A one-layer object position estimator using the expected value
 /category/Infrastructure Docker Azure
 /category/Azure Infrastructure
 /category/Infrastructure

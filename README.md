@@ -10,6 +10,7 @@
 1. create a feature branch with your changes
 2. create a pull request to be merged into main
 3. the cli will convert all markdown files to html files and generate the website
+   - if you add a blog post (dynamic content), we need to tell angular the route by adding the new page to `prerender-routes.txt`. Use `generate_reprender_routes.ps1`. This should be automated in the future.
 4. after the pull request is merged, the website will be deployed automatically
 
 ## Development

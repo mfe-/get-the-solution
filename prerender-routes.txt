@@ -1,4 +1,5 @@
-﻿/blog/Dotnet docker experiences
+/blog/A one-layer object position estimator using the expected value
+/blog/Dotnet docker experiences
 /blog/Hands on - Azure Scale Sets
 /blog/Install linux from hdd - without usb
 /blog/Using Azure Key vault with AzureDevOps
@@ -20,7 +21,7 @@
 /blog/Das Aufgabenkönig-Spiel ExamsGame
 /blog/Creating exercises with the R exams package
 /blog/Add Token Authorization to AngularJS and WebApi
-/blog/DLL Hell – Could not load file or assembly System.Web.http 4.0.0.0
+/blog/DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0
 /blog/Datenbankoptimierung
 /blog/Email Subject mit UTF8 im Header
 /blog/Shenyang
@@ -43,26 +44,28 @@
 /blog/Einführung in die Programmierung
 /blog/ItemsSource zu UserControl hinzufügen
 /blog/Subklassen in XAML ansprechen
-/blog/A one-layer object position estimator using the expected value
-/category/Infrastructure Docker Azure
-/category/Azure Infrastructure
+/category/Machine Learning
+/category/Neural Networks
+/category/Convolution Neural Networks
 /category/Infrastructure
-/category/C# Azure Infrastructure
+/category/Docker
+/category/Azure
 /category/C#
-/category/education Article image C#
-/category/education Article python sip
-/category/education Article sip
-/category/Android Article linux
-/category/C linux
-/category/.NET Framework C# UWP
-/category/R education Angular TypeScript
-/category/R education
-/category/.NET Framework C#
+/category/education
+/category/Article
+/category/image
+/category/python
+/category/sip
+/category/Android
+/category/linux
+/category/C
 /category/.NET Framework
+/category/UWP
+/category/R
+/category/Angular
+/category/TypeScript
 /category/DBMS
 /category/Other
 /category/Java
-/category/TGI education
-/category/Article
-/category/.NET Framework C# XAML
-/category/Article education
+/category/TGI
+/category/XAML

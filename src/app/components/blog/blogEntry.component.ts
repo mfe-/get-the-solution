@@ -11,7 +11,6 @@ import { environment } from 'src/app/app.config';
 @Component({
     selector: 'app-blogentry',
     templateUrl: './blogEntry.component.html',
-    standalone: true,
     imports: [NgFor, DatePipe]
 })
 export class BlogEntryComponent implements OnInit, AfterViewInit {

@@ -4,8 +4,7 @@ import { RouterLink } from '@angular/router';
 @Component({
     imports: [RouterLink],
     selector: 'my-header',
-    templateUrl: './header.component.html',
-    standalone: true
+    templateUrl: './header.component.html'
 })
 export class HeaderComponent {
 

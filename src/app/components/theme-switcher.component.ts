@@ -7,8 +7,7 @@ import { RouterLink } from '@angular/router';
     template: '<a [routerLink]="" queryParamsHandling="preserve" '
         + '(click)="switch()">{{currentCssFile==defaultCssFile ? \'Turn Light off\' : \'Turn Light on\'}}</a>',
     styles: [],
-    standalone: true,
-    imports: [RouterLink],
+    imports: [RouterLink]
 })
 /**
  * can swap the css file which is used in

@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 @Component({
     selector: 'app-convolution',
     templateUrl: './convolution.discret.component.html',
-    standalone: true,
     imports: [FormsModule, RouterLink, NgFor]
 })
 export class ConvolutionDiscretComponent implements OnInit {

@@ -8,7 +8,6 @@ import { NgFor, DatePipe } from '@angular/common';
 @Component({
     selector: 'app-blogcategory',
     templateUrl: './blog-category.component.html',
-    standalone: true,
     imports: [NgFor, DatePipe]
 })
 export class BlogCategoryComponent implements OnInit {

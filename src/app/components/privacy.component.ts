@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
     selector: 'privacy-component',
     templateUrl: './privacy.component.html',
     styleUrls: [],
-    standalone: true,
     imports: [RouterLink]
 })
 export class PrivacyComponent{

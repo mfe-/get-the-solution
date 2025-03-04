@@ -29,7 +29,7 @@ jobs:
           for i in *.md; do pandoc "$i" -o "${i%.*}".html --highlight-style=breezeDark --verbose; done
 
       # output generated file to build artifacts
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: generated-html-files
           path: |

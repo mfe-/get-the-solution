@@ -153,7 +153,7 @@ jobs:
 
       - name: Upload artifact for deployment job
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: release.zip
@@ -165,7 +165,7 @@ jobs:
   
       - name: Upload IaC artifact for deployment job
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: iac
           path: iac.zip

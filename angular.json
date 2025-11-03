@@ -32,15 +32,7 @@
               }
             ],
             "scripts": [],
-            "browser": "src/main.ts",
-            "server": "src/main.server.ts",
-            "prerender": {
-              "routesFile": "prerender-routes.txt",
-              "discoverRoutes": true
-            },
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -117,6 +109,64 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/get-the-solution-app/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.app.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "get-the-solution-app:build:development",
+              "serverTarget": "get-the-solution-app:server:development"
+            },
+            "production": {
+              "browserTarget": "get-the-solution-app:build:production",
+              "serverTarget": "get-the-solution-app:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/",
+              "/home",
+              "/privacy",
+              "/impressum",
+              "/projects",
+              "/contact",
+              "/blog"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "get-the-solution-app:build:production",
+              "serverTarget": "get-the-solution-app:server:production"
+            },
+            "development": {
+              "browserTarget": "get-the-solution-app:build:development",
+              "serverTarget": "get-the-solution-app:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

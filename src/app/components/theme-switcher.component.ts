@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Input, Inject, PLATFORM_ID, DOCUMENT, ChangeDetectionStrategy } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-theme-switcher',
+    standalone: true,
     template: '<a [routerLink]="" queryParamsHandling="preserve" '
         + '(click)="switch()">{{currentCssFile==defaultCssFile ? \'Turn Light off\' : \'Turn Light on\'}}</a>',
     styles: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink]
 })
 /**

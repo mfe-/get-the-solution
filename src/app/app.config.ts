@@ -3,12 +3,12 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app-routing.module';
 import { BlogService } from './service/blogservice';
-import { FetchBackend, HttpBackend, HttpClient, provideHttpClient } from '@angular/common/http';
+import { FetchBackend, HttpBackend, HttpClient, provideHttpClient, withXhr } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes),
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         { provide: 'IBlogService', useClass: BlogService },
         { provide: FetchBackend },
         { provide: HttpBackend, useExisting: FetchBackend }
@@ -18,5 +18,5 @@ export const appConfig: ApplicationConfig = {
 export const environment = {
     production: true,
     git: "https://github.com/mfe-/get-the-solution/edit/main/src/",
-    baseUri: ""
+    baseUri: "/"
   };

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, PLATFORM_ID, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, Input, PLATFORM_ID, ViewChild, ElementRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { IBlogService } from 'src/app/contract/IBlogService';
 import { BlogEntry } from 'src/app/model/BlogEntry';
@@ -10,7 +10,9 @@ import { environment } from 'src/app/app.config';
 
 @Component({
     selector: 'app-blogentry',
+    standalone: true,
     templateUrl: './blogEntry.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgFor, DatePipe]
 })
 export class BlogEntryComponent implements OnInit, AfterViewInit {

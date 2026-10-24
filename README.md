@@ -1,53 +1,71 @@
 # [get-the-solution.net](https://get-the-solution.net/)
 
+This repository contains the static blog and portfolio website for get-the-solution.net. The app is built with Angular 22 and uses a custom static blog pipeline where Markdown posts are converted to HTML before the app is built.
+
 ## Prerequisites
 
-- nodejs
-- `npm install`
+- Node.js 22.x
+- npm
+- pandoc
 
-## Build and deploy website
+Install dependencies:
 
-1. create a feature branch with your changes
-2. create a pull request to be merged into main
-3. the cli will convert all markdown files to html files and generate the website
-   - if you add a blog post (dynamic content), we need to tell angular the route by adding the new page to `prerender-routes.txt`. Use `generate_reprender_routes.ps1`. This should be automated in the future.
-4. after the pull request is merged, the website will be deployed automatically
+```bash
+npm install
+```
 
-## Development
+## Local development
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2 and was updated meanwhile to angular 19.0.5.
+Run the app locally:
 
-### Build angular app in browser and server mode
+```bash
+npm run start
+```
 
-1. Run `ng build --configuration production --aot` (builds browser and server)
+This runs the prestart hook, which generates prerender routes and converts the Markdown blog posts to HTML before starting Angular dev server.
 
-### Run angular app in browser (and server) mode
+## Production build
 
-1. Run `ng run get-the-solution-app:build:production` to build the project. The build artifacts will be stored in the `dist/` directory. 
+Build the application for production:
 
-2. Switch to `cd dist\get-the-solution-app\browser\`
-3. Use `http-server` to serve the files. Install it with `npm install -g http-server`
+```bash
+npm run build
+```
 
-### Convert markdown files to html files (for local development and testing)
+The build also runs the prebuild hook, which performs:
 
-Using pandoc in Linux:
+- `npm run generate:prerender-routes`
+- `npm run convert:blog-markdown`
 
- cd src/assets/database; for i in *.md; do pandoc "$i" -o "${i%.*}".html; done
+These steps generate the static routes and convert all markdown posts in `src/assets/database/` into HTML files.
 
+## Blog workflow
 
-### Code scaffolding
+The project uses a custom static blog pipeline:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- blog metadata lives in `src/assets/database/blog.json`
+- Markdown content is stored in `src/assets/database/*.md`
+- `pandoc` converts those files into matching `.html` files
+- `scripts/generate-prerender-routes.js` creates the prerender list for Angular
 
-### Running unit tests
+When adding a new blog post, ensure that the metadata and source file are consistent and the prerender route generation runs as part of the build/start pipeline.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Useful scripts
 
-### Running end-to-end tests
+```bash
+npm run generate:prerender-routes
+npm run convert:blog-markdown
+npm run test
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Deployment
 
+1. create a feature branch
+2. make your changes
+3. validate with a build
+4. open a pull request to merge into `main`
+5. deploy the application through the configured CI/CD pipeline
 
-## Further help
+## Notes
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This project is a static Angular site with custom prerendering and a markdown-based blog system. The generated output is published as the production website.

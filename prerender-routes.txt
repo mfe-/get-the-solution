@@ -1,71 +1,73 @@
+/blog
+/blog/.so undefined reference to openssl
 /blog/A one-layer object position estimator using the expected value
-/blog/Dotnet docker experiences
-/blog/Hands on - Azure Scale Sets
-/blog/Install linux from hdd - without usb
-/blog/Using Azure Key vault with AzureDevOps
-/blog/Connecting to Azure Devops with a Service Principal
-/blog/Create an Azure App registrations daemon app
+/blog/Add Token Authorization to AngularJS and WebApi
+/blog/C-Sharp Anwendung Plugin fähig machen
+/blog/C-Sharp Plugins mit AppDomains realisieren
 /blog/Checkout dotnet-trace
-/blog/Use boundary trace to find contour of object in images
+/blog/Connecting to Azure Devops with a Service Principal
 /blog/Create a Self-Signed Certificate for Code Signing
+/blog/Create an Azure App registrations daemon app
+/blog/Creating exercises with the R exams package
+/blog/DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0
+/blog/Das Aufgabenkönig-Spiel ExamsGame
+/blog/Datenbank erstellen mit dem ER-Diagramm und MySql
+/blog/Datenbankoptimierung
+/blog/Digitale Standardbaugruppen
 /blog/Discrete Wavelet transformation
 /blog/Discrete cosine transform
-/blog/Signal hilbert transformation
-/blog/Signal filtering
-/blog/Signal sampling
-/blog/Fast Fourier Transform
-/blog/Working with adb aka Android Debug Bridge
-/blog/Signal processing
-/blog/.so undefined reference to openssl
-/blog/ILT0005 runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp returned exit code -1073741819
-/blog/Das Aufgabenkönig-Spiel ExamsGame
-/blog/Creating exercises with the R exams package
-/blog/Add Token Authorization to AngularJS and WebApi
-/blog/DLL Hell - Could not load file or assembly System.Web.http 4.0.0.0
-/blog/Datenbankoptimierung
-/blog/Email Subject mit UTF8 im Header
-/blog/Shenyang
-/blog/Glassfish 4 and Realm
-/blog/reinstall grub
-/blog/Logische Schaltungen
-/blog/Digitale Standardbaugruppen
-/blog/Sequenzielle Logik
-/blog/MySQL Cursor alternative – Dynamische SQL Cursor
-/blog/Datenbank erstellen mit dem ER-Diagramm und MySql
-/blog/Modelle in der Informatik
-/blog/Subversion – Repositories zusammenlegen – exportieren
-/blog/C-Sharp Plugins mit AppDomains realisieren
-/blog/C-Sharp Anwendung Plugin fähig machen
-/blog/ONLINE COMMUNITIES
-/blog/Tray Icon mit WPF
-/blog/MarkupExtension – Bilder aus Resource direkt ins XAML laden
-/blog/Überschriebener Default Style in BasedOn angeben
-/blog/ListBox-SelectedItem Zusatzinformationen anzeigen
+/blog/Dotnet docker experiences
 /blog/Einführung in die Programmierung
+/blog/Email Subject mit UTF8 im Header
+/blog/Fast Fourier Transform
+/blog/Glassfish 4 and Realm
+/blog/Hands on - Azure Scale Sets
+/blog/ILT0005 runtime.win10-arm.microsoft.net.native.compiler tools ARM nutc_driver.exe intermediate MDIL...rsp returned exit code -1073741819
+/blog/Install linux from hdd - without usb
 /blog/ItemsSource zu UserControl hinzufügen
+/blog/ListBox-SelectedItem Zusatzinformationen anzeigen
+/blog/Logische Schaltungen
+/blog/MarkupExtension – Bilder aus Resource direkt ins XAML laden
+/blog/Modelle in der Informatik
+/blog/MySQL Cursor alternative – Dynamische SQL Cursor
+/blog/ONLINE COMMUNITIES
+/blog/Sequenzielle Logik
+/blog/Shenyang
+/blog/Signal filtering
+/blog/Signal hilbert transformation
+/blog/Signal processing
+/blog/Signal sampling
 /blog/Subklassen in XAML ansprechen
+/blog/Subversion – Repositories zusammenlegen – exportieren
+/blog/Tray Icon mit WPF
+/blog/Use boundary trace to find contour of object in images
+/blog/Using Azure Key vault with AzureDevOps
+/blog/Working with adb aka Android Debug Bridge
+/blog/reinstall grub
+/blog/Überschriebener Default Style in BasedOn angeben
+/category
+/category/.NET Framework
+/category/Android
+/category/Angular
+/category/Article
+/category/Azure
+/category/C
+/category/C#
+/category/Convolution Neural Networks
+/category/DBMS
+/category/Docker
+/category/Infrastructure
+/category/Java
 /category/Machine Learning
 /category/Neural Networks
-/category/Convolution Neural Networks
-/category/Infrastructure
-/category/Docker
-/category/Azure
-/category/C#
+/category/Other
+/category/R
+/category/TGI
+/category/TypeScript
+/category/UWP
+/category/XAML
 /category/education
-/category/Article
 /category/image
+/category/linux
 /category/python
 /category/sip
-/category/Android
-/category/linux
-/category/C
-/category/.NET Framework
-/category/UWP
-/category/R
-/category/Angular
-/category/TypeScript
-/category/DBMS
-/category/Other
-/category/Java
-/category/TGI
-/category/XAML

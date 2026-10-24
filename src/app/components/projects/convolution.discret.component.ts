@@ -1,11 +1,13 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-convolution',
+    standalone: true,
     templateUrl: './convolution.discret.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, RouterLink, NgFor]
 })
 export class ConvolutionDiscretComponent implements OnInit {

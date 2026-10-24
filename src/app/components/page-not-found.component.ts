@@ -1,12 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IBlogService } from '../contract/IBlogService';
 import { BlogEntry } from '../model/BlogEntry';
 
 @Component({
     selector: 'app-page-not-found',
+    standalone: true,
     templateUrl: './page-not-found.component.html',
     styleUrls: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink]
 })
 export class PageNotFoundComponent implements OnInit {

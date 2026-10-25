@@ -9,6 +9,7 @@
 }
 :root {
     --brand-green: #78B68D;
+    --brand-green-soft: #dfeee4;
     --brand-green-deep: #2f7d5b;
     --brand-pink: #C84884;
     --brand-pink-soft: #f6d7e6;
@@ -23,15 +24,21 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     color: var(--ink);
     background:
         radial-gradient(circle at top left, rgba(200, 72, 132, 0.08), transparent 30%),
-        radial-gradient(circle at top right, rgba(120, 182, 141, 0.13), transparent 32%),
-        linear-gradient(180deg, #f5f3ef 0%, #f3f6f5 100%);
+        radial-gradient(circle at top right, rgba(120, 182, 141, 0.1), transparent 32%),
+        linear-gradient(180deg, #f5f3ef 0%, #eef4f0 26%, #f3efee 52%, #eef4f0 76%, #f5f3ef 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Spectral', serif;
 }
 
@@ -41,6 +48,8 @@ body.black {
         radial-gradient(circle at top left, rgba(200, 72, 132, 0.18), transparent 28%),
         radial-gradient(circle at top right, rgba(120, 182, 141, 0.12), transparent 30%),
         linear-gradient(180deg, #111821 0%, #0a1017 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 body.black nav.sticky {
@@ -180,6 +189,7 @@ nav hr {
 }
 
 main {
+    flex: 1 0 auto;
     font-family: 'Spectral', serif;
     font-size: 1.15em;
     line-height: 1.7;
@@ -188,11 +198,11 @@ main {
 }
 
 main section {
-    padding: 1.5rem 1.4rem;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 1.25rem;
-    box-shadow: var(--shadow);
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 section h2 {
@@ -292,7 +302,7 @@ footer {
     padding-top: 1rem;
     text-align: center;
     color: var(--ink-soft);
-    background: rgba(255, 255, 255, 0.22);
+    background: linear-gradient(180deg, #f5f3ef 0%, #edf4f0 100%);
     border-top: 1px solid rgba(120, 182, 141, 0.25);
 }
 

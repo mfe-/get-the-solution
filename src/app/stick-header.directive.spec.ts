@@ -26,6 +26,9 @@ describe('StickHeaderDirective', () => {
             item: () => ({ appendChild: jasmine.createSpy(), removeChild: jasmine.createSpy(), getElementsByTagName: () => ({ length: 0 }) }),
           };
         }
+        return {
+          item: () => null,
+        };
       }),
       createElement: jasmine.createSpy('createElement').and.returnValue({ appendChild: jasmine.createSpy(), setAttribute: jasmine.createSpy() }),
       createTextNode: jasmine.createSpy('createTextNode'),

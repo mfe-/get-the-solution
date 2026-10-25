@@ -22,7 +22,17 @@ Run the app locally:
 npm run start
 ```
 
-This runs the prestart hook, which generates prerender routes and converts the Markdown blog posts to HTML before starting Angular dev server.
+This generates prerender routes and converts the Markdown blog posts to HTML before starting the Angular dev server.
+
+To skip the (slower) Markdown-to-HTML conversion for blog posts, e.g. while only working on layout/styling:
+
+```bash
+npm run start -- --skip-blog-html
+# or
+SKIP_BLOG_HTML=1 npm run start
+```
+
+You can also set the `SKIP_BLOG_HTML=1` environment variable instead of passing the flag.
 
 ## Production build
 
